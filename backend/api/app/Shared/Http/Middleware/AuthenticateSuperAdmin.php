@@ -28,7 +28,19 @@ final class AuthenticateSuperAdmin
      */
     public function handle(Request $request, Closure $next, string $minRole = 'readonly'): Response
     {
-        $token = Value::string($request->bearerToken());
+        // X-Admin-Token first, because Authorization is already spoken for.
+        // Every published build carries the shared app secret as HTTP Basic in
+        // Authorization (RequireAppSecret), and one header cannot hold both a
+        // Basic credential and a Bearer token — so a panel that authenticated
+        // through Authorization could never get past the gate in front of it.
+        // The other three principals already avoid this the same way, with
+        // X-Employee-Token, X-Firebase-Token and X-Kiosk-Token.
+        //
+        // bearerToken() stays as a fallback: it is what the tests and any
+        // curl-based tooling send, and it still works wherever the app secret
+        // is unset — which is every local checkout.
+        $token = Value::string($request->header('X-Admin-Token'))
+            ?: Value::string($request->bearerToken());
 
         $admin = SuperAdminSession::resolve($token);
 

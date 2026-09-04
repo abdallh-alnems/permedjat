@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -356,7 +358,18 @@ class _Attachment extends StatelessWidget {
         if (token == null) {
           return const SizedBox.shrink();
         }
-        final headers = {'Authorization': 'Bearer $token'};
+        // Same split as CRUD._headers: the app secret owns Authorization,
+        // the operator's session token goes in X-Admin-Token. This is an
+        // Image.network / launchUrl fetch that bypasses CRUD, so it has to
+        // build the pair itself or the attachment 401s.
+        final securityUser = dotenv.env['SECURITY_USER'] ?? '';
+        final securityKey = dotenv.env['SECURITY_KEY'] ?? '';
+        final headers = {
+          if (securityUser.isNotEmpty && securityKey.isNotEmpty)
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('$securityUser:$securityKey'))}',
+          'X-Admin-Token': token,
+        };
 
         if (!message.attachmentIsImage) {
           return InkWell(

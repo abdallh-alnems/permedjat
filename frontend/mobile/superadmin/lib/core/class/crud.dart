@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -8,15 +9,39 @@ import 'status_request.dart';
 class CRUD {
   static const _secureStorage = FlutterSecureStorage();
 
+  /// Two credentials, two headers, and they must not be confused.
+  ///
+  /// `Authorization` carries the shared app secret as HTTP Basic — the same pair
+  /// every published Permedjat build sends, which is what stops the API from
+  /// being callable by anyone who reads a URL out of a bundle. It is not
+  /// authentication.
+  ///
+  /// The operator's session token is authentication, and it goes in
+  /// `X-Admin-Token`. It used to go in `Authorization: Bearer`, which cannot
+  /// work: one header cannot hold a Basic credential and a Bearer token at the
+  /// same time, so this app was refused by the gate in front of its own API on
+  /// every request. The other three apps already do it this way with
+  /// `X-Employee-Token`, `X-Firebase-Token` and `X-Kiosk-Token`.
   Future<Map<String, String>> _headers({bool auth = true}) async {
+    final securityUser = dotenv.env['SECURITY_USER'] ?? '';
+    final securityKey = dotenv.env['SECURITY_KEY'] ?? '';
+
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
+
+    // Left off entirely when unset, so a local checkout against a backend with
+    // no app secret is not sending an empty `Basic Og==` for it to reject.
+    if (securityUser.isNotEmpty && securityKey.isNotEmpty) {
+      headers['Authorization'] =
+          'Basic ${base64Encode(utf8.encode('$securityUser:$securityKey'))}';
+    }
+
     if (auth) {
       final token = await _secureStorage.read(key: 'admin_token');
       if (token != null) {
-        headers['Authorization'] = 'Bearer $token';
+        headers['X-Admin-Token'] = token;
       }
     }
     return headers;

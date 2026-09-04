@@ -128,6 +128,32 @@ final class SuperAdminAuthTest extends TestCase
             ->assertStatus(403);
     }
 
+    public function test_the_session_token_is_accepted_in_x_admin_token(): void
+    {
+        // Authorization carries the shared app secret as HTTP Basic on every
+        // published build, so the panel cannot also put a Bearer token there.
+        // Without this header the admin app is locked out of its own API in
+        // production while every test still passes, because the app-secret gate
+        // disables itself whenever SECURITY_USER is unset — which it is here.
+        $token = $this->openSession();
+
+        $this->withHeader('X-Admin-Token', $token)
+            ->getJson('/v1/admin/auth/me')
+            ->assertOk()
+            ->assertJsonPath('data.username', $this->username);
+    }
+
+    public function test_x_admin_token_is_read_even_when_authorization_holds_basic(): void
+    {
+        $token = $this->openSession();
+
+        $this->withHeader('X-Admin-Token', $token)
+            ->withHeader('Authorization', 'Basic '.base64_encode('app:secret'))
+            ->getJson('/v1/admin/auth/me')
+            ->assertOk()
+            ->assertJsonPath('data.username', $this->username);
+    }
+
     public function test_the_account_screen_reports_the_session_itself(): void
     {
         $token = $this->openSession();
