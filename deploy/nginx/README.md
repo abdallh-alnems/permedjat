@@ -67,3 +67,74 @@ curl -s -o /dev/null -w '%{http_code}\n' https://api.permedjat.com/backend_medje
 ```
 
 A backup of the pre-change snippet is at `/root/permedjat-common.conf.bak-20260815`.
+
+## Laravel mounted at the host root — 2026-09-04
+
+`backend/api` now serves `api.permedjat.com/`. The legacy backend was not touched:
+it is still reached at `/backend_medjet/...` and still resolves against the
+server-level `root /var/www/permedjat`.
+
+**Why the root and not a prefix.** `/join`, `/.well-known/{file}` and
+`/iclock/{action}` are declared outside the `/v1` group, so they have to sit at
+the root. `/backend` was never a real prefix on this server — it returns 404,
+despite what the top-level `CLAUDE.md` says — and `/api` would be redundant
+under `api.permedjat.com`.
+
+**Applied to `/etc/nginx/snippets/permedjat-common.conf`**, replacing the three
+trailing lines (`location /`, favicon, robots) and nothing else:
+
+```nginx
+location = /index.php {
+    root /var/www/permedjat/api/public;
+    fastcgi_pass unix:/run/php/php8.5-fpm.sock;
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param HTTP_AUTHORIZATION $http_authorization;
+    fastcgi_param HTTPS $https if_not_empty;
+    fastcgi_read_timeout 120s;
+}
+
+location / {
+    root /var/www/permedjat/api/public;
+    try_files $uri $uri/ /index.php?$query_string;
+}
+location = /favicon.ico { root /var/www/permedjat/api/public; access_log off; log_not_found off; }
+location = /robots.txt  { root /var/www/permedjat/api/public; access_log off; log_not_found off; }
+```
+
+`location = /index.php` is the load-bearing line. Without it the `try_files`
+fallback internally redirects to `/index.php`, that redirect is re-matched
+against the `~ \.php$` regex block, and `SCRIPT_FILENAME` becomes
+`/var/www/permedjat/index.php` — which does not exist. Every Laravel route would
+404 while every legacy URL kept working: a failure that reads as "the deploy did
+nothing" rather than as a routing bug. An exact-match location outranks a regex
+one, which is what keeps the front controller off the legacy docroot.
+
+Legacy is safe for the same reason in reverse: every `/backend_medjet/...` URL
+ends in `.php`, so the regex block claims it before the `location /` prefix is
+ever considered.
+
+No deny rule changed. Verified afterwards that none of the 297 routes is
+shadowed by the `(config|core|models|vendor|migrations|seeds|scripts|lang)/`,
+`*.json` or hidden-file rules.
+
+Backup of the pre-change snippet: `/root/permedjat-common.conf.bak-20260904-prelaravel`.
+
+**Verify:**
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' https://api.permedjat.com/up                              # 200
+curl -s -o /dev/null -w '%{http_code}\n' https://api.permedjat.com/backend_medjet/app/auth/login.php  # 401, still alive
+curl -s https://api.permedjat.com/                                                                  # {"status":"success",...}
+```
+
+### ⚠ `permedjat-common.conf` in this directory does NOT match the server
+
+The copy checked in here was written for a server layout that was never
+deployed: it expects the legacy backend at `/var/www/permedjat/backend` with its
+endpoints under `api/`, and adds rewrites from `/backend_medjet/` to
+`/backend/api/`. The live server still has `/var/www/permedjat/backend_medjet`
+with endpoints under `app/`. **Applying the checked-in file as-is would 404 the
+entire legacy API.** The Laravel change above was therefore made against the
+live file, not by deploying this one. Reconcile the two before any server
+rebuild relies on this directory.
