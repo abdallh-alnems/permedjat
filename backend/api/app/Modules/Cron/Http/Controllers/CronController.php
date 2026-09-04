@@ -7,8 +7,10 @@ namespace App\Modules\Cron\Http\Controllers;
 use App\Modules\Cron\Services\CatchUpAbsences;
 use App\Modules\Cron\Services\PurgeKioskCaptures;
 use App\Modules\Cron\Services\RunDailyAlerts;
+use App\Modules\Cron\Services\RunLeaveRollover;
 use App\Shared\Http\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Ports of api/app/cron/*.php.
@@ -33,5 +35,14 @@ final class CronController
     public function purgeKioskCaptures(PurgeKioskCaptures $job): JsonResponse
     {
         return ApiResponse::success($job->execute());
+    }
+
+    /**
+     * Self-guards to 1 January in each company's own zone, so it is safe to
+     * call nightly. ?force=1 re-runs a missed year — the job is idempotent.
+     */
+    public function runLeaveRollover(Request $request, RunLeaveRollover $job): JsonResponse
+    {
+        return ApiResponse::success($job->execute((bool) $request->query('force')));
     }
 }

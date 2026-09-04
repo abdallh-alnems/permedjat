@@ -7836,6 +7836,119 @@
                 "x-app-secret": "Also gated by the client secret, sent as HTTP Basic."
             }
         },
+        "/v1/cron/run-leave-rollover": {
+            "get": {
+                "operationId": "cron.run-leave-rollover",
+                "tags": [
+                    "Cron"
+                ],
+                "summary": "Self-guards to 1 January in each company's own zone, so it is safe to",
+                "responses": {
+                    "200": {
+                        "description": "The call succeeded.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                }
+                            }
+                        }
+                    },
+                    "4XX": {
+                        "description": "Refused. Branch on error_code, not on message.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Failure"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "required": false,
+                        "description": "ar or en. Chooses the language of `message`.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "ar",
+                                "en"
+                            ]
+                        }
+                    }
+                ],
+                "security": [
+                    {
+                        "cronSecret": []
+                    }
+                ],
+                "x-app-secret": "Also gated by the client secret, sent as HTTP Basic."
+            },
+            "post": {
+                "operationId": "cron.run-leave-rollover.post",
+                "tags": [
+                    "Cron"
+                ],
+                "summary": "Self-guards to 1 January in each company's own zone, so it is safe to",
+                "responses": {
+                    "200": {
+                        "description": "The call succeeded.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Success"
+                                }
+                            }
+                        }
+                    },
+                    "4XX": {
+                        "description": "Refused. Branch on error_code, not on message.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Failure"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "required": false,
+                        "description": "ar or en. Chooses the language of `message`.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "ar",
+                                "en"
+                            ]
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "cronSecret": []
+                    }
+                ],
+                "x-app-secret": "Also gated by the client secret, sent as HTTP Basic."
+            }
+        },
         "/v1/dashboard/live-attendance": {
             "get": {
                 "operationId": "dashboard.live-attendance",

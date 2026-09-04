@@ -730,6 +730,8 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
             ->name('cron.run-alerts');
         Route::match(['get', 'post'], 'v1/cron/purge-kiosk-captures', [CronController::class, 'purgeKioskCaptures'])
             ->name('cron.purge-kiosk-captures');
+        Route::match(['get', 'post'], 'v1/cron/run-leave-rollover', [CronController::class, 'runLeaveRollover'])
+            ->name('cron.run-leave-rollover');
 
     });
 
