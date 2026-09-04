@@ -58,8 +58,18 @@ export — the BFF proxy `src/app/api/[...path]/route.ts` injects the secret
    systemctl restart permedjat-web        # runs `next start -H 127.0.0.1 -p 3000` as www-data
    ```
 3. Env lives in `/var/www/permedjat-web/central/.env.local` (not in git): `SECURITY_USER`,
-   `SECURITY_KEY`, `NEXT_PUBLIC_API_HOST=https://api.permedjat.com/backend_medjet`,
-   `NEXT_PUBLIC_FIREBASE_*`.
+   `SECURITY_KEY`, `NEXT_PUBLIC_API_HOST`, `NEXT_PUBLIC_FIREBASE_*`.
+
+   `NEXT_PUBLIC_API_HOST` is mid-migration and the two values are not interchangeable:
+
+   - The server currently holds `https://api.permedjat.com/backend_medjet`, and the
+     deployed bundle was built against it — it calls the old PHP endpoints.
+   - The source in `src/` calls `/v1` exclusively, so a build from this repo needs the
+     bare host `https://api.permedjat.com`, where Laravel now serves the root.
+
+   Because `NEXT_PUBLIC_*` is baked into `.next/static` at build time, changing this
+   value and rebuilding is what actually moves the web app from the old backend to
+   Laravel. Treat it as a cutover with a rollback plan, not a config edit.
 4. Nginx vhost `/etc/nginx/sites-available/permedjat-web` terminates TLS (Cloudflare Origin CA)
    and proxies 443 → `127.0.0.1:3000`.
 5. In the Firebase console for the `permedjat` project (already done for `app.permedjat.com`):
