@@ -128,13 +128,68 @@ curl -s -o /dev/null -w '%{http_code}\n' https://api.permedjat.com/backend_medje
 curl -s https://api.permedjat.com/                                                                  # {"status":"success",...}
 ```
 
-### ⚠ `permedjat-common.conf` in this directory does NOT match the server
+## Taking the old backend out of the path — 2026-09-04
 
-The copy checked in here was written for a server layout that was never
-deployed: it expects the legacy backend at `/var/www/permedjat/backend` with its
-endpoints under `api/`, and adds rewrites from `/backend_medjet/` to
-`/backend/api/`. The live server still has `/var/www/permedjat/backend_medjet`
-with endpoints under `app/`. **Applying the checked-in file as-is would 404 the
-entire legacy API.** The Laravel change above was therefore made against the
-live file, not by deploying this one. Reconcile the two before any server
-rebuild relies on this directory.
+Everything that still reached into `/var/www/permedjat/backend_medjet` now goes
+to Laravel, so the directory can be deleted. Four kinds of thing pointed at it:
+
+**The association files, `/join` and `/join_team`** — on both the API and the
+promo vhost — now hand off through `permedjat-laravel-front.conf`. That snippet
+sets `SCRIPT_FILENAME` to the front controller and leaves `REQUEST_URI` alone,
+so the routing decision stays in the application. The `.well-known` locations
+stay exact-match: the `*.json` and hidden-file deny rules are regexes and would
+otherwise 403 `assetlinks.json` before the prefix location could reach the app.
+The application picks the employee pair or the management pair from the host
+asked, which is why one snippet serves both vhosts.
+
+`/public/join.css` is gone with no replacement — the landing views inline their
+CSS.
+
+**The attendance terminals** on `:8090` were the last thing still executing a
+file from the old tree. Verified before the swap that Laravel's `/iclock/`
+returns a byte-identical body to `device/iclock.php`, which matters more than
+usual here: a terminal that does not get a clean 200 re-sends the same batch
+forever.
+
+**`/iclock/` is now denied on the API vhost.** Mounting the application at the
+root made the terminal protocol reachable through Cloudflare as well, and it is
+declared outside the `app.secret` group, so it answered unauthenticated. An
+unknown serial auto-inserts an `unclaimed` row in `attendance_devices` — fine
+on a port only terminals can reach, not fine on the open internet. The `^~`
+prefix beats both the regex blocks and `location /`, so the devices vhost is
+once again the only way in.
+
+**The cron jobs and the monitoring probes** were repointed too, and are not in
+this directory: `/usr/local/bin/permedjat-cron-run.sh` now calls
+`http://127.0.0.1/v1/cron/<name>`, and the two blackbox targets in
+`/etc/prometheus/prometheus.yml` now probe `/v1/employees`, which returns the
+same 401 the modules already expect — so no module change was needed.
+
+Backups from this change: `/root/permedjat-{common.conf,web,devices}.bak-20260904*`,
+`/root/prometheus.yml.bak-20260904`, `/root/permedjat-cron-run.sh.bak-20260904`,
+`/root/cron.d-permedjat.bak-20260904`.
+
+**Verify:**
+
+```bash
+ssh permedjat 'curl -s "http://127.0.0.1:8090/iclock/cdata?SN=TEST&options=all"'  # the option block
+curl -s -o /dev/null -w '%{http_code}\n' 'https://api.permedjat.com/iclock/cdata?SN=TEST'  # 403
+curl -s -o /dev/null -w '%{http_code}\n' https://permedjat.com/join                        # 200
+```
+
+### These files match the server
+
+Every `.conf` here was copied from the running server on 2026-09-04 and verified
+identical, so this directory is once again what its first paragraph claims: the
+record a rebuilt server can be restored from.
+
+It was not, before that. The `permedjat-common.conf` checked in here had been
+written for a layout that was never deployed — it expected the old backend at
+`/var/www/permedjat/backend` with its endpoints under `api/`, and rewrote
+`/backend_medjet/` to `/backend/api/`. The server still had
+`/var/www/permedjat/backend_medjet` with endpoints under `app/`. Applying the
+checked-in file would have 404'd the entire legacy API, so the Laravel changes
+were made against the live files and copied back here afterwards.
+
+`backend/legacy/` in the repo still differs from what is deployed the same way —
+see the note in the top-level docs before running anything from it.
