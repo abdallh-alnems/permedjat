@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         App\Modules\Cron\Console\PurgeKioskCapturesCommand::class,
         App\Modules\Cron\Console\RunDailyAlertsCommand::class,
         App\Modules\Cron\Console\RunLeaveRolloverCommand::class,
+        App\Modules\SuperAdmin\Console\CreateOperatorCommand::class,
         App\Shared\Docs\GenerateOpenApiCommand::class,
     ])
     ->withMiddleware(function (Middleware $middleware): void {
