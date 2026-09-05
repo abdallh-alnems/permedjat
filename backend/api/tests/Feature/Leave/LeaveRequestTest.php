@@ -56,7 +56,6 @@ final class LeaveRequestTest extends TestCase
             'default_annual_leave_days' => 21,
             'apply_legal_seniority_entitlement' => 0,
         ]);
-        DB::table('approval_chains')->where('tenant_id', $this->tenantId)->delete();
 
         $this->branchId = (int) DB::table('branches')->insertGetId([
             'tenant_id' => $this->tenantId,

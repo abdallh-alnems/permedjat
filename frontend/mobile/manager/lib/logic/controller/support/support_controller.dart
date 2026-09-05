@@ -235,7 +235,6 @@ class SupportController extends GetxController {
               category: currentTicket.value!.category,
               priority: currentTicket.value!.priority,
               status: newStatus,
-              assignedSuperAdminId: currentTicket.value!.assignedSuperAdminId,
               lastMessageAt: DateTime.now(),
               lastMessagePreview: body,
               unreadForUser: false,

@@ -6,7 +6,6 @@ class SupportTicketModel {
   final String category;
   final String priority;
   final String status;
-  final int? assignedSuperAdminId;
   final DateTime? lastMessageAt;
   final String? lastMessagePreview;
   final bool unreadForUser;
@@ -21,7 +20,6 @@ class SupportTicketModel {
     required this.category,
     required this.priority,
     required this.status,
-    this.assignedSuperAdminId,
     this.lastMessageAt,
     this.lastMessagePreview,
     required this.unreadForUser,
@@ -38,7 +36,6 @@ class SupportTicketModel {
       category: json['category'] as String? ?? 'other',
       priority: json['priority'] as String? ?? 'normal',
       status: json['status'] as String? ?? 'open',
-      assignedSuperAdminId: json['assigned_super_admin_id'] as int?,
       lastMessageAt: _parseDate(json['last_message_at']),
       lastMessagePreview: json['last_message_preview'] as String?,
       unreadForUser: (json['unread_for_user'] as dynamic) == 1 ||

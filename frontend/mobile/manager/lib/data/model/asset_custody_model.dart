@@ -12,7 +12,6 @@ class AssetCustodyModel {
   final String? serialNo;
   final int quantity;
   final String? assignPhotoUrl;
-  final String? returnPhotoUrl;
   final String status;
   final String? notes;
   final String? returnNote;
@@ -32,7 +31,6 @@ class AssetCustodyModel {
     this.serialNo,
     this.quantity = 1,
     this.assignPhotoUrl,
-    this.returnPhotoUrl,
     this.status = 'assigned',
     this.notes,
     this.returnNote,
@@ -54,7 +52,6 @@ class AssetCustodyModel {
       serialNo: json['serial_no'] as String?,
       quantity: (json['quantity'] as num?)?.toInt() ?? 1,
       assignPhotoUrl: json['assign_photo_url'] as String?,
-      returnPhotoUrl: json['return_photo_url'] as String?,
       status: (json['status'] as String?) ?? 'assigned',
       notes: json['notes'] as String?,
       returnNote: json['return_note'] as String?,

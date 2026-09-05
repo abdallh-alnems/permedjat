@@ -179,24 +179,6 @@ final class ReviewTest extends TestCase
             ->assertJsonPath('data.items.0.reviewer_name', 'Admin general_manager');
     }
 
-    public function test_the_list_can_be_narrowed_to_a_cycle(): void
-    {
-        $cycleId = (int) DB::table('performance_cycles')->insertGetId([
-            'tenant_id' => $this->tenantId,
-            'name' => 'Q1 2026',
-            'start_date' => '2026-01-01',
-            'end_date' => '2026-03-31',
-        ]);
-
-        $this->create(['cycle_id' => $cycleId])->assertStatus(201);
-        $this->create()->assertStatus(201);
-
-        $this->withHeader('X-Firebase-Token', $this->adminToken)
-            ->getJson('/v1/performance/reviews?employee_id='.$this->employeeId.'&cycle_id='.$cycleId)
-            ->assertOk()
-            ->assertJsonCount(1, 'data.items');
-    }
-
     public function test_a_review_can_be_deleted(): void
     {
         $id = Value::int($this->create()->assertStatus(201)->json('data.id'));

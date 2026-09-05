@@ -76,12 +76,6 @@ class AuditActions {
     'warning.add': _ActionInfo('أضاف إنذارًا', 'employees'),
     'warning.delete': _ActionInfo('حذف إنذارًا', 'employees'),
     'profile.update': _ActionInfo('حدّث الملف الشخصي', 'employees'),
-    'onboarding.generate': _ActionInfo('أنشأ خطة تعيين', 'employees'),
-    'onboarding_task.add': _ActionInfo('أضاف مهمة تعيين', 'employees'),
-    'onboarding_task.set_status': _ActionInfo('غيّر حالة مهمة تعيين', 'employees'),
-    'onboarding_template.create': _ActionInfo('أنشأ قالب تعيين', 'employees'),
-    'onboarding_template.update': _ActionInfo('عدّل قالب تعيين', 'employees'),
-    'onboarding_template.delete': _ActionInfo('حذف قالب تعيين', 'employees'),
 
     // ── Attendance ──
     'attendance.manual_check_in': _ActionInfo('سجّل حضورًا يدويًا', 'attendance'),
@@ -102,12 +96,6 @@ class AuditActions {
     'schedule.availability_set': _ActionInfo('حدّد التوافر', 'schedule'),
     'schedule.availability_add_date': _ActionInfo('أضاف تاريخ توافر', 'schedule'),
     'schedule.availability_delete': _ActionInfo('حذف توافرًا', 'schedule'),
-    'schedule.open_shift_create': _ActionInfo('أنشأ وردية مفتوحة', 'schedule'),
-    'schedule.open_shift_cancel': _ActionInfo('ألغى وردية مفتوحة', 'schedule'),
-    'schedule.open_shift_approve': _ActionInfo('وافق على طلب وردية مفتوحة', 'schedule'),
-    'schedule.open_shift_reject': _ActionInfo('رفض طلب وردية مفتوحة', 'schedule'),
-    'schedule.open_shift_claim': _ActionInfo('تقدّم لوردية مفتوحة', 'schedule'),
-    'schedule.open_shift_withdraw': _ActionInfo('سحب طلب وردية مفتوحة', 'schedule'),
     'schedule.swap_request': _ActionInfo('طلب تبديل وردية', 'schedule'),
     'schedule.swap_approve': _ActionInfo('وافق على تبديل وردية', 'schedule'),
     'schedule.swap_reject': _ActionInfo('رفض تبديل وردية', 'schedule'),
@@ -149,23 +137,7 @@ class AuditActions {
     'asset.return_approve': _ActionInfo('وافق على إرجاع عهدة', 'finance'),
     'asset.return_reject': _ActionInfo('رفض إرجاع عهدة', 'finance'),
 
-    // ── Recruitment ──
-    'candidate.create': _ActionInfo('أضاف مرشحًا', 'recruitment'),
-    'candidate.update': _ActionInfo('عدّل بيانات مرشح', 'recruitment'),
-    'candidate.move_stage': _ActionInfo('نقل مرشحًا لمرحلة', 'recruitment'),
-    'candidate.convert': _ActionInfo('حوّل مرشحًا إلى موظف', 'recruitment'),
-    'job_opening.create': _ActionInfo('أنشأ وظيفة شاغرة', 'recruitment'),
-    'job_opening.update': _ActionInfo('عدّل وظيفة شاغرة', 'recruitment'),
-    'job_opening.set_status': _ActionInfo('غيّر حالة وظيفة شاغرة', 'recruitment'),
-
     // ── Performance ──
-    'performance_cycle.create': _ActionInfo('أنشأ دورة تقييم', 'performance'),
-    'performance_cycle.update': _ActionInfo('عدّل دورة تقييم', 'performance'),
-    'performance_cycle.set_status': _ActionInfo('غيّر حالة دورة تقييم', 'performance'),
-    'performance_goal.create': _ActionInfo('أضاف هدف أداء', 'performance'),
-    'performance_goal.update': _ActionInfo('عدّل هدف أداء', 'performance'),
-    'performance_goal.delete': _ActionInfo('حذف هدف أداء', 'performance'),
-    'performance_goal.set_progress': _ActionInfo('حدّث تقدّم هدف أداء', 'performance'),
     'performance_review.create': _ActionInfo('أنشأ تقييم أداء', 'performance'),
     'performance_review.update': _ActionInfo('عدّل تقييم أداء', 'performance'),
     'performance_review.delete': _ActionInfo('حذف تقييم أداء', 'performance'),
@@ -195,10 +167,6 @@ class AuditActions {
     'branch.create': _ActionInfo('أنشأ فرعًا', 'settings'),
     'branch.update': _ActionInfo('عدّل فرعًا', 'settings'),
     'branch.update_attendance_method': _ActionInfo('عدّل طريقة الحضور لفرع', 'settings'),
-    'approval_chain.create': _ActionInfo('أنشأ سلسلة موافقات', 'settings'),
-    'approval_chain.update': _ActionInfo('عدّل سلسلة موافقات', 'settings'),
-    'approval_chain.delete': _ActionInfo('حذف سلسلة موافقات', 'settings'),
-    'approval_chain.set_steps': _ActionInfo('حدّد خطوات سلسلة موافقات', 'settings'),
     'manager.invite': _ActionInfo('دعا مديرًا', 'settings'),
     'manager.cancel_invite': _ActionInfo('ألغى دعوة مدير', 'settings'),
     'admin.permissions_updated': _ActionInfo('حدّث صلاحيات مدير', 'settings'),
@@ -226,7 +194,6 @@ class AuditActions {
         'loan',
         'leave',
         'break',
-        'candidate',
       }.contains(targetType);
 
   /// A short Arabic summary of the useful fields inside an action's `payload`

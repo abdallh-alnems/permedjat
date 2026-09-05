@@ -90,10 +90,4 @@ final class PerformanceReviews
             ->delete() > 0;
     }
 
-    public static function cycleExists(int $cycleId, int $tenantId): bool
-    {
-        return DB::table('performance_cycles')
-            ->where('id', $cycleId)->where('tenant_id', $tenantId)
-            ->exists();
-    }
 }
