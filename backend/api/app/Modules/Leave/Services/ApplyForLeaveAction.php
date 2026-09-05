@@ -9,7 +9,6 @@ use App\Models\Employee;
 use App\Modules\Leave\Domain\LeaveBalanceCalculator;
 use App\Modules\Leave\Domain\LeaveRequests;
 use App\Modules\Notifications\Domain\ManagerAlert;
-use App\Shared\Approvals\ApprovalRouter;
 use App\Shared\Time\TenantClock;
 use App\Support\Value;
 
@@ -33,7 +32,6 @@ final class ApplyForLeaveAction
     public function __construct(
         private readonly LeaveRequests $leaves,
         private readonly LeaveBalanceCalculator $balances,
-        private readonly ApprovalRouter $approvals,
         private readonly ManagerAlert $alert,
     ) {}
 
@@ -79,12 +77,6 @@ final class ApplyForLeaveAction
         }
 
         $leaveId = $this->leaves->open($employeeId, $tenantId, $type, $start, $end, Value::nullableString($input['reason'] ?? null));
-
-        $this->approvals->route(
-            $tenantId, 'leave', $leaveId,
-            branchId: $employee->branch_id,
-            byEmployeeId: $employeeId,
-        );
 
         $typeAr = self::TYPE_LABELS_AR[$type];
 

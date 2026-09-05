@@ -29,6 +29,15 @@ final class EmployeeWebCredential extends Model
 
     protected $table = 'employee_web_credentials';
 
+    /**
+     * `created_at` was dropped on 2026-09-05 — nothing read it, and `pin_set_at`
+     * already records when the PIN was chosen. Eloquent writes the timestamp
+     * columns by name whether or not any code mentions them, so leaving this on
+     * would make every activation fail on a column that no longer exists.
+     * `updated_at` survives and MySQL maintains it (ON UPDATE CURRENT_TIMESTAMP).
+     */
+    public $timestamps = false;
+
     protected $guarded = [];
 
     /** @var list<string> */

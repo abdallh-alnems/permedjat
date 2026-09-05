@@ -9,7 +9,6 @@ use App\Models\Employee;
 use App\Modules\Leave\Domain\LeaveBalanceCalculator;
 use App\Modules\Leave\Domain\LeaveRequests;
 use App\Modules\Leave\Services\ApplyForLeaveAction;
-use App\Shared\Approvals\ApprovalRouter;
 use App\Shared\Http\ApiResponse;
 use App\Shared\Time\TenantClock;
 use App\Support\Value;
@@ -29,7 +28,6 @@ final class MyLeaveController
         private readonly LeaveRequests $leaves,
         private readonly LeaveBalanceCalculator $balances,
         private readonly ApplyForLeaveAction $apply,
-        private readonly ApprovalRouter $approvals,
     ) {}
 
     public function apply(Request $request): JsonResponse
@@ -72,10 +70,6 @@ final class MyLeaveController
             throw new ApiFailure(__('messages.request_not_cancellable'), 409, 'leave_not_cancellable');
         }
 
-        // The chain goes first: dropping the leave while an approval request
-        // still points at it leaves an approver holding a decision about
-        // something that no longer exists.
-        $this->approvals->cancelFor($tenantId, 'leave', $leaveId);
         $this->leaves->withdrawOwn($leaveId, $employee->id, $tenantId);
 
         return ApiResponse::success(['message' => 'Leave request cancelled']);

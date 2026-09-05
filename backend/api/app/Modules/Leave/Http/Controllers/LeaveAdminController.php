@@ -13,7 +13,6 @@ use App\Modules\Leave\Services\ConvertToAbsenceAction;
 use App\Modules\Leave\Services\RecordLeaveAction;
 use App\Modules\Notifications\Domain\Notifier;
 use App\Shared\Access\Permissions;
-use App\Shared\Approvals\ApprovalRouter;
 use App\Shared\Http\ApiResponse;
 use App\Shared\Time\TenantClock;
 use App\Support\Value;
@@ -34,7 +33,6 @@ final class LeaveAdminController
     public function __construct(
         private readonly LeaveRequests $leaves,
         private readonly LeaveBalanceCalculator $balances,
-        private readonly ApprovalRouter $approvals,
         private readonly RecordLeaveAction $record,
         private readonly ConvertToAbsenceAction $convert,
         private readonly Notifier $notifier,
@@ -81,7 +79,6 @@ final class LeaveAdminController
         $adminId = self::admin($request)->id;
         $leaveId = self::leaveId($request);
 
-        $this->approvals->cancelFor($tenantId, 'leave', $leaveId);
         $this->leaves->approve($leaveId, $tenantId, $adminId);
 
         AuditLog::record($tenantId, $adminId, 'leave.approve', 'leave', $leaveId);
@@ -103,7 +100,6 @@ final class LeaveAdminController
 
         $reason = trim(Value::string($request->input('rejection_reason') ?? $request->input('reason')));
 
-        $this->approvals->cancelFor($tenantId, 'leave', $leaveId);
         $this->leaves->reject($leaveId, $tenantId, $adminId, $reason !== '' ? $reason : null);
 
         AuditLog::record($tenantId, $adminId, 'leave.reject', 'leave', $leaveId);

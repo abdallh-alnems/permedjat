@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Performance\Domain;
 
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -28,7 +27,6 @@ final class PerformanceReviews
         return (int) DB::table('performance_reviews')->insertGetId([
             'tenant_id' => $tenantId,
             'employee_id' => $data['employee_id'],
-            'cycle_id' => $data['cycle_id'] ?? null,
             'reviewer_id' => $reviewerId,
             'reviewer_type' => $data['reviewer_type'] ?? 'manager',
             'rating' => $data['rating'] ?? null,
@@ -62,12 +60,11 @@ final class PerformanceReviews
     /**
      * @return list<array<string, mixed>>
      */
-    public static function forEmployee(int $employeeId, int $tenantId, ?int $cycleId = null): array
+    public static function forEmployee(int $employeeId, int $tenantId): array
     {
         $rows = DB::table('performance_reviews as pr')
             ->leftJoin('admins as a', 'a.id', '=', 'pr.reviewer_id')
             ->where('pr.employee_id', $employeeId)->where('pr.tenant_id', $tenantId)
-            ->when($cycleId !== null, fn (QueryBuilder $q): QueryBuilder => $q->where('pr.cycle_id', $cycleId))
             ->orderByDesc('pr.created_at')
             ->get(['pr.*', 'a.name as reviewer_name'])
             ->all();
@@ -89,5 +86,4 @@ final class PerformanceReviews
             ->where('id', $id)->where('tenant_id', $tenantId)
             ->delete() > 0;
     }
-
 }

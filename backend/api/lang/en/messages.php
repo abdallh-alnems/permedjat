@@ -209,7 +209,6 @@ return [
     'custody_not_found' => 'Custody not found',
     'custody_not_returnable' => 'This custody item cannot be returned in its current state',
     'custody_returned_immutable' => 'A returned custody item cannot be edited',
-    'cycle_not_found' => 'Cycle not found',
     'deduction_start_in_past' => 'The first deduction month cannot be in the past',
     'deduction_value_invalid' => 'The deduction value must be greater than zero',
     'demo_account_not_configured' => 'Demo account not configured',

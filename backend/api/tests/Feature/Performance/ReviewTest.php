@@ -153,11 +153,6 @@ final class ReviewTest extends TestCase
         $this->create(['status' => 'archived'])->assertStatus(422);
     }
 
-    public function test_an_unknown_cycle_is_refused(): void
-    {
-        $this->create(['cycle_id' => 99999999])->assertStatus(404);
-    }
-
     public function test_reviews_are_listed_newest_first(): void
     {
         $this->create(['review' => 'First'])->assertStatus(201);

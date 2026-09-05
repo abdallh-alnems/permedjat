@@ -207,7 +207,6 @@ return [
     'custody_not_found' => 'عهدة غير موجودة',
     'custody_not_returnable' => 'لا يمكن إرجاع هذه العهدة في حالتها الحالية',
     'custody_returned_immutable' => 'لا يمكن تعديل عهدة تم إرجاعها',
-    'cycle_not_found' => 'دورة الرواتب غير موجودة',
     'deduction_start_in_past' => 'شهر بداية الخصم لا يمكن أن يكون في الماضي',
     'deduction_value_invalid' => 'قيمة الخصم يجب أن تكون أكبر من صفر',
     'demo_account_not_configured' => 'حساب العرض غير مُهيّأ',

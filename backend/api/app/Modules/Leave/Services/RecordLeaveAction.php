@@ -8,7 +8,6 @@ use App\Exceptions\ApiFailure;
 use App\Modules\Leave\Domain\LeaveBalanceCalculator;
 use App\Modules\Leave\Domain\LeaveRequests;
 use App\Modules\Notifications\Domain\ManagerAlert;
-use App\Shared\Approvals\ApprovalRouter;
 use App\Support\Value;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +28,6 @@ final class RecordLeaveAction
     public function __construct(
         private readonly LeaveRequests $leaves,
         private readonly LeaveBalanceCalculator $balances,
-        private readonly ApprovalRouter $approvals,
         private readonly ManagerAlert $alert,
     ) {}
 
@@ -96,11 +94,6 @@ final class RecordLeaveAction
 
         if ($autoApprove) {
             $this->leaves->approve($leaveId, $tenantId, $adminId);
-        } else {
-            $this->approvals->route(
-                $tenantId, 'leave', $leaveId,
-                branchId: $branchId, byAdminId: $adminId, byEmployeeId: $employeeId,
-            );
         }
 
         $this->announce($tenantId, $employeeId, $leaveId, $name, $type);
@@ -150,15 +143,6 @@ final class RecordLeaveAction
 
             return [$paidId, $unpaidId];
         });
-
-        if (! $autoApprove) {
-            foreach (array_filter([$paidId, $unpaidId]) as $id) {
-                $this->approvals->route(
-                    $tenantId, 'leave', $id,
-                    branchId: $branchId, byAdminId: $adminId, byEmployeeId: $employeeId,
-                );
-            }
-        }
 
         $this->announce($tenantId, $employeeId, $paidId ?? $unpaidId, $name, 'annual');
 

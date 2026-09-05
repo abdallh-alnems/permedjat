@@ -25,12 +25,8 @@ final class ReviewController
         $tenantId = Value::int($request->attributes->get('tenant_id'));
         $employee = $this->subject(Value::int($request->query('employee_id')), $tenantId, self::admin($request));
 
-        $cycleId = Value::int($request->query('cycle_id'));
-
         return ApiResponse::success([
-            'items' => PerformanceReviews::forEmployee(
-                $employee->id, $tenantId, $cycleId > 0 ? $cycleId : null,
-            ),
+            'items' => PerformanceReviews::forEmployee($employee->id, $tenantId),
         ]);
     }
 
@@ -62,15 +58,8 @@ final class ReviewController
             throw new ApiFailure('Invalid status', 422, 'invalid_status');
         }
 
-        // Review cycles were dropped on 2026-09-05 — nothing can create one, so
-        // any id a caller sends refers to a cycle that cannot exist.
-        if (Value::int($request->input('cycle_id')) > 0) {
-            throw new ApiFailure(__('messages.cycle_not_found'), 404, 'not_found');
-        }
-
         $id = PerformanceReviews::create($tenantId, [
             'employee_id' => $employee->id,
-            'cycle_id' => null,
             'reviewer_type' => $reviewerType,
             'rating' => $rating,
             'strengths' => $request->input('strengths'),
