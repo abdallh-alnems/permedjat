@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:permedjat_central/core/class/crud.dart';
 import 'package:permedjat_central/core/class/status_request.dart';
+import 'package:permedjat_central/core/constant/id/app_links.dart';
 import 'package:permedjat_central/data/data_source/remote/category_data/category_data.dart';
 import '../../helpers/test_helpers.dart';
 
@@ -29,7 +30,7 @@ void main() {
 
       await categoryData.getCategories();
 
-      verify(() => mockCrud.getData(any())).called(1);
+      verify(() => mockCrud.getData(AppLinks.categories)).called(1);
     });
 
     test('createCategory ينادي postData', () async {
@@ -38,37 +39,37 @@ void main() {
 
       await categoryData.createCategory({'name': 'تقنية'});
 
-      verify(() => mockCrud.postData(any(), {'name': 'تقنية'})).called(1);
+      verify(() => mockCrud.postData(AppLinks.categoryCreate, {'name': 'تقنية'}))
+          .called(1);
     });
 
-    test('updateCategory ينادي postData', () async {
-      when(() => mockCrud.postData(any(), any()))
+    test('updateCategory ينادي patchData والـ id في المسار لا في الجسم', () async {
+      when(() => mockCrud.patchData(any(), any()))
           .thenAnswer((_) async => {'status': StatusRequest.success, 'data': null});
 
-      await categoryData.updateCategory({'id': 1, 'name': 'محدث'});
+      await categoryData.updateCategory({'id': 7, 'name': 'محدث'});
 
-      verify(() => mockCrud.postData(any(), {'id': 1, 'name': 'محدث'})).called(1);
+      verify(() => mockCrud.patchData(AppLinks.categoryUpdate(7), {'name': 'محدث'}))
+          .called(1);
     });
 
-    test('deleteCategory ينادي postData مع id', () async {
-      when(() => mockCrud.postData(any(), any()))
+    test('updateCategory لا يعدّل الخريطة الممرّرة إليه', () async {
+      when(() => mockCrud.patchData(any(), any()))
+          .thenAnswer((_) async => {'status': StatusRequest.success, 'data': null});
+
+      final payload = {'id': 7, 'name': 'محدث'};
+      await categoryData.updateCategory(payload);
+
+      expect(payload, {'id': 7, 'name': 'محدث'});
+    });
+
+    test('deleteCategory ينادي deleteData مع id في المسار', () async {
+      when(() => mockCrud.deleteData(any()))
           .thenAnswer((_) async => {'status': StatusRequest.success, 'data': null});
 
       await categoryData.deleteCategory(5);
 
-      verify(() => mockCrud.postData(any(), {'id': 5})).called(1);
-    });
-
-    test('assignCategories ينادي postData', () async {
-      when(() => mockCrud.postData(any(), any()))
-          .thenAnswer((_) async => {'status': StatusRequest.success, 'data': null});
-
-      await categoryData.assignCategories(employeeId: 10, categoryIds: [1, 2]);
-
-      verify(() => mockCrud.postData(any(), {
-        'employee_id': 10,
-        'category_ids': [1, 2],
-      })).called(1);
+      verify(() => mockCrud.deleteData(AppLinks.categoryDelete(5))).called(1);
     });
   });
 }
