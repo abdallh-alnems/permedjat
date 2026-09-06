@@ -65,7 +65,6 @@ void main() {
       expect(user.phone, isNull);
       expect(user.photoUrl, isNull);
       expect(user.permissions, isEmpty);
-      expect(user.employeeCode, isNull);
       expect(user.jobTitle, isNull);
       expect(user.branchName, isNull);
     });

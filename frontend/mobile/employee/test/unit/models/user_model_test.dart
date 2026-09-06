@@ -14,7 +14,6 @@ void main() {
       'photo_url': 'https://example.com/photo.jpg',
       'role_key': 'employee',
       'permissions': ['read', 'write'],
-      'employee_code': 'EMP001',
       'job_title': 'مهندس',
       'branch_name': 'الفرع الرئيسي',
     };
@@ -32,7 +31,6 @@ void main() {
       expect(user.photoUrl, 'https://example.com/photo.jpg');
       expect(user.roleKey, 'employee');
       expect(user.permissions, <String>['read', 'write']);
-      expect(user.employeeCode, 'EMP001');
       expect(user.jobTitle, 'مهندس');
       expect(user.branchName, 'الفرع الرئيسي');
     });
@@ -90,7 +88,6 @@ void main() {
       expect(user.photoUrl, isNull);
       expect(user.roleKey, '');
       expect(user.permissions, <String>[]);
-      expect(user.employeeCode, isNull);
       expect(user.jobTitle, isNull);
       expect(user.branchName, isNull);
     });
@@ -151,7 +148,6 @@ void main() {
       expect(result['phone'], isNull);
       expect(result['photo_url'], isNull);
       expect(result['tenant_name'], isNull);
-      expect(result['employee_code'], isNull);
       expect(result['job_title'], isNull);
       expect(result['branch_name'], isNull);
       expect(result['permissions'], <String>[]);
@@ -191,7 +187,6 @@ void main() {
       expect(user.permissions, isEmpty);
       expect(user.phone, isNull);
       expect(user.photoUrl, isNull);
-      expect(user.employeeCode, isNull);
       expect(user.jobTitle, isNull);
       expect(user.branchName, isNull);
       expect(user.tenantName, isNull);

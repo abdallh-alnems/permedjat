@@ -16,7 +16,6 @@ void main() {
         'serial_no': 'SN123',
         'quantity': 2,
         'assign_photo_url': 'https://example.com/photo.jpg',
-        'return_photo_url': null,
         'status': 'assigned',
         'notes': 'ملاحظة',
         'return_note': null,
@@ -38,7 +37,6 @@ void main() {
       expect(asset.serialNo, 'SN123');
       expect(asset.quantity, 2);
       expect(asset.assignPhotoUrl, 'https://example.com/photo.jpg');
-      expect(asset.returnPhotoUrl, isNull);
       expect(asset.status, 'assigned');
       expect(asset.notes, 'ملاحظة');
       expect(asset.returnedAt, isNull);
