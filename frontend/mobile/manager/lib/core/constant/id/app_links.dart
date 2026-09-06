@@ -32,15 +32,13 @@ class AppLinks {
   // ── Employees ──────────────────────────────────────────
   static String get employees => '$base/v1/employees';
   static String employeeDetail(int id) {
-    // GET → v1/employees/profile, PATCH → v1/employees/{id},
-    // POST → v1/employees/{id}/terminate
+    // GET → v1/employees/profile, PATCH → v1/employees/{id}.
     // The data layer should be updated to call the right endpoint per method.
     return '$base/v1/employees/profile?id=$id';
   }
 
   static String get employeeCreate => '$base/v1/employees';
   static String employeeUpdate(int employeeId) => '$base/v1/employees/$employeeId';
-  static String employeeDelete(int employeeId) => '$base/v1/employees/$employeeId/terminate';
   // Terminated (ended-service) employees + re-hire.
   static String get employeesTerminated =>
       '$base/v1/employees/terminated';
@@ -120,8 +118,6 @@ class AppLinks {
       '$base/v1/branches/networks/sightings';
   static String get branchApproveNetworks =>
       '$base/v1/branches/networks/approve';
-  static String get branchCaptureNetwork =>
-      '$base/v1/branches/networks/capture';
   static String get branchUpdateAttendanceMethod =>
       '$base/v1/branches/attendance-method';
   static String get setAttendanceMethodOverride =>
@@ -208,8 +204,6 @@ class AppLinks {
   static String allowanceUpdate(int id) => '$base/v1/allowances/$id';
   static String allowanceDelete(int id) => '$base/v1/allowances/$id';
   static String get payrollAuditLog => '$base/v1/payroll/audit-log';
-  static String get payrollBankFile =>
-      '$base/v1/payroll/bank-file';
   static String get payrollBankPreview =>
       '$base/v1/payroll/bank-file/preview';
 
@@ -257,8 +251,6 @@ class AppLinks {
   static String bonusManualUpdate(int id) => '$base/v1/bonuses/manual/$id';
   static String bonusManualDelete(int id) => '$base/v1/bonuses/manual/$id';
 
-  /// Bulk bonus/deduction applied to every employee in a branch/shift/category.
-  static String get payrollBulkAdjust => '$base/v1/payroll/bulk-adjust';
 
   // ── Bulk adjustments (tracked batches: deduction/bonus to a scope) ──
   static String get bulkAdjustmentList =>
@@ -282,7 +274,6 @@ class AppLinks {
   // ── Loans / Advances (auto-deducted installments) ──────
   static String get loans => '$base/v1/loans';
   static String get loanCreate => '$base/v1/loans';
-  static String loanDetail(int id) => '$base/v1/loans/show?id=$id';
   static String get loanApprove => '$base/v1/loans/approve';
   static String get loanCancel => '$base/v1/loans/cancel';
 
@@ -306,8 +297,6 @@ class AppLinks {
       '$base/v1/performance/reviews';
   static String performanceReviewDelete(int id) => '$base/v1/performance/reviews/$id';
 
-  // ── Roles / Permissions ────────────────────────────────
-  static String get roles => '$base/v1/roles/permissions';
 
   // ── Reports ──────────
   static String get reportAttendance => '$base/v1/reports/attendance';
@@ -366,11 +355,6 @@ class AppLinks {
   static String get adminPermissionsReset =>
       '$base/v1/team/permissions/reset';
 
-  // ── Biometric ──────────────────────────────────────────
-  static String get biometricEnrollFace =>
-      '$base/v1/biometric/face';
-  static String get biometricEnrollFingerprint =>
-      '$base/v1/biometric/fingerprint';
   static String biometricDelete(int employeeId) => '$base/v1/biometric/$employeeId';
   static String biometricStatus(int employeeId) =>
       '$base/v1/biometric/status?employee_id=$employeeId';
@@ -380,7 +364,6 @@ class AppLinks {
   static String get categoryCreate => '$base/v1/categories';
   static String categoryUpdate(int id) => '$base/v1/categories/$id';
   static String categoryDelete(int id) => '$base/v1/categories/$id';
-  static String get categoryAssign => '$base/v1/categories/assign';
   // Behind manage_company_settings, not manage_employees — it is an attendance
   // decision taken at category grain, not a category edit.
   static String get categoryWebAccess =>

@@ -97,28 +97,6 @@ final class AdminPermissionsController
         return ApiResponse::success(['message' => 'Permissions reset to defaults']);
     }
 
-    /** The catalogue, plus whoever has been given a tailored set. */
-    public function catalogue(Request $request): JsonResponse
-    {
-        $tenantId = Value::int($request->attributes->get('tenant_id'));
-
-        $roles = DB::table('custom_roles as cr')
-            ->join('admins as a', 'a.id', '=', 'cr.admin_id')
-            ->where('cr.tenant_id', $tenantId)
-            ->orderByDesc('cr.created_at')
-            ->get(['cr.*', 'a.name as admin_name']);
-
-        return ApiResponse::success([
-            'custom_roles' => $roles->map(static function (object $row): array {
-                /** @var array<string, mixed> $columns */
-                $columns = (array) $row;
-
-                return $columns;
-            })->all(),
-            'available_permissions' => Permissions::CATALOGUE,
-        ]);
-    }
-
     /**
      * @return list<string>
      */

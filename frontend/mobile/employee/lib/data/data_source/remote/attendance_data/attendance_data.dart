@@ -106,10 +106,6 @@ class AttendanceData {
     return await _crud.postData(AppLinks.faceChallenge, {'purpose': purpose});
   }
 
-  Future<Map<String, dynamic>> faceStatus() async {
-    return await _crud.postData(AppLinks.faceMyStatus, {});
-  }
-
   /// One-time self-enrollment of the employee's own face.
   Future<Map<String, dynamic>> enrollFace({
     required List<double> embedding,

@@ -118,10 +118,6 @@ export function setCrewSupervisor(employeeId: number, supervisorId: number | nul
   });
 }
 
-export function deleteEmployee(id: number) {
-  return apiPost<{ status?: string }>(`v1/employees/${id}/terminate`);
-}
-
 export async function listTerminated(): Promise<TerminatedEmployee[]> {
   // Backend returns `{ items, total, currency }`.
   const raw = await apiGet<unknown>("v1/employees/terminated");

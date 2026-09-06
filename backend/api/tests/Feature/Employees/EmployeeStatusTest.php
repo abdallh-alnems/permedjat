@@ -6,7 +6,6 @@ namespace Tests\Feature\Employees;
 
 use App\Models\Admin;
 use App\Models\Employee;
-use App\Models\EmployeeAuthToken;
 use App\Modules\Auth\Services\FirebaseTokenVerifier;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
@@ -29,8 +28,6 @@ final class EmployeeStatusTest extends TestCase
 
     private string $token;
 
-    private Admin $admin;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,7 +47,6 @@ final class EmployeeStatusTest extends TestCase
             'is_active' => 1,
         ]);
 
-        $this->admin = Admin::query()->findOrFail($id);
         $this->token = $firebase->issue($uid);
 
         DB::table('employee_suspensions')->where('employee_id', $this->employee->id)->delete();
@@ -298,57 +294,5 @@ final class EmployeeStatusTest extends TestCase
         $this->send('/v1/employees/crew-supervisor', [
             'employee_id' => $this->employee->id, 'supervisor_id' => $b->id,
         ])->assertStatus(422)->assertJsonPath('error_code', 'supervisor_terminated');
-    }
-
-    // ── Browser PIN reset ────────────────────────────────────────────────
-
-    public function test_resetting_the_pin_severs_browser_access_immediately(): void
-    {
-        // A reset taking effect at the next expiry would leave up to sixteen
-        // hours of access after the decision to end it.
-        $web = EmployeeAuthToken::issueWeb($this->tenantId, $this->employee->id, 'browser-1', 3600);
-
-        DB::table('employee_web_credentials')->where('employee_id', $this->employee->id)->delete();
-        DB::table('employee_web_credentials')->insert([
-            'tenant_id' => $this->tenantId,
-            'employee_id' => $this->employee->id,
-            'pin_hash' => password_hash('481920', PASSWORD_BCRYPT, ['cost' => 4]),
-            'failed_attempts' => 0,
-            'pin_set_at' => now(),
-        ]);
-
-        $this->send('/v1/employees/reset-web-pin', ['employee_id' => $this->employee->id])
-            ->assertOk()
-            ->assertJsonStructure(['data' => ['message', 'activation_code', 'expires_at']]);
-
-        $this->assertNull(EmployeeAuthToken::findActiveByPlain($web['token']));
-        $this->assertDatabaseMissing('employee_web_credentials', ['employee_id' => $this->employee->id]);
-    }
-
-    public function test_the_reset_leaves_the_phone_session_alone(): void
-    {
-        $phone = EmployeeAuthToken::issue($this->tenantId, $this->employee->id, 'handset', null, 'android', null);
-
-        $this->send('/v1/employees/reset-web-pin', ['employee_id' => $this->employee->id])->assertOk();
-
-        $this->assertNotNull(EmployeeAuthToken::findActiveByPlain($phone));
-    }
-
-    public function test_the_reset_is_audited(): void
-    {
-        $this->send('/v1/employees/reset-web-pin', ['employee_id' => $this->employee->id])->assertOk();
-
-        $this->assertDatabaseHas('audit_log', [
-            'admin_id' => $this->admin->id,
-            'action' => 'employee.web_pin_reset',
-            'target_id' => (string) $this->employee->id,
-        ]);
-    }
-
-    public function test_an_employee_from_another_company_is_not_found(): void
-    {
-        $other = $this->createEmployee($this->createTenant());
-
-        $this->send('/v1/employees/reset-web-pin', ['employee_id' => $other->id])->assertNotFound();
     }
 }

@@ -7,17 +7,6 @@ export async function listLoans(): Promise<Loan[]> {
   return unwrapList<Loan>(raw, ["items", "data"]);
 }
 
-export async function getLoan(id: number): Promise<Loan> {
-  // Backend returns `{ loan }` (with installments merged in); a flat loan object
-  // is accepted too.
-  const raw = asObject(await apiGet<unknown>("v1/loans/show", { id }));
-  const loan = asObject(raw?.loan) ?? raw;
-  if (!loan || typeof loan.id !== "number") {
-    throw new Error("Unexpected loan response");
-  }
-  return loan as unknown as Loan;
-}
-
 export function createLoan(data: Partial<Loan>) {
   return apiPost<Loan>("v1/loans", data);
 }

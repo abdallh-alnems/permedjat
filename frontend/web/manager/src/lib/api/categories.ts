@@ -33,13 +33,6 @@ export function deleteCategory(id: number) {
   return apiDelete<{ status?: string }>(`v1/categories/${id}`);
 }
 
-export function assignCategory(employeeId: number, categoryId: number) {
-  return apiPost<{ status?: string }>("v1/categories/assign", {
-    employee_id: employeeId,
-    category_id: categoryId,
-  });
-}
-
 export async function listAssets(): Promise<AssetCustody[]> {
   // Backend returns `{ items }`.
   const raw = await apiGet<unknown>("v1/assets");

@@ -55,7 +55,7 @@ class FaceChallengeModel {
       );
 }
 
-/// The employee's own enrollment state, from v1/biometric/self/status.
+/// The employee's own enrollment state, as the check-in reply reports it.
 class FaceStatusModel {
   final bool enrolled;
   final bool needsReenrollment;

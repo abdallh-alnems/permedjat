@@ -92,33 +92,6 @@ final class SelfEnrollmentController
     }
 
     /**
-     * Whether to send the employee to enrollment or straight to the camera.
-     */
-    public function status(Request $request): JsonResponse
-    {
-        $employee = self::employee($request);
-        $tenantId = Value::int($request->attributes->get('tenant_id'));
-
-        $stored = $employee->getAttribute('face_embedding');
-        $enrolled = $stored !== null && $stored !== '';
-        $stale = $enrolled && BiometricEnrollment::isStale(
-            $employee->getAttribute('face_enrolled_at'),
-            $employee->getAttribute('face_model_version'),
-        );
-
-        $settings = $this->faces->settingsFor($this->branch($employee, $tenantId), $tenantId);
-
-        return ApiResponse::success([
-            'enrolled' => $enrolled && ! $stale,
-            'needs_reenrollment' => $stale,
-            'enrolled_at' => $employee->getAttribute('face_enrolled_at'),
-            'model_version' => FaceEmbedding::MODEL_VERSION,
-            'liveness_required' => $settings['liveness_required'],
-            'min_quality_score' => FaceEnrollment::MIN_QUALITY_SCORE,
-        ]);
-    }
-
-    /**
      * One-time by design: a second enrollment would let somebody quietly
      * replace the reference face after the first was approved.
      */

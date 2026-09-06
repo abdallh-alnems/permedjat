@@ -26,13 +26,4 @@ class CategoryData {
     return await _crud.deleteData(AppLinks.categoryDelete(id));
   }
 
-  Future<Map<String, dynamic>> assignCategories({
-    required int employeeId,
-    required List<int> categoryIds,
-  }) async {
-    return await _crud.postData(AppLinks.categoryAssign, {
-      'employee_id': employeeId,
-      'category_ids': categoryIds,
-    });
-  }
 }

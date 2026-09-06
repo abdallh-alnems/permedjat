@@ -6,7 +6,6 @@ namespace App\Modules\Branches\Http\Controllers;
 
 use App\Exceptions\ApiFailure;
 use App\Models\Branch;
-use App\Modules\Attendance\Domain\GeofenceCheck;
 use App\Modules\Attendance\Domain\NetworkVerifier;
 use App\Modules\Audit\Domain\AuditLog;
 use App\Modules\Branches\Domain\Branches;
@@ -36,73 +35,6 @@ final class BranchNetworkController
     public const WIFI_MODES = ['learning', 'enforcing', 'optional'];
 
     public const WIFI_MATCHES = ['bssid', 'ip', 'either'];
-
-    /**
-     * An administrator standing in the branch presses a button, and the access
-     * point their phone is on is approved.
-     *
-     * The geofence guard is the important part: if they captured their home
-     * router by mistake, that home would become the branch's valid location and
-     * the office would be locked out.
-     */
-    public function capture(Request $request): JsonResponse
-    {
-        $tenantId = Value::int($request->attributes->get('tenant_id'));
-        $admin = BranchController::admin($request);
-        $branchId = BranchController::existing(Value::int($request->input('branch_id')), $tenantId);
-        RequireBranchAccess::assert($admin, $branchId);
-
-        $bssid = NetworkVerifier::normaliseBssid($request->input('bssid'));
-
-        if ($bssid === null) {
-            // Also the path for an Android device with location switched off,
-            // which reports a sentinel address rather than a real one.
-            throw new ApiFailure(__('messages.wifi_not_connected'), 422, 'WIFI_NOT_CONNECTED');
-        }
-
-        $latitude = Value::float($request->input('latitude'));
-        $longitude = Value::float($request->input('longitude'));
-
-        if ($latitude === 0.0 && $longitude === 0.0) {
-            throw new ApiFailure('Location is required to capture a branch network', 400, 'LOCATION_REQUIRED');
-        }
-
-        $branch = Branch::query()->where('id', $branchId)->where('tenant_id', $tenantId)->firstOrFail();
-        $geofence = GeofenceCheck::evaluate($branch, $latitude, $longitude);
-
-        if (! $geofence->passed) {
-            throw new ApiFailure(__('messages.wifi_capture_outside_branch'), 403, 'CAPTURE_OUTSIDE_BRANCH', [
-                'distance' => $geofence->distanceMetres,
-                'allowed_radius' => $geofence->allowedRadiusMetres,
-            ]);
-        }
-
-        $ssid = self::truncated($request->input('ssid'));
-        $label = self::truncated($request->input('label'));
-
-        BranchNetworks::approve($tenantId, $branchId, 'bssid', $bssid, $label ?? $ssid, 'captured', $admin->id);
-
-        // A branch capturing its first network has clearly opted in, so it
-        // starts in learning mode rather than being left unset — the remaining
-        // access points still need discovering before enforcement makes sense.
-        if (Value::nullableString($branch->getAttribute('wifi_mode')) === null) {
-            Branches::updateWifiSettings(
-                $branchId, $tenantId, 'learning',
-                Value::string($branch->getAttribute('wifi_match'), 'bssid'),
-            );
-        }
-
-        AuditLog::record($tenantId, $admin->id, 'branch.capture_network', 'branch', $branchId, [
-            'bssid' => $bssid,
-            'ssid' => $ssid,
-        ]);
-
-        return ApiResponse::success([
-            'bssid' => $bssid,
-            'ssid' => $ssid,
-            'networks' => self::approved($branchId, $tenantId),
-        ]);
-    }
 
     /**
      * Approves a batch of networks, and optionally changes what enforcement

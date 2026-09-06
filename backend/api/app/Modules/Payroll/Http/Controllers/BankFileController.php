@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Modules\Payroll\Http\Controllers;
 
 use App\Exceptions\ApiFailure;
-use App\Models\Admin;
-use App\Modules\Audit\Domain\AuditLog;
-use App\Modules\Payroll\Domain\Export\BankExportContext;
 use App\Modules\Payroll\Domain\Export\BankExporterRegistry;
 use App\Modules\Payroll\Domain\PayrollLedger;
 use App\Shared\Http\ApiResponse;
@@ -15,7 +12,6 @@ use App\Support\Value;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Port of api/app/payroll/bank_file_preview.php and export_bank_file.php.
@@ -52,64 +48,6 @@ final class BankFileController
             'missing' => $missing,
             'available_exporters' => BankExporterRegistry::availableFor(self::tenant($tenantId)),
         ]);
-    }
-
-    public function download(Request $request): StreamedResponse
-    {
-        $tenantId = Value::int($request->attributes->get('tenant_id'));
-        $admin = $request->attributes->get('admin');
-        if (! $admin instanceof Admin) {
-            throw new ApiFailure(__('messages.authentication_required'), 401);
-        }
-
-        $adminId = $admin->id;
-        $month = self::month($request);
-        $branchId = Value::int($request->query('branch_id')) ?: null;
-
-        $tenant = self::tenant($tenantId);
-        $exporter = BankExporterRegistry::resolve(
-            Value::string($request->query('exporter'), '') ?: null,
-            $tenant,
-        );
-
-        if ($exporter === null) {
-            throw new ApiFailure(
-                __('messages.no_payroll_exporter'),
-                422,
-                'payroll_exporter_available_country_format',
-            );
-        }
-
-        [$ready] = self::split($this->ledger->approvedForBankFile($tenantId, $month, $branchId));
-
-        $context = new BankExportContext($ready, $tenant, $month, Value::string($tenant['currency'] ?? null, 'EGP'));
-
-        AuditLog::record($tenantId, $adminId, 'payroll.export_bank_file', null, null, [
-            'month' => $month,
-            'exporter' => $exporter->key(),
-            'country' => $tenant['country_code'] ?? null,
-        ]);
-
-        $filename = "payroll_{$exporter->key()}_{$month}.{$exporter->fileExtension()}";
-
-        return new StreamedResponse(
-            static function () use ($exporter, $context): void {
-                $output = fopen('php://output', 'w');
-
-                if ($output === false) {
-                    return;
-                }
-
-                $exporter->write($output, $context);
-                fclose($output);
-            },
-            200,
-            [
-                'Content-Type' => $exporter->mimeType(),
-                'Content-Disposition' => "attachment; filename=\"{$filename}\"",
-                'X-Content-Type-Options' => 'nosniff',
-            ],
-        );
     }
 
     /**

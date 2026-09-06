@@ -79,19 +79,6 @@ final class Loans
     }
 
     /**
-     * @return list<array<string, mixed>>
-     */
-    public static function installments(int $loanId, int $tenantId): array
-    {
-        $rows = DB::table('loan_installments')
-            ->where('loan_id', $loanId)->where('tenant_id', $tenantId)
-            ->orderBy('seq')
-            ->get()->all();
-
-        return array_values(array_map(self::toArray(...), $rows));
-    }
-
-    /**
      * What this employee still owes across every live loan.
      *
      * Summed from the unpaid installments rather than from the loan header:

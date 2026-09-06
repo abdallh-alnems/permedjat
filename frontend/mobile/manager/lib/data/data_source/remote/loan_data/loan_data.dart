@@ -11,10 +11,6 @@ class LoanData {
     return await _crud.getData(AppLinks.loans, queryParameters: params);
   }
 
-  Future<Map<String, dynamic>> getLoan(int id) async {
-    return await _crud.getData(AppLinks.loanDetail(id));
-  }
-
   Future<Map<String, dynamic>> createLoan(Map<String, dynamic> data) async {
     return await _crud.postData(AppLinks.loanCreate, data);
   }

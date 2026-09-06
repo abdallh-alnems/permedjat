@@ -40,21 +40,6 @@ final class LoanController
         ]);
     }
 
-    public function show(Request $request): JsonResponse
-    {
-        $tenantId = Value::int($request->attributes->get('tenant_id'));
-        $id = Value::int($request->query('id'));
-        $loan = $id > 0 ? Loans::find($id, $tenantId) : null;
-
-        if ($loan === null) {
-            throw new ApiFailure(__('messages.loan_not_found'), 404, 'not_found');
-        }
-
-        $loan['installments'] = Loans::installments($id, $tenantId);
-
-        return ApiResponse::success(['loan' => $loan]);
-    }
-
     public function create(Request $request): JsonResponse
     {
         $tenantId = Value::int($request->attributes->get('tenant_id'));

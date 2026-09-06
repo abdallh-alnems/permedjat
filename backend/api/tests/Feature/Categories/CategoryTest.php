@@ -144,46 +144,6 @@ final class CategoryTest extends TestCase
         }
     }
 
-    public function test_an_employees_categories_are_replaced_wholesale(): void
-    {
-        // The list is what they are now, not a history of what has been added.
-        $first = $this->created('Drivers');
-        $second = $this->created('Cleaners');
-
-        $this->asAdmin()->postJson('/v1/categories/assign', [
-            'employee_id' => $this->employeeId,
-            'category_ids' => [$first],
-        ])->assertOk();
-
-        $this->asAdmin()->postJson('/v1/categories/assign', [
-            'employee_id' => $this->employeeId,
-            'category_ids' => [$second],
-        ])->assertOk();
-
-        $this->assertDatabaseHas('employee_category_assignments', [
-            'employee_id' => $this->employeeId, 'category_id' => $second,
-        ]);
-        $this->assertDatabaseMissing('employee_category_assignments', [
-            'employee_id' => $this->employeeId, 'category_id' => $first,
-        ]);
-    }
-
-    public function test_an_empty_list_clears_them(): void
-    {
-        $id = $this->created();
-        $this->asAdmin()->postJson('/v1/categories/assign', [
-            'employee_id' => $this->employeeId,
-            'category_ids' => [$id],
-        ])->assertOk();
-
-        $this->asAdmin()->postJson('/v1/categories/assign', [
-            'employee_id' => $this->employeeId,
-            'category_ids' => [],
-        ])->assertOk();
-
-        $this->assertDatabaseMissing('employee_category_assignments', ['employee_id' => $this->employeeId]);
-    }
-
     public function test_a_category_a_document_requirement_needs_cannot_be_deleted(): void
     {
         // Removing it would drop the requirement, not just the label.

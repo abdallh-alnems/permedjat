@@ -12,7 +12,6 @@ use App\Shared\Http\ApiResponse;
 use App\Support\Value;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Ports of api/app/categories/*.php.
@@ -111,36 +110,6 @@ final class CategoryController
         AuditLog::record($tenantId, $adminId, 'employee_category.delete', 'employee_category', $id);
 
         return ApiResponse::success(['message' => 'Category deleted']);
-    }
-
-    /**
-     * An employee's categories, replaced wholesale — the list is what they are
-     * now, not a history of what has been added.
-     */
-    public function assign(Request $request): JsonResponse
-    {
-        $tenantId = Value::int($request->attributes->get('tenant_id'));
-        $adminId = self::admin($request)->id;
-        $employeeId = Value::int($request->input('employee_id'));
-
-        $exists = DB::table('employees')->where('id', $employeeId)->where('tenant_id', $tenantId)->exists();
-
-        if (! $exists) {
-            throw new ApiFailure(__('messages.employee_not_found'), 404, 'not_found');
-        }
-
-        $raw = $request->input('category_ids');
-        $categoryIds = is_array($raw)
-            ? array_values(array_map(static fn (mixed $id): int => Value::int($id), $raw))
-            : [];
-
-        EmployeeCategories::assignToEmployee($employeeId, $tenantId, $categoryIds);
-
-        AuditLog::record($tenantId, $adminId, 'employee_category.assign', 'employee', $employeeId, [
-            'category_ids' => $categoryIds,
-        ]);
-
-        return ApiResponse::success(['message' => 'Categories assigned']);
     }
 
     /**

@@ -202,59 +202,6 @@ final class EmployeeListTest extends TestCase
             ->assertJsonStructure(['data' => ['items', 'page', 'total', 'currency']]);
     }
 
-    // ── Deactivation ─────────────────────────────────────────────────────
-
-    public function test_deactivation_keeps_the_history_and_ends_the_session(): void
-    {
-        // A company that let somebody go still has to answer questions about
-        // the years they worked, so the record stays and only the access goes.
-        [, $token] = $this->admin();
-
-        $plain = 'test-'.bin2hex(random_bytes(16));
-        EmployeeAuthToken::query()->create([
-            'tenant_id' => $this->tenantId,
-            'employee_id' => $this->employee->id,
-            'token_hash' => EmployeeAuthToken::hash($plain),
-            'platform' => 'android',
-            'device_id' => 'device-a',
-        ]);
-
-        $this->withHeader('X-Firebase-Token', $token)
-            ->postJson('/v1/employees/'.$this->employee->id.'/terminate')
-            ->assertOk();
-
-        $this->assertDatabaseHas('employees', ['id' => $this->employee->id, 'status' => 'terminated']);
-        $this->assertNull(EmployeeAuthToken::findActiveByPlain($plain));
-    }
-
-    public function test_deactivating_somebody_from_another_company_is_not_found(): void
-    {
-        [, $token] = $this->admin();
-
-        $other = $this->createEmployee($this->createTenant());
-
-        $this->withHeader('X-Firebase-Token', $token)
-            ->postJson('/v1/employees/'.$other->id.'/terminate')
-            ->assertNotFound();
-    }
-
-    public function test_deactivation_is_audited(): void
-    {
-        [$admin, $token] = $this->admin();
-
-        $this->withHeader('X-Firebase-Token', $token)
-            ->postJson('/v1/employees/'.$this->employee->id.'/terminate')
-            ->assertOk();
-
-        $this->assertDatabaseHas('audit_log', [
-            'admin_id' => $admin->id,
-            'action' => 'employee.delete',
-            'target_type' => 'employee',
-        ]);
-    }
-
-    // ── The employee's own profile ───────────────────────────────────────
-
     public function test_an_employee_sees_their_checklist_and_balance(): void
     {
         $plain = 'test-'.bin2hex(random_bytes(16));

@@ -114,39 +114,6 @@ final class EmployeeCategories
     }
 
     /**
-     * Replaces an employee's categories wholesale.
-     *
-     * The list is a statement of what they are now, not a history of what has
-     * been added, so it is rewritten rather than merged.
-     *
-     * @param  list<int>  $categoryIds
-     */
-    public static function assignToEmployee(int $employeeId, int $tenantId, array $categoryIds): void
-    {
-        DB::transaction(function () use ($employeeId, $tenantId, $categoryIds): void {
-            DB::table('employee_category_assignments')
-                ->where('employee_id', $employeeId)->where('tenant_id', $tenantId)
-                ->delete();
-
-            $rows = [];
-
-            foreach (array_unique($categoryIds) as $categoryId) {
-                if ($categoryId > 0) {
-                    $rows[] = [
-                        'employee_id' => $employeeId,
-                        'category_id' => $categoryId,
-                        'tenant_id' => $tenantId,
-                    ];
-                }
-            }
-
-            if ($rows !== []) {
-                DB::table('employee_category_assignments')->insert($rows);
-            }
-        });
-    }
-
-    /**
      * @return array<string, mixed>
      */
     private static function toArray(mixed $row): array

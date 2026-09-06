@@ -256,61 +256,6 @@ final class BranchTest extends TestCase
 
     // ── Networks ─────────────────────────────────────────────────────────
 
-    public function test_capturing_a_network_from_inside_the_branch_approves_it(): void
-    {
-        $this->asAdmin()->postJson('/v1/branches/networks/capture', [
-            'branch_id' => $this->branchId,
-            'bssid' => 'AA:BB:CC:DD:EE:01',
-            'ssid' => 'Office',
-            'latitude' => 30.0444,
-            'longitude' => 31.2357,
-        ])->assertOk()->assertJsonPath('data.bssid', 'aa:bb:cc:dd:ee:01');
-
-        $this->assertDatabaseHas('branch_networks', [
-            'branch_id' => $this->branchId,
-            'kind' => 'bssid',
-            'value' => 'aa:bb:cc:dd:ee:01',
-            'is_active' => 1,
-        ]);
-    }
-
-    public function test_capturing_from_somewhere_else_is_refused(): void
-    {
-        // If an administrator captured their home router, that home would
-        // become the branch's valid location and the office would be locked out.
-        $this->asAdmin()->postJson('/v1/branches/networks/capture', [
-            'branch_id' => $this->branchId,
-            'bssid' => 'AA:BB:CC:DD:EE:02',
-            'latitude' => 31.5,
-            'longitude' => 30.0,
-        ])->assertForbidden()->assertJsonPath('error_code', 'CAPTURE_OUTSIDE_BRANCH');
-
-        $this->assertDatabaseMissing('branch_networks', ['value' => 'aa:bb:cc:dd:ee:02']);
-    }
-
-    public function test_the_first_capture_starts_the_branch_learning(): void
-    {
-        // The remaining access points still need discovering before enforcement
-        // makes sense.
-        $this->asAdmin()->postJson('/v1/branches/networks/capture', [
-            'branch_id' => $this->branchId,
-            'bssid' => 'AA:BB:CC:DD:EE:03',
-            'latitude' => 30.0444,
-            'longitude' => 31.2357,
-        ])->assertOk();
-
-        $this->assertDatabaseHas('branches', ['id' => $this->branchId, 'wifi_mode' => 'learning']);
-    }
-
-    public function test_capturing_without_a_network_says_so(): void
-    {
-        $this->asAdmin()->postJson('/v1/branches/networks/capture', [
-            'branch_id' => $this->branchId,
-            'latitude' => 30.0444,
-            'longitude' => 31.2357,
-        ])->assertStatus(422)->assertJsonPath('error_code', 'WIFI_NOT_CONNECTED');
-    }
-
     public function test_a_batch_of_networks_is_approved(): void
     {
         $this->asAdmin()->postJson('/v1/branches/networks/approve', [

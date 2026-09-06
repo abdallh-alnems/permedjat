@@ -221,56 +221,15 @@ final class SelfEnrollmentTest extends TestCase
         ]);
     }
 
-    public function test_the_status_sends_an_unenrolled_employee_to_the_camera(): void
-    {
-        $this->withHeader('X-Employee-Token', $this->token)
-            ->postJson('/v1/biometric/self/status')
-            ->assertOk()
-            ->assertJsonPath('data.enrolled', false)
-            ->assertJsonPath('data.needs_reenrollment', false)
-            ->assertJsonPath('data.liveness_required', true)
-            ->assertJsonPath('data.model_version', FaceEmbedding::MODEL_VERSION);
-    }
-
-    public function test_the_status_reports_an_enrolled_employee(): void
-    {
-        $this->enroll()->assertStatus(201);
-
-        $this->withHeader('X-Employee-Token', $this->token)
-            ->postJson('/v1/biometric/self/status')
-            ->assertOk()
-            ->assertJsonPath('data.enrolled', true)
-            ->assertJsonPath('data.needs_reenrollment', false);
-    }
-
-    public function test_a_stale_enrollment_reads_as_not_enrolled_and_needing_a_redo(): void
-    {
-        $this->enroll()->assertStatus(201);
-
-        DB::table('employees')->where('id', $this->employeeId)
-            ->update(['face_model_version' => 'retired_v0']);
-
-        $this->withHeader('X-Employee-Token', $this->token)
-            ->postJson('/v1/biometric/self/status')
-            ->assertOk()
-            ->assertJsonPath('data.enrolled', false)
-            ->assertJsonPath('data.needs_reenrollment', true);
-    }
-
     public function test_a_branch_can_relax_liveness_for_its_own_staff(): void
     {
         DB::table('branches')->where('id', $this->branchId)->update(['face_liveness_required' => 0]);
-
-        $this->withHeader('X-Employee-Token', $this->token)
-            ->postJson('/v1/biometric/self/status')
-            ->assertOk()
-            ->assertJsonPath('data.liveness_required', false);
 
         $this->enroll(['liveness_passed' => false])->assertStatus(201);
     }
 
     public function test_an_unauthenticated_request_is_refused(): void
     {
-        $this->postJson('/v1/biometric/self/status')->assertStatus(401);
+        $this->postJson('/v1/biometric/self/face')->assertStatus(401);
     }
 }

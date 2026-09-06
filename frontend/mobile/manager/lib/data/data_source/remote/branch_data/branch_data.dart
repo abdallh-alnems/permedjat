@@ -69,24 +69,6 @@ class BranchData {
     });
   }
 
-  /// Captures the access point the admin is currently connected to. The
-  /// backend rejects it unless the admin's GPS puts them inside the branch.
-  Future<Map<String, dynamic>> captureBranchNetwork({
-    required int branchId,
-    required String bssid,
-    String? ssid,
-    required double latitude,
-    required double longitude,
-  }) async {
-    return await _crud.postData(AppLinks.branchCaptureNetwork, {
-      'branch_id': branchId,
-      'bssid': bssid,
-      'ssid': ?ssid,
-      'latitude': latitude,
-      'longitude': longitude,
-    });
-  }
-
   Future<Map<String, dynamic>> updateBranchAttendanceMethods({
     required int branchId,
     List<String>? methods,

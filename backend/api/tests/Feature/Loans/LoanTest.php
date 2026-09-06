@@ -284,17 +284,6 @@ final class LoanTest extends TestCase
 
     // ── Reading ──────────────────────────────────────────────────────────
 
-    public function test_a_loan_reads_back_with_its_schedule(): void
-    {
-        $id = $this->created(['total_amount' => 200, 'installments_count' => 2]);
-        $this->asAdmin()->postJson('/v1/loans/approve', ['id' => $id])->assertOk();
-
-        $this->asAdmin()->getJson('/v1/loans/show?id='.$id)
-            ->assertOk()
-            ->assertJsonPath('data.loan.employee_name', 'Borrower')
-            ->assertJsonCount(2, 'data.loan.installments');
-    }
-
     public function test_the_list_can_be_narrowed_to_one_person(): void
     {
         $stranger = (int) DB::table('employees')->insertGetId([
@@ -311,29 +300,6 @@ final class LoanTest extends TestCase
 
         $this->assertIsArray($items);
         $this->assertCount(1, $items);
-    }
-
-    public function test_a_loan_from_another_company_is_not_found(): void
-    {
-        $otherTenant = $this->createTenant();
-        $stranger = (int) DB::table('employees')->insertGetId([
-            'tenant_id' => $otherTenant,
-            'name' => 'Elsewhere',
-            'status' => 'active',
-            'base_salary' => 1000,
-        ]);
-        $id = (int) DB::table('employee_loans')->insertGetId([
-            'tenant_id' => $otherTenant,
-            'employee_id' => $stranger,
-            'type' => 'loan',
-            'total_amount' => 100,
-            'installment_amount' => 100,
-            'installments_count' => 1,
-            'start_month' => '2026-01',
-            'status' => 'pending',
-        ]);
-
-        $this->asAdmin()->getJson('/v1/loans/show?id='.$id)->assertNotFound();
     }
 
     public function test_loans_are_closed_without_the_payroll_permission(): void

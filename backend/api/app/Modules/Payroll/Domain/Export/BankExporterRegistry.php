@@ -51,34 +51,4 @@ final class BankExporterRegistry
 
         return $available;
     }
-
-    /**
-     * @param  array<string, mixed>  $tenant
-     */
-    public static function resolve(?string $key, array $tenant): ?BankExporter
-    {
-        $all = self::all();
-
-        if ($key !== null && $key !== '') {
-            return $all[$key] ?? null;
-        }
-
-        // Companies that predate the country column are treated as Egyptian,
-        // which is where every one of them actually is.
-        $country = Value::nullableString($tenant['country_code'] ?? null) ?: 'EG';
-
-        foreach ($all as $exporter) {
-            if ($exporter->countryCode() === $country) {
-                return $exporter;
-            }
-        }
-
-        foreach ($all as $exporter) {
-            if ($exporter->countryCode() === '*') {
-                return $exporter;
-            }
-        }
-
-        return null;
-    }
 }

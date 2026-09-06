@@ -246,54 +246,6 @@ final class AttendanceReviewTest extends TestCase
 
     // ── Face audit ───────────────────────────────────────────────────────
 
-    public function test_the_distribution_view_reports_a_threshold_and_buckets(): void
-    {
-        // This is what turns log_only into a decision.
-        [, $token] = $this->admin();
-
-        $this->withHeader('X-Firebase-Token', $token)
-            ->postJson('/v1/attendance/face-logs', ['view' => 'distribution', 'days' => 30])
-            ->assertOk()
-            ->assertJsonStructure(['data' => ['days', 'threshold', 'buckets']])
-            ->assertJsonPath('data.days', 30);
-    }
-
-    public function test_the_distribution_window_is_clamped(): void
-    {
-        // An unbounded window is a table scan somebody eventually asks for by
-        // accident.
-        [, $token] = $this->admin();
-
-        $this->withHeader('X-Firebase-Token', $token)
-            ->postJson('/v1/attendance/face-logs', ['view' => 'distribution', 'days' => 99999])
-            ->assertOk()
-            ->assertJsonPath('data.days', 365);
-    }
-
-    public function test_the_employee_view_returns_their_attempts(): void
-    {
-        [, $token] = $this->admin();
-
-        DB::table('face_verification_logs')->insert([
-            'tenant_id' => $this->tenantId,
-            'employee_id' => $this->employee->id,
-            'purpose' => 'check_in',
-            'result' => 'below_threshold',
-            'accepted' => 0,
-            'match_score' => 0.31,
-            'threshold' => 0.45,
-            'liveness_passed' => 1,
-        ]);
-
-        $this->withHeader('X-Firebase-Token', $token)
-            ->postJson('/v1/attendance/face-logs', ['employee_id' => $this->employee->id])
-            ->assertOk()
-            ->assertJsonPath('data.logs.0.result', 'below_threshold')
-            ->assertJsonPath('data.logs.0.match_score', 0.31);
-    }
-
-    // ── Rotating display ─────────────────────────────────────────────────
-
     public function test_a_display_gets_a_code_with_overlapping_windows(): void
     {
         // expires_in is longer than rotate_in on purpose, so a code cannot

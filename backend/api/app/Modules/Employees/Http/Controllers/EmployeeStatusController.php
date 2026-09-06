@@ -9,15 +9,12 @@ use App\Models\ActivationCode;
 use App\Models\Admin;
 use App\Models\Employee;
 use App\Modules\Audit\Domain\AuditLog;
-use App\Modules\Auth\Services\WebSessionService;
 use App\Shared\Crew\Crew;
 use App\Shared\Http\ApiResponse;
 use App\Support\Value;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 /**
  * Ports reactivate.php, set_crew_supervisor.php and reset_web_pin.php.
@@ -123,47 +120,6 @@ final class EmployeeStatusController
 
         return ApiResponse::success([
             'message' => $supervisorId === null ? 'تم إلغاء المشرف' : 'تم تعيين المشرف',
-        ]);
-    }
-
-    /**
-     * Resetting an employee's browser PIN.
-     *
-     * Two jobs in one call. Recovery, because a six-digit secret with a
-     * five-attempt lockout will be forgotten and will lock people out. And
-     * control: this is the single call that severs browser access immediately,
-     * for a departing employee, a lost laptop, or a PIN shared with a colleague.
-     * That is why live sessions are revoked rather than left to run down — a
-     * reset taking effect at the next expiry would leave up to sixteen hours of
-     * access after the decision to end it.
-     */
-    public function resetWebPin(Request $request): JsonResponse
-    {
-        [$admin, $tenantId, $employee] = $this->context($request);
-
-        try {
-            $activation = DB::transaction(function () use ($employee, $tenantId): array {
-                DB::table('employee_web_credentials')
-                    ->where('employee_id', $employee->id)->where('tenant_id', $tenantId)->delete();
-
-                WebSessionService::revokeAllForEmployee($employee->id, 'admin_reset_web_pin');
-
-                // A fresh single-use code, because setting a new PIN goes
-                // through the same door as setting the first one. Without it
-                // the employee has no way to establish a new secret.
-                return ActivationCode::generateFor($tenantId, $employee->id);
-            });
-        } catch (Throwable $e) {
-            Log::error('Web PIN reset failed', ['employee_id' => $employee->id, 'exception' => $e]);
-            throw new ApiFailure(__('messages.generic_error_retry'), 500, 'reset_failed');
-        }
-
-        AuditLog::record($tenantId, $admin->id, 'employee.web_pin_reset', 'employee', $employee->id);
-
-        return ApiResponse::success([
-            'message' => 'تم إعادة تعيين الرقم السري',
-            'activation_code' => $activation['code'],
-            'expires_at' => $activation['expires_at'],
         ]);
     }
 

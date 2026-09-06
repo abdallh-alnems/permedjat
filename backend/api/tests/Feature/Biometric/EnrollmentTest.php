@@ -7,6 +7,7 @@ namespace Tests\Feature\Biometric;
 use App\Modules\Auth\Services\FirebaseTokenVerifier;
 use App\Modules\Notifications\Domain\PushSender;
 use App\Shared\Face\FaceEmbedding;
+use App\Shared\Face\FaceEnrollment;
 use App\Support\Value;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
@@ -98,63 +99,50 @@ final class EnrollmentTest extends TestCase
      * @param  array<string, mixed>  $payload
      * @return TestResponse<\Illuminate\Http\JsonResponse>
      */
-    private function send(string $path, array $payload = [], ?string $token = null): TestResponse
-    {
-        return $this->withHeader('X-Firebase-Token', $token ?? $this->adminToken)->postJson($path, $payload);
-    }
-
-    /**
-     * @param  array<string, mixed>  $payload
-     * @return TestResponse<\Illuminate\Http\JsonResponse>
-     */
     private function sendDelete(string $path, array $payload = [], ?string $token = null): TestResponse
     {
         return $this->withHeader('X-Firebase-Token', $token ?? $this->adminToken)->deleteJson($path, $payload);
     }
 
-    public function test_a_face_enrollment_records_the_vector_and_derives_the_status(): void
+    /**
+     * Puts a face on file without going through an endpoint.
+     *
+     * The HR enrollment routes were removed on 2026-09-06 — no client ever
+     * called them — so the tests for the routes that remain seed the row the
+     * same way the surviving paths do, through the domain.
+     */
+    private function enrolFace(?int $employeeId = null, float $quality = 0.9): void
     {
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ])->assertStatus(201)->assertJsonPath('data.status', 'face_enrolled');
-
-        $row = $this->employeeRow();
-        $this->assertNotNull($row['face_embedding']);
-        $this->assertSame(128, Value::int($row['face_embedding_dim']));
-        $this->assertSame(FaceEmbedding::MODEL_VERSION, Value::string($row['face_model_version']));
-        // Derived, never set directly: two columns that could disagree about
-        // the same fact eventually will.
-        $this->assertSame('face_only', Value::string($row['biometric_enrollment_status']));
+        FaceEnrollment::record(
+            $employeeId ?? $this->employeeId,
+            $this->tenantId,
+            self::vector(),
+            null,
+            $quality,
+            FaceEmbedding::MODEL_VERSION,
+        );
     }
 
-    public function test_a_malformed_vector_is_refused_at_the_door(): void
+    /**
+     * The columns the retired fingerprint route used to write. Nothing can set
+     * them any more, which is why this is spelled out here rather than called.
+     */
+    private function enrolFingerprint(): void
     {
-        // Stored happily, it would fail every check-in with an opaque error.
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => [1, 2, 3],
-            'quality_score' => 0.9,
-        ])->assertStatus(422);
-
-        $this->assertDatabaseHas('employees', [
-            'id' => $this->employeeId, 'biometric_enrollment_status' => 'not_enrolled',
-        ]);
+        DB::update(
+            'UPDATE employees SET fingerprint_enrolled_at = NOW(),'
+            .' biometric_enrollment_status = CASE'
+            ."   WHEN face_embedding IS NOT NULL THEN 'both' ELSE 'fingerprint_only' END"
+            .' WHERE id = ? AND tenant_id = ?',
+            [$this->employeeId, $this->tenantId],
+        );
     }
 
     public function test_holding_both_templates_is_reflected_in_the_status(): void
     {
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ])->assertStatus(201);
+        $this->enrolFace();
 
-        $this->send('/v1/biometric/fingerprint', [
-            'employee_id' => $this->employeeId,
-            'template_base64' => base64_encode('template-bytes'),
-        ])->assertStatus(201);
+        $this->enrolFingerprint();
 
         $this->assertDatabaseHas('employees', [
             'id' => $this->employeeId, 'biometric_enrollment_status' => 'both',
@@ -163,15 +151,8 @@ final class EnrollmentTest extends TestCase
 
     public function test_clearing_the_face_leaves_the_fingerprint_standing(): void
     {
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ])->assertStatus(201);
-        $this->send('/v1/biometric/fingerprint', [
-            'employee_id' => $this->employeeId,
-            'template_base64' => base64_encode('template-bytes'),
-        ])->assertStatus(201);
+        $this->enrolFace();
+        $this->enrolFingerprint();
 
         $this->sendDelete('/v1/biometric/'.$this->employeeId, ['type' => 'face'])->assertOk()->assertJsonPath('data.deleted_type', 'face');
 
@@ -184,11 +165,7 @@ final class EnrollmentTest extends TestCase
 
     public function test_clearing_everything_returns_the_employee_to_unenrolled(): void
     {
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ])->assertStatus(201);
+        $this->enrolFace();
 
         $this->sendDelete('/v1/biometric/'.$this->employeeId)->assertOk();
 
@@ -208,57 +185,15 @@ final class EnrollmentTest extends TestCase
         // could be used to swap somebody's reference face.
         $clerk = $this->admin('attendance');
 
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ], $clerk)->assertStatus(201);
+        $this->enrolFace();
 
         $this->sendDelete('/v1/biometric/'.$this->employeeId, [], $clerk)
             ->assertStatus(403);
     }
 
-    public function test_a_branch_manager_cannot_enrol_somebody_from_another_branch(): void
-    {
-        $otherBranch = (int) DB::table('branches')->insertGetId([
-            'tenant_id' => $this->tenantId, 'name' => 'Not theirs', 'is_active' => 1,
-        ]);
-        $token = $this->admin('branch_manager', $otherBranch);
-
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ], $token)->assertStatus(403);
-    }
-
-    public function test_another_companys_employee_is_out_of_reach(): void
-    {
-        $otherTenant = (int) DB::table('tenants')->insertGetId([
-            'name' => 'Other company', 'timezone' => 'Africa/Cairo', 'is_active' => 1,
-        ]);
-        $stranger = (int) DB::table('employees')->insertGetId([
-            'tenant_id' => $otherTenant,
-            'name' => 'Stranger',
-            'status' => 'active',
-            'base_salary' => 1000,
-            'hire_date' => '2022-01-01',
-        ]);
-
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $stranger,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ])->assertStatus(404);
-    }
-
     public function test_the_status_screen_reports_what_is_held(): void
     {
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.82,
-        ])->assertStatus(201);
+        $this->enrolFace(quality: 0.82);
 
         $this->withHeader('X-Firebase-Token', $this->adminToken)
             ->getJson('/v1/biometric/status?employee_id='.$this->employeeId)
@@ -269,11 +204,7 @@ final class EnrollmentTest extends TestCase
 
     public function test_an_embedding_from_a_retired_model_is_flagged_for_re_enrollment(): void
     {
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ])->assertStatus(201);
+        $this->enrolFace();
 
         DB::table('employees')->where('id', $this->employeeId)
             ->update(['face_model_version' => 'retired_v0']);
@@ -287,11 +218,7 @@ final class EnrollmentTest extends TestCase
 
     public function test_an_enrollment_from_before_the_version_column_is_not_flagged(): void
     {
-        $this->send('/v1/biometric/face', [
-            'employee_id' => $this->employeeId,
-            'embedding' => self::vector(),
-            'quality_score' => 0.9,
-        ])->assertStatus(201);
+        $this->enrolFace();
 
         DB::table('employees')->where('id', $this->employeeId)
             ->update(['face_model_version' => null]);

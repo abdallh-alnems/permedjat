@@ -217,10 +217,6 @@ export function bankFilePreview(month: string) {
   );
 }
 
-export function exportBankFile(month: string) {
-  return apiGet<{ csv: string }>("v1/payroll/bank-file", { month });
-}
-
 export async function getPayrollAudit(
   month: string,
 ): Promise<PayrollAuditEntry[]> {

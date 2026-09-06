@@ -19,31 +19,6 @@ final class BiometricEnrollment
 {
     public const TYPES = ['face', 'fingerprint', 'both'];
 
-    /**
-     * The fingerprint template is not stored.
-     *
-     * Fingerprints are matched by the terminal, which holds its own copy —
-     * nothing on this side ever compares one, so keeping the template here
-     * would be retaining an irrevocable biometric for no purpose. What is kept
-     * is the fact and date of enrollment, which is all the status screens ask
-     * for. Callers still send the template so the terminal-side flow is
-     * unchanged and the endpoint can start storing it if matching ever moves
-     * server-side.
-     */
-    public static function recordFingerprint(int $employeeId, int $tenantId): void
-    {
-        DB::update(
-            'UPDATE employees SET'
-            .' fingerprint_enrolled_at = NOW(),'
-            .' biometric_enrollment_status = CASE'
-            ."   WHEN face_embedding IS NOT NULL THEN 'both'"
-            ."   ELSE 'fingerprint_only'"
-            .' END'
-            .' WHERE id = ? AND tenant_id = ?',
-            [$employeeId, $tenantId],
-        );
-    }
-
     public static function clearFace(int $employeeId, int $tenantId): void
     {
         DB::update(

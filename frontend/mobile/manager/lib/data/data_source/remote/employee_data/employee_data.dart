@@ -43,10 +43,6 @@ class EmployeeData {
     return await _crud.patchData(AppLinks.employeeUpdate(id), data);
   }
 
-  Future<Map<String, dynamic>> deleteEmployee(int id) async {
-    return await _crud.postData(AppLinks.employeeDelete(id), const <String, dynamic>{});
-  }
-
   Future<Map<String, dynamic>> suspendEmployee(
     int employeeId, {
     required String reason,

@@ -14,7 +14,6 @@ use App\Modules\Attendance\Http\Controllers\CheckOutController;
 use App\Modules\Attendance\Http\Controllers\CrewCheckInController;
 use App\Modules\Attendance\Http\Controllers\CrewListController;
 use App\Modules\Attendance\Http\Controllers\FaceChallengeController;
-use App\Modules\Attendance\Http\Controllers\FaceLogsController;
 use App\Modules\Attendance\Http\Controllers\ManualCheckInController;
 use App\Modules\Attendance\Http\Controllers\MyAttendanceController;
 use App\Modules\Attendance\Http\Controllers\PunchPhotoController;
@@ -63,7 +62,6 @@ use App\Modules\Documents\Http\Controllers\ViewDocumentController;
 use App\Modules\Employees\Http\Controllers\ActivationCodeController;
 use App\Modules\Employees\Http\Controllers\AttendanceHistoryController;
 use App\Modules\Employees\Http\Controllers\CreateEmployeeController;
-use App\Modules\Employees\Http\Controllers\DeleteEmployeeController;
 use App\Modules\Employees\Http\Controllers\EmployeeProfileController;
 use App\Modules\Employees\Http\Controllers\EmployeeStatusController;
 use App\Modules\Employees\Http\Controllers\FinancialSummaryController;
@@ -90,9 +88,7 @@ use App\Modules\Payroll\Http\Controllers\AllowanceController;
 use App\Modules\Payroll\Http\Controllers\ApproveController;
 use App\Modules\Payroll\Http\Controllers\AuditLogController as PayrollAuditLogController;
 use App\Modules\Payroll\Http\Controllers\BankFileController;
-use App\Modules\Payroll\Http\Controllers\BulkAdjustController;
 use App\Modules\Payroll\Http\Controllers\BulkAdjustmentBatchController;
-use App\Modules\Payroll\Http\Controllers\CalculateController;
 use App\Modules\Payroll\Http\Controllers\DeductionRulesController;
 use App\Modules\Payroll\Http\Controllers\DisburseController;
 use App\Modules\Payroll\Http\Controllers\EosbController;
@@ -305,8 +301,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
                 ->name('attendance.branch');
             Route::get('v1/attendance/photo', PunchPhotoController::class)
                 ->name('attendance.photo');
-            Route::post('v1/attendance/face-logs', FaceLogsController::class)
-                ->name('attendance.face-logs');
 
             Route::post('v1/attendance/day-status', SetDayStatusController::class)
                 ->name('attendance.day-status');
@@ -327,7 +321,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
         Route::get('v1/employees', ListEmployeesController::class)->name('employees.list');
         Route::get('v1/employees/terminated', ListTerminatedController::class)
             ->name('employees.terminated');
-        Route::post('v1/employees/{id}/terminate', DeleteEmployeeController::class)->name('employees.terminate');
 
         Route::post('v1/employees', CreateEmployeeController::class)->name('employees.create');
         Route::patch('v1/employees/{id}', UpdateEmployeeController::class)->name('employees.update');
@@ -342,8 +335,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
             ->name('employees.reactivate');
         Route::post('v1/employees/crew-supervisor', [EmployeeStatusController::class, 'setCrewSupervisor'])
             ->name('employees.crew-supervisor');
-        Route::post('v1/employees/reset-web-pin', [EmployeeStatusController::class, 'resetWebPin'])
-            ->name('employees.reset-web-pin');
 
         Route::get('v1/employees/activation-code', [ActivationCodeController::class, 'show'])
             ->name('employees.activation-code');
@@ -435,15 +426,12 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
         Route::get('v1/payroll/live', LiveController::class)->name('payroll.live');
         Route::get('v1/employees/financial-summary', FinancialSummaryController::class)
             ->name('employees.financial-summary');
-        Route::get('v1/payroll/calculate', CalculateController::class)->name('payroll.calculate');
         Route::get('v1/payroll/slips', ListSlipsController::class)->name('payroll.slips');
         Route::get('v1/payroll/audit-log', PayrollAuditLogController::class)->name('payroll.audit-log');
         Route::get('v1/payroll/eosb', EosbController::class)->name('payroll.eosb');
         Route::get('v1/payroll/payslip.pdf', PayslipPdfController::class)->name('payroll.payslip-pdf');
         Route::get('v1/payroll/bank-file/preview', [BankFileController::class, 'preview'])
             ->name('payroll.bank-file.preview');
-        Route::get('v1/payroll/bank-file', [BankFileController::class, 'download'])
-            ->name('payroll.bank-file');
 
         Route::post('v1/payroll/generate', GenerateController::class)->name('payroll.generate');
         Route::post('v1/payroll/approve', [ApproveController::class, 'one'])->name('payroll.approve');
@@ -453,7 +441,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
         Route::post('v1/payroll/disburse', [DisburseController::class, 'one'])->name('payroll.disburse');
         Route::post('v1/payroll/disburse-all', [DisburseController::class, 'all'])->name('payroll.disburse-all');
         Route::post('v1/payroll/override-line', OverrideLineController::class)->name('payroll.override-line');
-        Route::post('v1/payroll/bulk-adjust', BulkAdjustController::class)->name('payroll.bulk-adjust');
 
         Route::post('v1/deductions/manual', [ManualAdjustmentController::class, 'addDeduction'])
             ->name('deductions.manual.add');
@@ -527,22 +514,12 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
     Route::middleware(['auth.employee', 'tenant'])->group(function (): void {
         Route::post('v1/biometric/self/face', [SelfEnrollmentController::class, 'enroll'])
             ->name('biometric.self.enroll');
-        Route::post('v1/biometric/self/status', [SelfEnrollmentController::class, 'status'])
-            ->name('biometric.self.status');
 
     });
 
     Route::middleware(['auth.admin', 'tenant'])->group(function (): void {
         Route::get('v1/biometric/status', [EnrollmentController::class, 'status'])
             ->name('biometric.status');
-    });
-
-    Route::middleware(['auth.admin', 'tenant', 'can.do:biometric_enroll'])->group(function (): void {
-        Route::post('v1/biometric/face', [EnrollmentController::class, 'enrollFace'])
-            ->name('biometric.enroll-face');
-        Route::post('v1/biometric/fingerprint', [EnrollmentController::class, 'enrollFingerprint'])
-            ->name('biometric.enroll-fingerprint');
-
     });
 
     Route::middleware(['auth.admin', 'tenant', 'can.do:biometric_delete'])->group(function (): void {
@@ -1020,11 +997,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
         // A GET that mutates, kept as it is: the published apps call it this way.
     });
 
-    Route::middleware(['auth.admin', 'tenant', 'can.do:view_reports'])->group(function (): void {
-        Route::get('v1/roles/permissions', [AdminPermissionsController::class, 'catalogue'])
-            ->name('roles.permissions');
-    });
-
     /*
     |--------------------------------------------------------------------------
     | Permissions (short breaks during a shift)
@@ -1111,7 +1083,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
 
     Route::middleware(['auth.admin', 'tenant', 'can.do:manage_payroll'])->group(function (): void {
         Route::get('v1/loans', [LoanController::class, 'index'])->name('loans.list');
-        Route::get('v1/loans/show', [LoanController::class, 'show'])->name('loans.show');
         Route::post('v1/loans', [LoanController::class, 'create'])->name('loans.create');
         Route::post('v1/loans/approve', [LoanController::class, 'approve'])->name('loans.approve');
         Route::post('v1/loans/cancel', [LoanController::class, 'cancel'])->name('loans.cancel');
@@ -1141,8 +1112,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
         Route::post('v1/branches/attendance-method', [BranchController::class, 'updateAttendanceMethod'])
             ->name('branches.attendance-method');
 
-        Route::post('v1/branches/networks/capture', [BranchNetworkController::class, 'capture'])
-            ->name('branches.networks.capture');
         Route::post('v1/branches/networks/approve', [BranchNetworkController::class, 'approve'])
             ->name('branches.networks.approve');
         Route::post('v1/branches/networks/sightings', [BranchNetworkController::class, 'sightings'])
@@ -1221,7 +1190,6 @@ Route::middleware(['app.secret', 'throttle:api'])->group(function (): void {
         Route::post('v1/categories', [CategoryController::class, 'create'])->name('categories.create');
         Route::patch('v1/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
         Route::delete('v1/categories/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
-        Route::post('v1/categories/assign', [CategoryController::class, 'assign'])->name('categories.assign');
 
     });
 

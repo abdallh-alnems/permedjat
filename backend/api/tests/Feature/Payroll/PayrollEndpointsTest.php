@@ -204,24 +204,6 @@ final class PayrollEndpointsTest extends TestCase
             ->assertOk()->assertHeader('X-Cache', 'MISS');
     }
 
-    public function test_calculating_one_employee_returns_their_breakdown(): void
-    {
-        $this->asAdmin()
-            ->getJson('/v1/payroll/calculate?employee_id='.$this->employeeId.'&month='.self::MONTH)
-            ->assertOk()
-            ->assertJsonPath('data.base_salary', 3000)
-            ->assertJsonPath('data.net_salary', 3000);
-    }
-
-    public function test_calculating_without_an_employee_is_refused(): void
-    {
-        $this->asAdmin()->getJson('/v1/payroll/calculate?month='.self::MONTH)
-            ->assertStatus(422)
-            ->assertJsonPath('error_code', 'employee_id_required');
-    }
-
-    // ── The state machine over HTTP ──────────────────────────────────────
-
     public function test_generate_approve_and_pay_walk_the_slip_through_its_states(): void
     {
         $this->asAdmin()->postJson('/v1/payroll/generate', [
@@ -374,68 +356,6 @@ final class PayrollEndpointsTest extends TestCase
 
     // ── Bulk adjustment ──────────────────────────────────────────────────
 
-    public function test_a_bulk_bonus_writes_one_row_per_employee_in_scope(): void
-    {
-        $this->asAdmin()->postJson('/v1/payroll/bulk-adjust', [
-            'kind' => 'bonus',
-            'scope_type' => 'branch',
-            'scope_id' => $this->branchId,
-            'amount' => 250,
-            'amount_type' => 'fixed',
-            'reason' => 'Eid bonus',
-        ])->assertOk()->assertJsonPath('data.count', 1);
-
-        $this->assertDatabaseHas('manual_bonuses', [
-            'employee_id' => $this->employeeId,
-            'amount' => '250.00',
-            'reason' => 'Eid bonus',
-        ]);
-    }
-
-    public function test_a_percentage_adjustment_resolves_per_employee_and_says_so(): void
-    {
-        $this->asAdmin()->postJson('/v1/payroll/bulk-adjust', [
-            'kind' => 'deduction',
-            'scope_type' => 'branch',
-            'scope_id' => $this->branchId,
-            'amount' => 10,
-            'amount_type' => 'percent',
-            'reason' => 'Late policy',
-        ])->assertOk();
-
-        $row = DB::table('manual_deductions')->where('employee_id', $this->employeeId)->first();
-
-        $this->assertNotNull($row);
-        $this->assertSame('300.00', $row->amount);
-        $this->assertSame('Late policy (10% من الأساسي)', $row->reason);
-    }
-
-    public function test_a_percentage_over_a_hundred_is_refused(): void
-    {
-        $this->asAdmin()->postJson('/v1/payroll/bulk-adjust', [
-            'kind' => 'bonus',
-            'scope_type' => 'branch',
-            'scope_id' => $this->branchId,
-            'amount' => 150,
-            'amount_type' => 'percent',
-            'reason' => 'Nonsense',
-        ])->assertStatus(422);
-    }
-
-    public function test_an_empty_scope_is_reported_rather_than_silently_doing_nothing(): void
-    {
-        $this->asAdmin()->postJson('/v1/payroll/bulk-adjust', [
-            'kind' => 'bonus',
-            'scope_type' => 'branch',
-            'scope_id' => 9999999,
-            'amount' => 100,
-            'amount_type' => 'fixed',
-            'reason' => 'Nobody',
-        ])->assertNotFound();
-    }
-
-    // ── Bank file ────────────────────────────────────────────────────────
-
     public function test_the_bank_preview_names_the_people_with_nowhere_to_pay(): void
     {
         // So nobody discovers the missing half at the bank.
@@ -476,38 +396,6 @@ final class PayrollEndpointsTest extends TestCase
             ->getJson('/v1/payroll/bank-file/preview?month='.self::MONTH.'&branch_id='.$this->branchId)
             ->assertOk()
             ->assertJsonPath('data.total_employees', 0);
-    }
-
-    public function test_the_bank_file_downloads_as_csv(): void
-    {
-        $this->asAdmin()->postJson('/v1/payroll/generate', [
-            'month' => self::MONTH,
-            'branch_id' => $this->branchId,
-        ])->assertOk();
-        $this->asAdmin()->postJson('/v1/payroll/approve', ['payroll_id' => $this->slipId()])->assertOk();
-
-        $response = $this->asAdmin()
-            ->get('/v1/payroll/bank-file?month='.self::MONTH.'&branch_id='.$this->branchId)
-            ->assertOk()
-            ->assertHeader('Content-Type', 'text/csv; charset=utf-8');
-
-        $csv = $response->streamedContent();
-
-        // A BOM, because these are opened in Excel, which reads a UTF-8 CSV as
-        // mojibake without one.
-        $this->assertStringStartsWith("\xEF\xBB\xBF", $csv);
-        $this->assertStringContainsString('EG380019000500000000263180002', $csv);
-        $this->assertStringContainsString('3000.00', $csv);
-    }
-
-    public function test_an_unknown_exporter_is_refused_rather_than_substituted(): void
-    {
-        // A company that asked for its own bank's layout and silently received
-        // a different one would upload a file the bank rejects.
-        $this->asAdmin()
-            ->getJson('/v1/payroll/bank-file?month='.self::MONTH.'&exporter=made_up')
-            ->assertStatus(422)
-            ->assertJsonPath('error_code', 'payroll_exporter_available_country_format');
     }
 
     public function test_the_bank_file_needs_a_well_formed_month(): void

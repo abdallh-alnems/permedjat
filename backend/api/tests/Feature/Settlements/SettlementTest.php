@@ -236,7 +236,7 @@ final class SettlementTest extends TestCase
         // Otherwise the app keeps showing a former employer's roster until the
         // token happens to expire.
         $this->withHeader('X-Employee-Token', $plain)
-            ->postJson('/v1/biometric/self/status')
+            ->getJson('/v1/leaves/mine')
             ->assertStatus(401);
     }
 

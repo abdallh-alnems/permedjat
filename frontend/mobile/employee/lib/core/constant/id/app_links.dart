@@ -66,5 +66,4 @@ class AppLinks {
   // Face check-in (face_selfie)
   static String get faceChallenge => '$base/v1/attendance/face-challenge';
   static String get faceEnrollSelf => '$base/v1/biometric/self/face';
-  static String get faceMyStatus => '$base/v1/biometric/self/status';
 }
