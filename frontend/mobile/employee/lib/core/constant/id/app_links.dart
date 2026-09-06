@@ -38,7 +38,7 @@ class AppLinks {
   static String get leaveBalance => '$base/v1/leaves/my-balance';
   static String get myLeaves => '$base/v1/leaves/mine';
   static String get leaveCancel => '$base/v1/leaves/cancel';
-  static String leaveUpdate(int leaveId) => '\$base/v1/leaves/\$leaveId';
+  static String leaveUpdate(int leaveId) => '$base/v1/leaves/$leaveId';
 
   static String get breakRequest => '$base/v1/breaks/request';
   static String get myBreaks => '$base/v1/breaks/mine';

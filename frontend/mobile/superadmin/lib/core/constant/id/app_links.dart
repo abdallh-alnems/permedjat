@@ -14,7 +14,7 @@ class AppLinks {
   // Tenants
   static String get tenants => '$base/v1/admin/tenants';
   static String get tenantCreate => '$base/v1/admin/tenants';
-  static String tenantUpdate(int tenantId) => '\$base/v1/admin/tenants/\$tenantId';
+  static String tenantUpdate(int tenantId) => '$base/v1/admin/tenants/$tenantId';
   static String get tenantDetail => '$base/v1/admin/tenants/detail';
   static String get tenantDiagnostics => '$base/v1/admin/tenants/diagnostics';
   static String get tenantActivate => '$base/v1/admin/tenants/activate';

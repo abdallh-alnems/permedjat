@@ -9,7 +9,7 @@ class AppLinks {
   static String get login => '$base/v1/auth/admin/login';
   static String get logout => '$base/v1/auth/admin/logout'; 
   // Sign-in doubles as "who am I": the reply carries the user record.
-  static String get me => '\$base/v1/auth/admin/login';
+  static String get me => '$base/v1/auth/admin/login';
   static String get deleteAccount => '$base/v1/auth/account';
   static String get updateProfile => '$base/v1/auth/profile';
   static String get updateFcmToken => '$base/v1/auth/fcm-token';
@@ -39,8 +39,8 @@ class AppLinks {
   }
 
   static String get employeeCreate => '$base/v1/employees';
-  static String employeeUpdate(int employeeId) => '\$base/v1/employees/$employeeId';
-  static String employeeDelete(int employeeId) => '\$base/v1/employees/$employeeId/terminate';
+  static String employeeUpdate(int employeeId) => '$base/v1/employees/$employeeId';
+  static String employeeDelete(int employeeId) => '$base/v1/employees/$employeeId/terminate';
   // Terminated (ended-service) employees + re-hire.
   static String get employeesTerminated =>
       '$base/v1/employees/terminated';
@@ -61,12 +61,12 @@ class AppLinks {
       '$base/v1/employees/documents/upload';
   static String documentFileView(int docId) =>
       '$base/v1/documents/view?id=$docId';
-  static String employeeUpdateDocument(int documentId) => '\$base/v1/employees/documents/$documentId';
+  static String employeeUpdateDocument(int documentId) => '$base/v1/employees/documents/$documentId';
   static String get employeeVerifyDocument =>
       '$base/v1/employees/documents/verify';
   static String get employeeRejectDocument =>
       '$base/v1/employees/documents/reject';
-  static String employeeDeleteDocument(int documentId) => '\$base/v1/employees/documents/$documentId';
+  static String employeeDeleteDocument(int documentId) => '$base/v1/employees/documents/$documentId';
   static String get employeeRequestDocument =>
       '$base/v1/employees/documents/request';
   static String employeeMissingDocuments(int id) =>
@@ -88,8 +88,8 @@ class AppLinks {
       '$base/v1/documents/required';
   static String get documentCreateRequired =>
       '$base/v1/documents/required';
-  static String documentUpdateRequired(int id) => '\$base/v1/documents/required/$id';
-  static String documentDeleteRequired(int id) => '\$base/v1/documents/required/$id';
+  static String documentUpdateRequired(int id) => '$base/v1/documents/required/$id';
+  static String documentDeleteRequired(int id) => '$base/v1/documents/required/$id';
   static String get documentToggleRequired =>
       '$base/v1/documents/required/toggle';
   static String get documentMarkExpired =>
@@ -115,7 +115,7 @@ class AppLinks {
   }
 
   static String get branchCreate => '$base/v1/branches';
-  static String branchUpdate(int branchId) => '\$base/v1/branches/$branchId';
+  static String branchUpdate(int branchId) => '$base/v1/branches/$branchId';
   static String get branchNetworkSightings =>
       '$base/v1/branches/networks/sightings';
   static String get branchApproveNetworks =>
@@ -146,8 +146,8 @@ class AppLinks {
   // ── Biometric devices (fingerprint / face terminals) ────
   static String get devices => '$base/v1/devices';
   static String get deviceRegister => '$base/v1/devices';
-  static String deviceUpdate(int deviceId) => '\$base/v1/devices/$deviceId';
-  static String deviceDelete(int deviceId) => '\$base/v1/devices/$deviceId';
+  static String deviceUpdate(int deviceId) => '$base/v1/devices/$deviceId';
+  static String deviceDelete(int deviceId) => '$base/v1/devices/$deviceId';
   static String get deviceCommand => '$base/v1/devices/command';
   static String get deviceLinkUser => '$base/v1/devices/link-user';
   static String get deviceImportPunches => '$base/v1/devices/import-punches';
@@ -205,8 +205,8 @@ class AppLinks {
   static String allowancesList(int employeeId) =>
       '$base/v1/allowances?employee_id=$employeeId';
   static String get allowanceCreate => '$base/v1/allowances';
-  static String allowanceUpdate(int id) => '\$base/v1/allowances/$id';
-  static String allowanceDelete(int id) => '\$base/v1/allowances/$id';
+  static String allowanceUpdate(int id) => '$base/v1/allowances/$id';
+  static String allowanceDelete(int id) => '$base/v1/allowances/$id';
   static String get payrollAuditLog => '$base/v1/payroll/audit-log';
   static String get payrollBankFile =>
       '$base/v1/payroll/bank-file';
@@ -231,7 +231,7 @@ class AppLinks {
       '$base/v1/leaves/carryover-policies';
   static String get leaveCarryoverPolicySave =>
       '$base/v1/leaves/carryover-policies';
-  static String leaveCarryoverPolicyDelete(int id) => '\$base/v1/leaves/carryover-policies/$id';
+  static String leaveCarryoverPolicyDelete(int id) => '$base/v1/leaves/carryover-policies/$id';
   static String get leaveEncashments =>
       '$base/v1/leaves/encashments';
 
@@ -251,11 +251,11 @@ class AppLinks {
       '$base/v1/deduction-rules';
   static String get deductionManualAdd =>
       '$base/v1/deductions/manual';
-  static String deductionManualUpdate(int id) => '\$base/v1/deductions/manual/$id';
-  static String deductionManualDelete(int id) => '\$base/v1/deductions/manual/$id';
+  static String deductionManualUpdate(int id) => '$base/v1/deductions/manual/$id';
+  static String deductionManualDelete(int id) => '$base/v1/deductions/manual/$id';
   static String get bonusManualAdd => '$base/v1/bonuses/manual';
-  static String bonusManualUpdate(int id) => '\$base/v1/bonuses/manual/$id';
-  static String bonusManualDelete(int id) => '\$base/v1/bonuses/manual/$id';
+  static String bonusManualUpdate(int id) => '$base/v1/bonuses/manual/$id';
+  static String bonusManualDelete(int id) => '$base/v1/bonuses/manual/$id';
 
   /// Bulk bonus/deduction applied to every employee in a branch/shift/category.
   static String get payrollBulkAdjust => '$base/v1/payroll/bulk-adjust';
@@ -266,16 +266,16 @@ class AppLinks {
   static String get bulkAdjustmentGet => '$base/v1/bulk-adjustments/get';
   static String get bulkAdjustmentCreate =>
       '$base/v1/bulk-adjustments';
-  static String bulkAdjustmentUpdate(int id) => '\$base/v1/bulk-adjustments/$id';
-  static String bulkAdjustmentDelete(int id) => '\$base/v1/bulk-adjustments/$id';
+  static String bulkAdjustmentUpdate(int id) => '$base/v1/bulk-adjustments/$id';
+  static String bulkAdjustmentDelete(int id) => '$base/v1/bulk-adjustments/$id';
   static String get bulkAdjustmentRemoveMember =>
       '$base/v1/bulk-adjustments/remove-member';
 
   // ── Assets & Custody (items handed to employees) ───────
   static String get assets => '$base/v1/assets';
   static String get assetCreate => '$base/v1/assets';
-  static String assetUpdate(int id) => '\$base/v1/assets/$id';
-  static String assetDelete(int id) => '\$base/v1/assets/$id';
+  static String assetUpdate(int id) => '$base/v1/assets/$id';
+  static String assetDelete(int id) => '$base/v1/assets/$id';
   static String get assetApproveReturn => '$base/v1/assets/approve-return';
   static String get assetRejectReturn => '$base/v1/assets/reject-return';
 
@@ -297,14 +297,14 @@ class AppLinks {
 
   // ── Warnings ───────────────────────────────────────────
   static String get warningAdd => '$base/v1/warnings';
-  static String warningDelete(int id) => '\$base/v1/warnings/$id';
+  static String warningDelete(int id) => '$base/v1/warnings/$id';
 
   // ── Performance Reviews ────────────────────────────────
   static String employeeReviews(int employeeId) =>
       '$base/v1/performance/reviews?employee_id=$employeeId';
   static String get performanceReviews =>
       '$base/v1/performance/reviews';
-  static String performanceReviewDelete(int id) => '\$base/v1/performance/reviews/$id';
+  static String performanceReviewDelete(int id) => '$base/v1/performance/reviews/$id';
 
   // ── Roles / Permissions ────────────────────────────────
   static String get roles => '$base/v1/roles/permissions';
@@ -334,8 +334,8 @@ class AppLinks {
   // ── Shifts ──────────────────────────────────────────────
   static String get shifts => '$base/v1/shifts';
   static String get shiftCreate => '$base/v1/shifts';
-  static String shiftUpdate(int id) => '\$base/v1/shifts/$id';
-  static String shiftDelete(int id) => '\$base/v1/shifts/$id';
+  static String shiftUpdate(int id) => '$base/v1/shifts/$id';
+  static String shiftDelete(int id) => '$base/v1/shifts/$id';
   static String get shiftAssign => '$base/v1/shifts/assign';
   static String get shiftUnassign => '$base/v1/shifts/unassign';
 
@@ -350,11 +350,11 @@ class AppLinks {
   static String get managerInvite => '$base/v1/team/invitations';
   static String get managerInvitations => '$base/v1/team/invitations';
   static String get managerCancelInvitation =>
-      '\$base/v1/team/invitations/cancel';
+      '$base/v1/team/invitations/cancel';
   static String managerResendInvitation(int id) =>
       '$base/v1/team/invitations/resend?id=$id';
   static String get adminsList => '$base/v1/team';
-  static String adminUpdate(int adminId) => '\$base/v1/team/$adminId';
+  static String adminUpdate(int adminId) => '$base/v1/team/$adminId';
   static String get adminSetActive => '$base/v1/team/set-active';
   static String get adminRemove => '$base/v1/team/remove';
 
@@ -371,15 +371,15 @@ class AppLinks {
       '$base/v1/biometric/face';
   static String get biometricEnrollFingerprint =>
       '$base/v1/biometric/fingerprint';
-  static String biometricDelete(int employeeId) => '\$base/v1/biometric/$employeeId';
+  static String biometricDelete(int employeeId) => '$base/v1/biometric/$employeeId';
   static String biometricStatus(int employeeId) =>
       '$base/v1/biometric/status?employee_id=$employeeId';
 
   // ── Categories ─────────────────────────────────────────
   static String get categories => '$base/v1/categories';
   static String get categoryCreate => '$base/v1/categories';
-  static String categoryUpdate(int id) => '\$base/v1/categories/$id';
-  static String categoryDelete(int id) => '\$base/v1/categories/$id';
+  static String categoryUpdate(int id) => '$base/v1/categories/$id';
+  static String categoryDelete(int id) => '$base/v1/categories/$id';
   static String get categoryAssign => '$base/v1/categories/assign';
   // Behind manage_company_settings, not manage_employees — it is an attendance
   // decision taken at category grain, not a category edit.
