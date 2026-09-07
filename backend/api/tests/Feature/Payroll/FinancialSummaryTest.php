@@ -161,6 +161,24 @@ final class FinancialSummaryTest extends TestCase
             ->assertJsonPath('data.current.rules.late_type', null);
     }
 
+    /**
+     * The other half of the card's visibility rule, which lives in the client:
+     * a company that has configured nothing still gets the real overtime rate,
+     * and the card stays hidden because nothing else is set. Pinned here so the
+     * response cannot quietly go back to null and take the row with it.
+     */
+    public function test_the_overtime_rate_is_reported_even_with_nothing_configured(): void
+    {
+        $this->fetch()
+            ->assertOk()
+            ->assertJsonPath('data.current.rules.overtime_multiplier', 1.5)
+            ->assertJsonPath('data.current.rules.absence_multiplier', null)
+            ->assertJsonPath('data.current.rules.late_type', null)
+            ->assertJsonPath('data.current.rules.late_unit_minutes', null)
+            ->assertJsonPath('data.current.rules.late_deduction_per_unit', null)
+            ->assertJsonPath('data.current.rules.late_fixed_amount', null);
+    }
+
     public function test_an_outstanding_loan_reports_what_is_left_on_it(): void
     {
         $loanId = (int) DB::table('employee_loans')->insertGetId([

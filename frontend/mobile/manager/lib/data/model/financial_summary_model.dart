@@ -336,9 +336,10 @@ class SalaryChange {
 
 /// Snapshot of the tenant's active payroll rules at calculation time. Used by
 /// the rule-transparency card so the admin/employee sees exactly *how* late /
-/// absence / overtime are converted to amounts. All fields nullable — missing
-/// values mean the rule isn't configured (falls back to PayrollCalculator
-/// defaults).
+/// absence / overtime are converted to amounts. Missing values mean the rule
+/// isn't configured (falls back to PayrollCalculator defaults) — with one
+/// exception: [overtimeMultiplier] is not a setting at all any more. It is the
+/// constant the calculator applies, so it always arrives with a value.
 class PayrollRules {
   final String? lateType; // 'proportional' | 'fixed'
   final double? lateUnitMinutes;
@@ -369,10 +370,16 @@ class PayrollRules {
     );
   }
 
+  /// Whether this company has configured anything worth showing a card for.
+  ///
+  /// [overtimeMultiplier] deliberately does not vote: it stopped being a
+  /// setting when `bonus_rules` was dropped and is now a constant that always
+  /// arrives. Counting it would open the card for every company, including the
+  /// ones that have configured nothing — which is not what the card is for.
+  /// It is still displayed inside the card whenever the card is shown.
   bool get hasAny =>
       lateType != null ||
       absenceMultiplier != null ||
-      overtimeMultiplier != null ||
       lateDeductionPerUnit != null ||
       lateFixedAmount != null;
 }
