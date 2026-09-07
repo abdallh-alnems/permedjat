@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\DB;
  *
  * Absence is the one attendance state with no event behind it, so it has to be
  * inferred — and inferred carefully, because every exemption missed here marks
- * somebody absent who was legitimately away. Approved leave, a public holiday, a
- * recurring closure, a weekly day off and a published rest day each stop it.
+ * somebody absent who was legitimately away. Approved leave, a recurring
+ * closure, a weekly day off and a published rest day each stop it. A day an
+ * administrator marked as a holiday stops it too, by already being a row.
  *
  * Idempotent by construction (INSERT IGNORE on the one-per-day key), so running
  * it on every view of a past day is safe.
@@ -66,10 +67,6 @@ final class AbsenceBackfill
         // every day of an approved week off except the first.
         $onLeave = LeaveRequests::employeesOnLeave($tenantId, $date);
 
-        [$holidayEverywhere, $holidayBranches] = self::scope(
-            DB::table('holidays')->where('tenant_id', $tenantId)->where('date', $date)->pluck('branch_id')->values()->all()
-        );
-
         [$closedEverywhere, $closedBranches] = self::scope(
             DB::table('recurring_leaves')
                 ->where('tenant_id', $tenantId)->where('day_of_week', $weekday)->where('is_active', 1)
@@ -87,10 +84,6 @@ final class AbsenceBackfill
             }
 
             if (self::isWeeklyOff(Value::string($employee->weekly_off_days), $weekday)) {
-                continue;
-            }
-
-            if ($holidayEverywhere || ($branchId !== null && isset($holidayBranches[$branchId]))) {
                 continue;
             }
 

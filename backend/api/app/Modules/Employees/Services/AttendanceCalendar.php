@@ -42,13 +42,6 @@ final class AttendanceCalendar
             ->whereBetween('date', [$from, $to])
             ->pluck('type', 'date');
 
-        $holidays = DB::table('holidays')
-            ->where('tenant_id', $tenantId)
-            ->whereBetween('date', [$from, $to])
-            ->pluck('date')
-            ->map(static fn (mixed $d): string => Value::string($d))
-            ->flip();
-
         $weeklyOff = $this->weeklyOffDays($employeeId, $tenantId);
         $today = TenantClock::date($tenantId);
 
@@ -76,7 +69,7 @@ final class AttendanceCalendar
 
             $days[] = [
                 'date' => $date,
-                'status' => $this->statusFor($date, $weekday, $today, $onLeave, $holidays, $weeklyOff),
+                'status' => $this->statusFor($date, $weekday, $today, $onLeave, $weeklyOff),
                 'check_in_time' => null,
                 'check_out_time' => null,
                 'worked_minutes' => 0,
@@ -91,7 +84,6 @@ final class AttendanceCalendar
 
     /**
      * @param  \Illuminate\Support\Collection<array-key, mixed>  $onLeave
-     * @param  \Illuminate\Support\Collection<string, int>  $holidays
      * @param  list<string>  $weeklyOff
      */
     private function statusFor(
@@ -99,17 +91,13 @@ final class AttendanceCalendar
         string $weekday,
         string $today,
         \Illuminate\Support\Collection $onLeave,
-        \Illuminate\Support\Collection $holidays,
         array $weeklyOff,
     ): string {
-        // Order matters: leave outranks a holiday, which outranks a weekly day
-        // off, because that is the order somebody would explain the day in.
+        // Order matters: leave outranks a weekly day off, because that is the
+        // order somebody would explain the day in. A day an administrator marked
+        // as a holiday is a recorded row and never reaches this method.
         if ($onLeave->has($date)) {
             return 'leave';
-        }
-
-        if ($holidays->has($date)) {
-            return 'holiday';
         }
 
         if (in_array($weekday, $weeklyOff, true)) {

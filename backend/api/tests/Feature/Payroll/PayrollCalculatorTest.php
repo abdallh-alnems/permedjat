@@ -55,7 +55,6 @@ final class PayrollCalculatorTest extends TestCase
         // test is the calculator's, not whatever a fixture company happens to
         // have configured.
         DB::table('deduction_rules')->where('tenant_id', $this->tenantId)->delete();
-        DB::table('bonus_rules')->where('tenant_id', $this->tenantId)->delete();
         DB::table('late_deduction_tiers')->where('tenant_id', $this->tenantId)->delete();
         DB::table('payroll_statutory_settings')->where('tenant_id', $this->tenantId)->delete();
     }
@@ -81,9 +80,9 @@ final class PayrollCalculatorTest extends TestCase
         ]);
     }
 
-    private function rule(string $key, string $value, string $type = 'numeric', string $table = 'deduction_rules'): void
+    private function rule(string $key, string $value, string $type = 'numeric'): void
     {
-        DB::table($table)->insert([
+        DB::table('deduction_rules')->insert([
             'tenant_id' => $this->tenantId,
             'rule_key' => $key,
             'rule_type' => $type,
@@ -236,10 +235,11 @@ final class PayrollCalculatorTest extends TestCase
 
     public function test_overtime_pays_the_hourly_rate_times_the_multiplier(): void
     {
-        $this->rule('overtime_multiplier', '1.5', 'numeric', 'bonus_rules');
         $this->attendance('2026-02-10', 'present', ['overtime_minutes' => 120]);
 
-        // 12.50/hour × 1.5 × 2 hours.
+        // 12.50/hour × 1.5 × 2 hours. The multiplier was readable from
+        // `bonus_rules` until that table was dropped; it is a constant now, and
+        // 1.5 is what every tenant was already being paid.
         $this->assertSame(37.5, $this->calculate()['total_bonuses']);
     }
 

@@ -31,6 +31,8 @@ final class PayrollCalculator
 
     private const HOURS_PER_DAY = 8;
 
+    private const OVERTIME_MULTIPLIER = 1.5;
+
     /**
      * @return array<string, mixed> Empty when the employee does not exist.
      */
@@ -268,9 +270,13 @@ final class PayrollCalculator
         ?string $effectiveEnd,
     ): array {
         $lines = [];
-        $rules = $this->rules('bonus_rules', $tenantId);
         $hourlyRate = ($baseSalary / self::DAYS_PER_MONTH) / self::HOURS_PER_DAY;
-        $multiplier = Value::float($this->ruleValue($rules, 'overtime_multiplier', 1.5), 1.5);
+
+        // 1.5x, as it has always been in practice. The rate was readable from
+        // `bonus_rules`, but no endpoint could write that table, so every tenant
+        // took this default; the table was dropped on 2026-09-07. Deductions
+        // still resolve through `rules()` — `deduction_rules` is configurable.
+        $multiplier = self::OVERTIME_MULTIPLIER;
 
         foreach ($this->attendance($employeeId, $tenantId, $cycle->start, $effectiveEnd) as $day) {
             $minutes = Value::int($day['overtime_minutes'] ?? null);

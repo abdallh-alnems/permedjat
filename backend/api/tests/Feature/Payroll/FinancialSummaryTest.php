@@ -45,7 +45,6 @@ final class FinancialSummaryTest extends TestCase
         $this->tenantId = $this->createTenant();
         DB::table('tenants')->where('id', $this->tenantId)->update(['cycle_start_day' => 1]);
         DB::table('deduction_rules')->where('tenant_id', $this->tenantId)->delete();
-        DB::table('bonus_rules')->where('tenant_id', $this->tenantId)->delete();
 
         $this->employeeId = (int) DB::table('employees')->insertGetId([
             'tenant_id' => $this->tenantId,
@@ -153,15 +152,12 @@ final class FinancialSummaryTest extends TestCase
             'tenant_id' => $this->tenantId, 'rule_key' => 'absence_multiplier',
             'rule_type' => 'numeric', 'rule_value' => '2', 'is_active' => 1,
         ]);
-        DB::table('bonus_rules')->insert([
-            'tenant_id' => $this->tenantId, 'rule_key' => 'overtime_multiplier',
-            'rule_type' => 'numeric', 'rule_value' => '1.5', 'is_active' => 1,
-        ]);
-
         $this->fetch()
             ->assertOk()
             ->assertJsonPath('data.current.rules.absence_multiplier', 2)
-            ->assertJsonPath('data.current.rules.overtime_multiplier', 1.5)
+            // Reported as null since `bonus_rules` was dropped: nothing can set
+            // it, and the calculator's 1.5 is a constant the panel does not read.
+            ->assertJsonPath('data.current.rules.overtime_multiplier', null)
             ->assertJsonPath('data.current.rules.late_type', null);
     }
 

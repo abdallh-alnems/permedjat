@@ -182,13 +182,11 @@ final class FinancialSummaryController
     {
         $values = [];
 
-        foreach (['deduction_rules', 'bonus_rules'] as $table) {
-            $rules = DB::table($table)->where('tenant_id', $tenantId)->where('is_active', 1)
-                ->get(['rule_key', 'rule_value']);
+        $rules = DB::table('deduction_rules')->where('tenant_id', $tenantId)->where('is_active', 1)
+            ->get(['rule_key', 'rule_value']);
 
-            foreach ($rules as $rule) {
-                $values[Value::string($rule->rule_key)] = $rule->rule_value;
-            }
+        foreach ($rules as $rule) {
+            $values[Value::string($rule->rule_key)] = $rule->rule_value;
         }
 
         $numeric = static fn (string $key): ?float => isset($values[$key]) ? Value::float($values[$key]) : null;
@@ -199,6 +197,10 @@ final class FinancialSummaryController
             'late_deduction_per_unit' => $numeric('late_deduction_per_unit'),
             'late_fixed_amount' => $numeric('late_fixed_amount'),
             'absence_multiplier' => $numeric('absence_multiplier'),
+            // Only ever came from `bonus_rules`, which no endpoint could write
+            // and which was dropped on 2026-09-07. Still null, as it has been
+            // for every tenant since this panel was built; the calculator's
+            // 1.5x is a constant now. Report it here if the panel should say so.
             'overtime_multiplier' => $numeric('overtime_multiplier'),
         ];
     }
