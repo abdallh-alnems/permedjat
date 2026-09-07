@@ -155,9 +155,9 @@ final class FinancialSummaryTest extends TestCase
         $this->fetch()
             ->assertOk()
             ->assertJsonPath('data.current.rules.absence_multiplier', 2)
-            // Reported as null since `bonus_rules` was dropped: nothing can set
-            // it, and the calculator's 1.5 is a constant the panel does not read.
-            ->assertJsonPath('data.current.rules.overtime_multiplier', null)
+            // The constant the calculator applies, not a stored setting: the
+            // panel would otherwise say nothing about a rate it does use.
+            ->assertJsonPath('data.current.rules.overtime_multiplier', 1.5)
             ->assertJsonPath('data.current.rules.late_type', null);
     }
 

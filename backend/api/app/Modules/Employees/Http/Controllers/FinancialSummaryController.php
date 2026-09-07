@@ -197,11 +197,11 @@ final class FinancialSummaryController
             'late_deduction_per_unit' => $numeric('late_deduction_per_unit'),
             'late_fixed_amount' => $numeric('late_fixed_amount'),
             'absence_multiplier' => $numeric('absence_multiplier'),
-            // Only ever came from `bonus_rules`, which no endpoint could write
-            // and which was dropped on 2026-09-07. Still null, as it has been
-            // for every tenant since this panel was built; the calculator's
-            // 1.5x is a constant now. Report it here if the panel should say so.
-            'overtime_multiplier' => $numeric('overtime_multiplier'),
+            // Not read from a table: it came from `bonus_rules`, which nothing
+            // could write and which was dropped on 2026-09-07. The panel exists
+            // to explain the arithmetic, and the arithmetic uses this constant —
+            // reporting null left it silent about a rate that was never in doubt.
+            'overtime_multiplier' => PayrollCalculator::OVERTIME_MULTIPLIER,
         ];
     }
 

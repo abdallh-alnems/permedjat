@@ -31,7 +31,12 @@ final class PayrollCalculator
 
     private const HOURS_PER_DAY = 8;
 
-    private const OVERTIME_MULTIPLIER = 1.5;
+    /**
+     * Public because the financial tab's rules panel reports it. One constant,
+     * so the number the payslip is built from and the number the employee is
+     * told about cannot drift apart.
+     */
+    public const OVERTIME_MULTIPLIER = 1.5;
 
     /**
      * @return array<string, mixed> Empty when the employee does not exist.
