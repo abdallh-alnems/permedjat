@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Exceptions\ApiFailure;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -90,5 +91,22 @@ return Application::configure(basePath: dirname(__DIR__))
         // that answers JSON everywhere else.
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('v1/*') || $request->expectsJson(),
+        );
+
+        // ApiFailure is how this application says no: a wrong password, a
+        // missing token, a permission the caller does not hold. Those are
+        // answers, not faults, and Laravel was writing every one of them to the
+        // log as production.ERROR with a full stack trace — about 7KB each.
+        //
+        // The uptime probe made the cost visible. It asks for /v1/employees
+        // without credentials every thirty seconds, because a 401 is what
+        // proves the API is up *and* its guard is working; that alone wrote
+        // 30MB and 4,200 entries a day, and it was 100% of the error log. A
+        // real failure would have been a needle in it.
+        //
+        // Server-side failures still report: a 5xx ApiFailure means something
+        // broke rather than refused, and those are worth a stack trace.
+        $exceptions->dontReportWhen(
+            fn (Throwable $e): bool => $e instanceof ApiFailure && $e->status() < 500,
         );
     })->create();
