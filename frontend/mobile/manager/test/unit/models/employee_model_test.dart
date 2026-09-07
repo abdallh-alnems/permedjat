@@ -10,7 +10,6 @@ void main() {
         'name': 'أحمد محمد',
         'phone': '0501234567',
         'photo_url': 'https://example.com/photo.jpg',
-        'employee_code': 'EMP001',
         'job_title': 'مدير',
         'base_salary': 5000,
         'status': 'active',
@@ -51,7 +50,6 @@ void main() {
       expect(emp.name, 'أحمد محمد');
       expect(emp.phone, '0501234567');
       expect(emp.photoUrl, 'https://example.com/photo.jpg');
-      expect(emp.employeeCode, 'EMP001');
       expect(emp.jobTitle, 'مدير');
       expect(emp.baseSalary, 5000);
       expect(emp.status, 'active');

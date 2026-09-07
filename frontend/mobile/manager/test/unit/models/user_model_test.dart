@@ -14,7 +14,6 @@ void main() {
         'photo_url': 'https://example.com/photo.jpg',
         'role_key': 'owner',
         'permissions': ['manage_employees', 'manage_payroll'],
-        'employee_code': 'ADM001',
         'job_title': 'مدير',
         'branch_name': 'الفرع الرئيسي',
       };
@@ -30,7 +29,6 @@ void main() {
       expect(user.photoUrl, 'https://example.com/photo.jpg');
       expect(user.roleKey, 'owner');
       expect(user.permissions, ['manage_employees', 'manage_payroll']);
-      expect(user.employeeCode, 'ADM001');
       expect(user.jobTitle, 'مدير');
       expect(user.branchName, 'الفرع الرئيسي');
     });

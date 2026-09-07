@@ -862,7 +862,6 @@ class _EmployeePickerState extends State<_EmployeePicker> {
         : widget.employees
             .where((e) =>
                 e.name.toLowerCase().contains(q) ||
-                (e.employeeCode?.toLowerCase().contains(q) ?? false) ||
                 (e.jobTitle?.toLowerCase().contains(q) ?? false))
             .toList();
 

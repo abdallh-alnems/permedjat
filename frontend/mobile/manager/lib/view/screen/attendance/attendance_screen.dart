@@ -1643,7 +1643,6 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
       list = list
           .where((e) =>
               e.name.toLowerCase().contains(q) ||
-              (e.employeeCode?.toLowerCase().contains(q) ?? false) ||
               (e.jobTitle?.toLowerCase().contains(q) ?? false))
           .toList();
     }

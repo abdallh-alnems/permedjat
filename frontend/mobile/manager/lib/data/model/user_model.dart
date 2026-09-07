@@ -8,7 +8,6 @@ class UserModel {
   final String? photoUrl;
   final String roleKey;
   final List<String> permissions;
-  final String? employeeCode;
   final String? jobTitle;
   final String? branchName;
 
@@ -22,7 +21,6 @@ class UserModel {
     this.photoUrl,
     required this.roleKey,
     this.permissions = const [],
-    this.employeeCode,
     this.jobTitle,
     this.branchName,
   });
@@ -41,7 +39,6 @@ class UserModel {
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      employeeCode: json['employee_code'] as String?,
       jobTitle: json['job_title'] as String?,
       branchName: json['branch_name'] as String?,
     );
@@ -66,7 +63,6 @@ class UserModel {
       photoUrl: photoUrl ?? this.photoUrl,
       roleKey: roleKey,
       permissions: permissions,
-      employeeCode: employeeCode,
       jobTitle: jobTitle,
       branchName: branchName,
     );
@@ -82,7 +78,6 @@ class UserModel {
         'photo_url': photoUrl,
         'role_key': roleKey,
         'permissions': permissions,
-        'employee_code': employeeCode,
         'job_title': jobTitle,
         'branch_name': branchName,
       };

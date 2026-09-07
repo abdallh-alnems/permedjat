@@ -252,7 +252,6 @@ const Map<String, String> ar = {
   'duration_required': 'أدخل مدة صحيحة',
   'employment_ends_on': 'تنتهي المدة في',
   'job_title': 'الوظيفة',
-  'employee_code': 'كود الموظف',
   'base_salary': 'الراتب الأساسي',
   'salary_required': 'الراتب مطلوب',
   'branch': 'الفرع',

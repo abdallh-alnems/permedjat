@@ -1427,8 +1427,6 @@ class _InfoCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.s3),
           if ((e.jobTitle ?? '').isNotEmpty)
             _InfoRow(label: 'job_title'.tr, value: e.jobTitle!),
-          if ((e.employeeCode ?? '').isNotEmpty)
-            _InfoRow(label: 'employee_code'.tr, value: e.employeeCode!),
           _InfoRow(label: 'phone_number'.tr, value: e.phone ?? '—'),
           _InfoRow(label: 'branch'.tr, value: e.branchName ?? '—'),
           if (ctrl.categories.isNotEmpty)

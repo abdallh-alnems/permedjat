@@ -519,9 +519,7 @@ class _EmployeePickerSheetState extends State<_EmployeePickerSheet> {
         return false;
       }
       if (q.isNotEmpty) {
-        final name = e.name.toLowerCase();
-        final code = (e.employeeCode ?? '').toLowerCase();
-        if (!name.contains(q) && !code.contains(q)) return false;
+        if (!e.name.toLowerCase().contains(q)) return false;
       }
       return true;
     }).toList();

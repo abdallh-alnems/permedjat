@@ -253,7 +253,6 @@ const Map<String, String> en = {
   'duration_required': 'Enter a valid duration',
   'employment_ends_on': 'Ends on',
   'job_title': 'Job Title',
-  'employee_code': 'Employee Code',
   'base_salary': 'Base Salary',
   'salary_required': 'Salary is required',
   'branch': 'Branch',

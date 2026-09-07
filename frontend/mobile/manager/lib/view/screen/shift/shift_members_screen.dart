@@ -493,8 +493,7 @@ class _AddMembersSheetState extends State<_AddMembersSheet> {
         return false;
       }
       if (q.isNotEmpty) {
-        final hay =
-            '${e.name} ${e.jobTitle ?? ''} ${e.employeeCode ?? ''}'.toLowerCase();
+        final hay = '${e.name} ${e.jobTitle ?? ''}'.toLowerCase();
         if (!hay.contains(q)) return false;
       }
       return true;

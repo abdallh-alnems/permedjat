@@ -6,7 +6,6 @@ class EmployeeModel {
   final String name;
   final String? phone;
   final String? photoUrl;
-  final String? employeeCode;
   final String? jobTitle;
   final double baseSalary;
   final String status;
@@ -56,7 +55,6 @@ class EmployeeModel {
     required this.name,
     this.phone,
     this.photoUrl,
-    this.employeeCode,
     this.jobTitle,
     this.baseSalary = 0,
     this.status = 'active',
@@ -134,7 +132,6 @@ class EmployeeModel {
       name: (json['name'] as String?) ?? '',
       phone: json['phone'] as String?,
       photoUrl: json['photo_url'] as String?,
-      employeeCode: json['employee_code'] as String?,
       jobTitle: json['job_title'] as String?,
       baseSalary: _parseDouble(json['base_salary']),
       status: (json['status'] as String?) ?? 'active',
