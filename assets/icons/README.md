@@ -1,94 +1,131 @@
 # Permedjat icon family
 
 Vector source of truth for every app icon in the repo. The `.svg` files here are
-what the platform assets were generated from — regenerate rather than editing a
+what every platform raster was generated from — regenerate rather than editing a
 PNG by hand.
+
+**Final design approved 2026-09-08.** All four marks and the shared ground were
+settled that day; the full platform export below was cut from these files on the
+same date.
 
 ## Shared spec
 
 | | |
 |---|---|
-| Mark | `#D4AF37` gold |
-| Background | `#121212` neutral black |
-| Contrast | 8.91 (WCAG, mark against ground) |
+| Background | `#1A1A1A` neutral black, identical in all four files |
 | Source canvas | 1024 × 1024 |
-| Corner radius | never baked in — iOS and Android mask it, web applies it |
-
-**Only Manager is on this palette so far.** It moved here on 2026-09-08 from
-`#C9A227` on `#2A2522` (contrast 6.26). Superadmin, Kiosk and Employee — and
-`web.svg`, which is the Manager gateway scaled 1.16× — are still on the old
-pair. See Known gaps.
-
-The warm charcoal ground was doing quiet work for `#C9A227`: a warm ground reads
-a slightly olive gold as rich. Take the warmth out of the ground and the same
-gold drifts toward mustard, so the mark was relit at the same time as the
-ground. `#D4AF37` was picked over a brighter `#E0B93C` (which reads yellow
-rather than metal above 64px) and over the copper direction `#C08A2E` / `#B8860B`
-(handsome at 512, but collapses to brown at 16–22px — the exact failure the
-black ground was meant to fix). `#121212` rather than `#0D0D0D` or `#000000`
-because on an OLED black home screen those two lose the rounded-tile silhouette
-entirely; `#121212` keeps it and matches the Material dark surface the app
-itself uses.
+| Corner radius | **never baked into a raster** — see Corners below |
 
 Every mark is drawn from Egyptian **administrative, architectural and writing**
 culture. Nothing here is a deity, a ritual object or royal insignia, and nothing
 should be added that is.
 
-## Status
+## The four marks
 
-### Locked — approved, do not change without a new review
+### Manager — `manager.svg`
+Three stacked plates, widening front-to-back, each carrying two rules of writing:
+a pile of records. Capsule ends (`rx` = half the plate height), a hairline stroke
+on each plate, no seal and no page-fold — both were cut on 2026-09-08 because
+below 32px they clotted the plates into hollow outlines.
 
-| App | Mark | Notes |
+| | |
+|---|---|
+| Back plate | `#8A6416` |
+| Middle plate | `#C9962B` |
+| Front plate | `#F0C64E` |
+| Rules | `#1A1A1A` at 0.5 opacity |
+| Strokes | `#F0C64E` at 0.25 (back, middle) · `#FFFFFF` at 0.3 (front) |
+
+### Kiosk — `kiosk.svg`
+A hollow round-topped arch standing on a threshold bar — a small entrance. Drawn
+as a single stroked path so the crown and both jambs carry one constant weight
+(150 units); the sill is a separate rounded rect the legs run into.
+
+| | |
+|---|---|
+| Arch | `#D4AF37` |
+| Threshold | `#8A6416` |
+
+Replaced the door-with-an-arrow placeholder, which read as the universal
+log-in/exit glyph rather than as Permedjat.
+
+### Employee — `employee.svg`
+A reed pen above a written line. Mark `#C9A227`.
+
+### Superadmin — `superadmin.svg`
+An obelisk on a plinth. Shaft widened 15% (plinth 10%) over the first draft,
+which thinned to a sliver at 22px. Mark `#C9A227`.
+
+## Contrast
+
+Measured against the `#1A1A1A` ground. The bar for a graphical element is 3:1.
+
+| Colour | Where | Ratio |
 |---|---|---|
-| **Manager** | Gateway on a platform | The platform is load-bearing: it is what gives the flagship its weight. Earlier passes without it read as binoculars, then as trousers. Recoloured to the black/`#D4AF37` pair 2026-09-08; geometry untouched. |
-| **Superadmin** | Obelisk | Shaft widened 15% (plinth 10%) over the first draft, which thinned to a sliver at 22px. |
-| **Web** | The Manager gateway | Mark scaled 1.16× — identical geometry, less padding, so it uses more of a 16px browser tab. |
+| `#F0C64E` | Manager front plate | 10.69 |
+| `#D4AF37` | Kiosk arch | 8.28 |
+| `#C9A227` | Employee · Superadmin | 7.19 |
+| `#C9962B` | Manager middle plate | 6.53 |
+| `#8A6416` | Manager back plate · Kiosk threshold | 3.24 |
 
-### Placeholder — exported so nothing ships blank, NOT approved
+## Corners
 
-| App | Mark | Why it is still open |
+`manager.svg` and `kiosk.svg` carry `rx="192"`; `employee.svg` and
+`superadmin.svg` are square. That divergence is cosmetic in the source and does
+**not** reach the rasters: every exported PNG is composited onto opaque
+`#1A1A1A` before it is downsampled, so all of them ship as full-bleed squares.
+iOS and Android apply their own mask, and a baked radius would leave transparent
+corners that flatten to black underneath it.
+
+## What was exported (2026-09-08)
+
+Rendered at 4× the target and reduced with Lanczos, so the small sizes stay
+clean. 139 files.
+
+| Platform | Sizes | Path |
 |---|---|---|
-| **Kiosk** | Door with an arrow cut out | Functionally clear and legible at every size, but generic: an arrow inside a rectangle is the universal log-in / exit glyph. A stranger reads it as a system icon rather than as Permedjat. Pending a revision that feels more distinctly ours. |
-| **Employee** | Reed pen over a written line | Reads close to the standard "edit" pencil, and at 22px it collapses to exactly that — a diagonal above a line. The chisel nib distinguishes a cut reed from a sharpened pencil only above ~32px. The scribe's palette (a bar with two ink wells) is the standing alternative; nothing else in UI resembles it. |
+| **iOS** (manager, employee) | 20 · 29 · 40 · 50 · 57 · 58 · 60 · 72 · 76 · 80 · 87 · 100 · 114 · 120 · 144 · 152 · 167 · 180 · 1024 — 21 files + `Contents.json` (25 entries) | `frontend/mobile/<app>/ios/Runner/Assets.xcassets/AppIcon.appiconset/` |
+| **Android launcher** | 48 · 72 · 96 · 144 · 192 (mdpi → xxxhdpi) | `frontend/mobile/<app>/android/app/src/main/res/mipmap-<dpi>/ic_launcher.png` |
+| **Android adaptive** | 108 · 162 · 216 · 324 · 432, background + foreground | `…/res/drawable-<dpi>/ic_launcher_{background,foreground}.png` |
+| **Flutter masters** | `icon_master.png` 1024 · `icon_bg.png` 1024 · `icon_foreground.png` 1024 · `<app>.svg` | `frontend/mobile/<app>/branding/` |
+| **Web / PWA** (manager) | favicon 16 · 32 · 48 · apple-icon 180 · 192 · 512 · `icon.svg` · `logo.png` 512 | `frontend/web/manager/public/icons/`, `public/logo.png` |
+| **Store** | Play 512 + master 1024 · App Store 1024 | `frontend/mobile/<app>/store_assets/<store>/icon/` |
 
-## Where the generated assets live
+The adaptive foreground is the mark alone at **1.25×** about the canvas centre —
+the scale `flutter_launcher_icons` had already used for the sets in the repo, so
+`dart run flutter_launcher_icons` reproduces these byte-for-byte in shape.
 
-The repo has no single icon directory — each app carries its own, and that
-convention was kept:
-
-```
-frontend/mobile/<app>/branding/          icon_master.png · icon_bg.png · icon_foreground.png · <app>.svg
-frontend/mobile/<app>/ios/…/AppIcon.appiconset/    Icon-App-<pt>x<pt>@<scale>x.png   (manager, employee)
-frontend/mobile/<app>/android/…/res/mipmap-<dpi>/  ic_launcher.png                   48 → 192
-frontend/mobile/<app>/android/…/res/drawable-<dpi>/ic_launcher_{background,foreground}.png   108 → 432
-frontend/web/manager/public/icons/       icon.svg · favicon-16/32/48 · apple-icon · icon-192 · icon-512
-frontend/web/manager/public/logo.png
-frontend/web/site/assets/                favicon-32 · apple-icon · logo
-frontend/desktop/manager/build/          icon.png · icon.ico · icon.icns
-```
+`frontend/web/manager/public/manifest.json` was updated: the icon list now names
+favicon-48, icon-192 and icon-512 (the last two `any maskable`), and
+`theme_color` moved from the retired teal `#0E7C86` to `#1A1A1A`.
 
 ## Regenerating
 
-The Flutter apps read `branding/` through `flutter_launcher_icons`, so:
+The Flutter apps read `branding/` through `flutter_launcher_icons`:
 
 ```bash
 cd frontend/mobile/<app> && dart run flutter_launcher_icons
 ```
 
-reproduces the iOS and Android sets from the masters. They were also written
+That reproduces the iOS and Android sets from the masters. They were also written
 directly by the export, so a checkout is complete without running Flutter.
 
 ## Known gaps
 
-- `frontend/web/manager/public/manifest.json` still declares
-  `"theme_color": "#0E7C86"` — the retired teal. Changing it is a brand decision
-  beyond the icon work, so it was left alone.
-- Store assets under `frontend/mobile/*/store_assets/` were not regenerated;
-  they are release artefacts, not build inputs.
-- **The Manager recolour stopped at the mobile app.** `web.svg` is a separate
-  source — the same gateway wrapped in `scale(1.16)` — and everything under
-  `frontend/web/manager/public/icons/`, `frontend/web/manager/public/logo.png`
-  and `frontend/desktop/manager/build/` is rendered from *it*, not from
-  `manager.svg`. They are all still warm charcoal, so the browser tab and the
-  desktop `.dmg` / `.exe` no longer match the phone icon. Recolouring `web.svg`
-  and re-rendering that set is the outstanding half.
+- ~~`web.svg` is stale~~ — **re-cut 2026-09-08.** It is now the Manager stack
+  wrapped in `scale(1.16)`, derived from `manager.svg` so the two cannot drift:
+  neutralise the scale and it renders pixel-identical to `manager.svg`. The
+  1.16 framing is kept from the retired file — it uses more of a 16px browser
+  tab. The web PNGs under `frontend/web/manager/public/` are still cut from
+  `manager.svg` (unscaled), which is deliberate: they are masked by the browser,
+  the desktop icon is not.
+- ~~Desktop was not re-exported~~ — **done 2026-09-08** from `web.svg`:
+  `icon.png` 1024, `icon.ico` (16 · 32 · 48 · 256), `icon.icns` (16 → 1024, the
+  full Apple iconset). These three keep their **rounded corners transparent**,
+  unlike every mobile raster: macOS and Windows do not mask a desktop app icon,
+  so a hard square would read as a dated tile in the Dock.
+- **Kiosk and Superadmin have no iOS project** (no `ios/` directory,
+  `ios: false` in `pubspec.yaml`), so they have no App Icon set and no
+  `app_store/` store assets. Nothing to update until they target iOS.
+- Store screenshots and feature graphics under `store_assets/` were not
+  regenerated; only the icons were. They are release artefacts, not build inputs.

@@ -22,7 +22,7 @@ app_store/
 HR,attendance,payslip,salary,leaves,clock in,QR,documents,advance,employee
 موارد بشرية,حضور,راتب,إجازات,مستندات,سلفة,موظف
 ```
-**الوصف:** (نفس وصف Google Play في `../../play_store_assets/README.md`)
+**الوصف:** (نفس وصف Google Play في `../../google_play/README.md`)
 
 ## 🔗 روابط App Store Connect
 - Privacy Policy: `https://permedjat.com/privacy-policy`

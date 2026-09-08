@@ -8,10 +8,19 @@
   "scope": "/",
   "display": "standalone",
   "background_color": "#F9FCFC",
-  "theme_color": "#0E7C86",
+  "theme_color": "#1A1A1A",
   "orientation": "any",
-  "categories": ["business", "productivity", "finance"],
+  "categories": [
+    "business",
+    "productivity",
+    "finance"
+  ],
   "icons": [
+    {
+      "src": "/icons/favicon-48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
     {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",

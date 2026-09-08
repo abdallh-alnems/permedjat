@@ -27,7 +27,7 @@ class AddEmployeeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.put(AddEmployeeController());
+    final ctrl = Get.find<AddEmployeeController>();
     final colors = AppColors.of(context);
 
     return Scaffold(

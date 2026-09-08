@@ -10,6 +10,7 @@ import '../../widget/maintenance_gate.dart';
 import '../../widget/update_gate.dart';
 import '../../../data/data_source/remote/auth_data/auth_data.dart';
 import '../../../data/data_source/remote/employee_data/employee_data.dart';
+import '../../../logic/controller/employee/add_employee_controller.dart';
 import '../../../data/data_source/remote/break_data/break_data.dart';
 import '../../../data/data_source/remote/performance_data/performance_data.dart';
 import '../../../data/data_source/remote/branch_data/branch_data.dart';
@@ -197,9 +198,14 @@ List<GetPage<dynamic>> getPages = [
     name: AppRoutes.employeeAdd,
     page: () => const AddEmployeeScreen(),
     binding: BindingsBuilder<void>(() {
+      Get.lazyPut<EmployeeData>(() => EmployeeData());
       Get.lazyPut<BranchData>(() => BranchData());
       Get.lazyPut<ShiftData>(() => ShiftData());
       Get.lazyPut<CategoryData>(() => CategoryData());
+      // Owned by the route, not by build(): the controller ends on the
+      // activation-code view, so a reused instance would greet the next
+      // employee with the previous one's code.
+      Get.lazyPut<AddEmployeeController>(() => AddEmployeeController());
     }),
     middlewares: [AuthMiddleware()],
     transition: Transition.fadeIn,
