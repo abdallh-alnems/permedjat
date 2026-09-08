@@ -72,6 +72,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
+
+# App icon (Permedjat — gold on warm charcoal). Regenerate: dart run flutter_launcher_icons
+# NOTE: the kiosk mark is a PLACEHOLDER pending final approval — see assets/icons/README.md
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "branding/icon_master.png"
+  adaptive_icon_background: "branding/icon_bg.png"
+  adaptive_icon_foreground: "branding/icon_foreground.png"
 
 flutter:
   uses-material-design: true
