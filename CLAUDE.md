@@ -7,40 +7,18 @@ Egypt / North-Africa market. UIs are **Arabic-first (RTL)**; permedjat_app, perm
 app also ship English (permedjat_admin is Arabic-only). One PHP backend serves four Flutter apps, one
 Next.js web port, and a desktop shell that wraps that web port.
 
-```
-Permedjat/
-├── backend/
-│   ├── api/                 ← Laravel 13 REST API on MySQL 8 — the core (Hetzner VPS)
-│   └── legacy/              ← the PHP 8.x backend it replaces. STILL WHAT IS DEPLOYED.
-├── frontend/
-│   ├── mobile/              ← Flutter apps — the `flutter` toolchain
-│   │   ├── employee/        ← Employee app (Android/iOS) — attendance, payslips, requests
-│   │   ├── manager/         ← Company HR/management app (Android/iOS)
-│   │   ├── kiosk/           ← Branch kiosk (Android tablet) — shared-device attendance
-│   │   ├── superadmin/      ← Internal super-admin panel (Android)
-│   │   └── shared/          ← package `permedjat_shared` — shared between the Flutter apps
-│   ├── web/                 ← the `npm` toolchain
-│   │   ├── manager/         ← Next.js 16 web port of mobile/manager (self-hosted)
-│   │   └── site/            ← Static promo/landing + privacy, delete-account, support
-│   └── desktop/
-│       └── manager/         ← Electron shell over web/manager → .dmg / .exe
-└── specs/                   ← spec-kit feature specs
-```
-
 Each subproject has its own `README.md` (and `permedjat_app` its own `CLAUDE.md`) with deeper detail.
 
 ## Tech Stack
 
-- **Backend:** PHP 8.x, MySQL 8. One endpoint per file under `app/<module>/`; shared logic in `core/`.
-  Deps via Composer: `kreait/firebase-php` (FCM + Remote Config), `mpdf/mpdf`, `phpoffice/phpword`.
-  Live server runs **PHP 8.5 / MySQL 8.4** — code is developed on 8.4 (MAMP), so watch for 8.5
-  deprecations in the server logs.
-- **Flutter apps:** Dart 3.11 / Flutter, **GetX** state management (GetxController, GetBuilder, Obx),
-  MVVM layering (`core/` `data/` `logic/` `view/`), `http` via a `CRUD` class, Firebase (Auth,
-  Messaging, Remote Config, Crashlytics), `flutter_dotenv` (`.env` required), RTL.
-  Fonts: **IBM Plex Sans Arabic** (Arabic) + **Geist** (Latin/numerals) — not Cairo.
-- **permedjat_central_web:** TypeScript 5, React 19, Next.js 16 (App Router), TanStack Query (server
-  state), Zustand, React Hook Form + Zod, shadcn/Base UI, Tailwind, Recharts, axios.
+The manifests are the source of truth (`composer.json`, `pubspec.yaml`, `package.json`).
+What they will not tell you:
+
+- The live server runs **PHP 8.5 / MySQL 8.4**, but code is developed on 8.4 (MAMP) — watch the
+  server logs for 8.5 deprecations.
+- Flutter apps use **GetX** (GetxController, GetBuilder, Obx) with MVVM layering
+  (`core/` `data/` `logic/` `view/`) and `http` behind a `CRUD` class — not Flutter's defaults.
+- Fonts are **IBM Plex Sans Arabic** (Arabic) + **Geist** (Latin/numerals) — **not Cairo**.
 
 ## Two backends, for now
 
@@ -61,23 +39,12 @@ covering how the Laravel side is laid out and run.
 
 ## Legacy backend layout (`backend/legacy/`)
 
-- `app/<module>/` — endpoints. Modules: auth, employees, attendance, shifts, schedule, breaks,
-  leaves, payroll, deductions, allowances, bonuses, loans, settlements, bulk_adjustments, documents,
-  assets, branches, categories, managers, roles, biometric, devices, performance, warnings, reports,
-  dashboard, notifications, settings, tenant, audit, support, admin, admin_support,
-  admin_app_control, cron.
-- `core/` — `Auth`/`AdminAuth`, `BaseApi`/`AdminBaseApi`, `TenantMiddleware` + `PermissionMiddleware`
-  (isolation + permissions), `PayrollCalculator`/`PayrollCache`/`PayslipPdfService`,
-  `SettlementCalculator`, `AttendanceMethodResolver`, `GpsService`, `NetworkVerifier` (WiFi),
-  `FaceMatchService` + `BiometricEnrollment` (face), `ZktecoAdms` + `DevicePunchIngestor`
-  (terminals), `TenantClock` (per-tenant time), `ApprovalEngine`/`ApprovalDispatcher`,
-  `NotificationService` + `RemoteConfigService` + `SmartAlertService`, `EmailService`/`AuthEmail`,
-  `I18n`, `RateLimiter`, `Validator`, `Response`.
-- `config/` — `bootstrap.php`, `database.php`, `firebase.php`, `cors.php`, `env.php`.
-  `config/env.php` is gitignored; the live one is hand-written on the server.
-- `migrations/` — hand-written, dated `.sql` files. `models/`, `lang/` (i18n), `scripts/`,
-  `app/cron/`, `uploads/`, `join.php` + `well_known.php` (join links + deep links),
-  `device/iclock.php` (attendance terminals — see `device/README.md`).
+One endpoint per file under `app/<module>/`; shared logic in `core/`; migrations are hand-written,
+dated `.sql` files. The parts that are not obvious from the tree:
+
+- `config/env.php` is gitignored — the live one is hand-written on the server.
+- `join.php` + `well_known.php` serve the join links and deep links.
+- `device/iclock.php` is the attendance-terminal endpoint — see `device/README.md`.
 
 ## Key backend conventions
 
@@ -130,8 +97,7 @@ covering how the Laravel side is laid out and run.
   (permedjat_central / permedjat_admin load `.env` as an asset). Point the app at the MAMP backend; for
   Android use `adb reverse` + a cleartext debug manifest. Lint with `flutter analyze lib` (bare
   `flutter analyze` scans FlutterFire example files under `build/` and reports phantom errors).
-- **permedjat_central_web:** `npm run dev` (or `dev:https`), `npm run build`, `npm run lint`,
-  `npm test` (vitest), `npm run test:e2e` (playwright).
+- **permedjat_central_web:** the standard `npm run` scripts; `dev:https` is there when you need TLS.
 
 ## Deployment
 
@@ -166,23 +132,9 @@ old destructive drop migrations and must never be run (one drops `candidates`, s
 `models/AuditLogModel.php`). Rebuild local from production with a dump — never by replaying
 migrations. SSH alias `permedjat` is configured in `~/.ssh/config`.
 
-- **Server:** single **Hetzner VPS** (Ubuntu 26.04, PHP 8.5 / MySQL 8.4 / Nginx) behind
-  **Cloudflare** (proxied, Full-strict, origin IP hidden; UFW allows 80/443 from Cloudflare ranges
-  only). Deploy is `rsync` from the Mac — no CI.
-  - `api.permedjat.com/backend` → the backend at `/var/www/permedjat/backend`.
-    `/backend_medjet` is the pre-rename prefix and is still matched, because app
-    builds already in the stores call it.
-  - `app.permedjat.com` → Next.js via systemd `permedjat-web.service` (`next start` on :3000)
-  - `permedjat.com` + `www` → static promo site (`frontend/web/site`), plus `/join` and
-    `/.well-known/*` deep links served from the backend copies
-  - `grafana.permedjat.com` (Grafana + Prometheus) and `db.permedjat.com` (Adminer, basic-auth)
-- **Cron:** `/etc/cron.d/permedjat` (Africa/Cairo) — leave rollover 00:00+00:30 (CLI), catch-up absences
-  23:50, daily alerts 07:00 (both via `/usr/local/bin/permedjat-cron-*.sh`, which pass **both** `key=`
-  and `cron_secret=`), mysqldump backup 02:00 with 14-day retention.
-- **Android release:** signed with upload keystore at `android/app/upload-keystore.jks` (gitignored),
-  wired via `key.properties` in `build.gradle.kts`; `flutter build appbundle --release` for store.
-- **Firebase:** project `permedjat`. Maintenance/force-update is driven by Remote Config; the admin
-  toggle also pushes an FCM topic for instant effect.
+The live infrastructure inventory — VPS layout, nginx hostname routes, the cron schedule, Android
+release signing and Firebase — is in the `permedjat-infra` skill. Load it before deploying,
+changing server or DNS config, or cutting an Android release.
 
 ## Specs
 
@@ -191,12 +143,3 @@ Feature specs live in `specs/` (spec-kit): `001-rebuild-employee-app`, `002-admi
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
-
-## Active Technologies
-- PHP 8.4 local (MAMP) / 8.5 live · TypeScript 5, React 19, Next.js 16 (App Router) + Existing `core/` services — `Auth`, `GpsService`, `NetworkVerifier`, `TenantClock`, `RateLimiter`, `Validator`, `Response`, `BiometricEnrollment` (photo-storage pattern). Web: TanStack Query, Zustand, React Hook Form + Zod, Tailwind, shadcn/Base UI, axios. (004-web-attendance-checkin)
-- MySQL 8.4 (live) — additive migrations only; images to `backend/legacy/uploads/` (004-web-attendance-checkin)
-- PHP 8.4 local (MAMP) / 8.5 live · Dart 3.11 / Flutter (GetX, MVVM) · TypeScript 5, React 19, Next.js 16 for the management web surface + Existing `core/` services — `Auth`, `FaceMatchService`, `BiometricEnrollment`, `GpsService`, `TenantClock`, `PermissionMiddleware`, `TenantMiddleware`, `RateLimiter`, `RemoteConfigService`, `I18n`, `Response`. Kiosk app: `camera`, `google_mlkit_face_detection`, `tflite_flutter` (all already in `frontend/mobile/employee/pubspec.yaml`), `assets/models/mobilefacenet.tflite` (5.2 MB, BSD-3, already in the repo) (005-branch-kiosk)
-- MySQL 8.4 (live) — four additive migrations, no drops or narrowing. Captures to `backend/legacy/uploads/kiosk/`, purged on a schedule (005-branch-kiosk)
-
-## Recent Changes
-- 004-web-attendance-checkin: Added PHP 8.4 local (MAMP) / 8.5 live · TypeScript 5, React 19, Next.js 16 (App Router) + Existing `core/` services — `Auth`, `GpsService`, `NetworkVerifier`, `TenantClock`, `RateLimiter`, `Validator`, `Response`, `BiometricEnrollment` (photo-storage pattern). Web: TanStack Query, Zustand, React Hook Form + Zod, Tailwind, shadcn/Base UI, axios.

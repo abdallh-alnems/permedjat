@@ -1,0 +1,109 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<title>Permedjat — عائلة الأيقونات على خلفية موحّدة</title>
+<style>
+:root{--page:#000;--ink:#EDE8E1;--dim:#8B8279;--line:#2A2A2A;--panel:#1C1C1C}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);margin:0;
+ font:14px/1.55 "IBM Plex Sans Arabic",-apple-system,system-ui,sans-serif;transition:background .18s}
+.hex,.num{font-family:ui-monospace,"SF Mono",Menlo,monospace;direction:ltr;unicode-bidi:isolate}
+header{position:sticky;top:0;z-index:9;background:rgba(9,9,9,.94);backdrop-filter:blur(12px);
+ border-bottom:1px solid var(--line);padding:16px 28px 12px}
+h1{font-size:17px;font-weight:600;margin:0 0 3px}
+.sub{color:var(--dim);margin:0 0 13px;font-size:12.5px}
+.grp{display:flex;flex-direction:column;gap:6px}.grp>b{font-size:11px;color:var(--dim)}
+.opts{display:flex;gap:6px}
+.sw{width:36px;height:26px;border-radius:7px;border:1.5px solid #333;cursor:pointer;padding:0;position:relative}
+.sw i{position:absolute;inset:auto 0 -15px;font-size:9px;font-style:normal;color:var(--dim);
+ text-align:center;font-family:ui-monospace,Menlo,monospace}
+.sw[aria-pressed="true"]{border-color:#D4AF37;box-shadow:0 0 0 2px rgba(212,175,55,.25)}
+main{padding:26px 28px 90px}
+section{margin:0 0 44px}
+h2{font-size:14px;font-weight:600;margin:0 0 3px}
+h2 small{font-weight:400;color:var(--dim);font-size:12px;margin-inline-start:8px}
+.hint{color:var(--dim);font-size:12px;margin:0 0 16px;max-width:70ch}
+.blk{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 14px}
+.fam{display:flex;gap:26px;align-items:flex-end;flex-wrap:wrap}
+.cell{text-align:center;color:#6B635B;font-size:10.5px}
+.cell img{display:block;margin:0 auto 7px}
+.cell b{display:block;color:var(--ink);font-size:11.5px;font-weight:600;margin-bottom:2px}
+.px img{image-rendering:pixelated}
+table{border-collapse:collapse;font-size:12.5px}
+th,td{padding:6px 13px;border-bottom:1px solid var(--line);text-align:start}
+th{color:var(--dim);font-weight:600;font-size:11px}
+.pass{color:#5FD08A}.fail{color:#E4635A}
+.dot{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;
+ margin-inline-end:7px;border:1px solid rgba(255,255,255,.14)}
+.home{display:flex;gap:30px;padding:26px 24px;border-radius:22px;
+ background:linear-gradient(150deg,#241d16,#0d1116 55%,#16110d)}
+</style></head><body>
+<header>
+ <h1>Permedjat — عائلة الأيقونات على <span style="color:#D4AF37">#1A1A1A</span> موحّدة</h1>
+ <p class="sub">خلفية واحدة بالظبط في الخمس ملفات. مفيش شكل أو لون علامة اتغيّر.</p>
+ <div class="grp"><b>أرضية الصفحة</b><div class="opts" id="g"></div></div>
+</header>
+<main>
+<section>
+ <h2>العائلة جنب بعض <small>256px</small></h2>
+ <div class="blk"><div class="fam" id="big"></div></div>
+</section>
+<section>
+ <h2>على شاشة رئيسية <small>64px على خلفية حقيقية</small></h2>
+ <div class="home" id="home"></div>
+</section>
+<section>
+ <h2>الأحجام الصغيرة <small>48 · 32 · 22 · 16 ومُكبَّر</small></h2>
+ <div id="small"></div>
+</section>
+<section>
+ <h2>التباين مقابل الخلفية الجديدة <small>الحد للعناصر الرسومية 3:1</small></h2>
+ <p class="hint">ملاحظة: <span class="hex">#6B4A0C</span> اللي سألت عنه مش موجود في manager.svg — ده كان لون المروحة اللي اتشالت. أغمق عنصر دلوقتي هو <span class="hex">#8A6416</span>.</p>
+ <table id="ctab"></table>
+</section>
+</main>
+<script>
+const SVGS={"manager": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1024 1024\"><rect width=\"1024\" height=\"1024\" rx=\"192\" fill=\"#1A1A1A\"/><g transform=\"scale(8)\"><rect x=\"26\" y=\"27\" width=\"76\" height=\"18\" rx=\"9\" fill=\"#8A6416\" stroke=\"#F0C64E\" stroke-opacity=\"0.25\" stroke-width=\"0.75\"/><line x1=\"37\" y1=\"32.8\" x2=\"91\" y2=\"32.8\" stroke=\"#1A1A1A\" stroke-opacity=\"0.5\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><line x1=\"37\" y1=\"39.2\" x2=\"75.88\" y2=\"39.2\" stroke=\"#1A1A1A\" stroke-opacity=\"0.5\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><rect x=\"20\" y=\"55\" width=\"88\" height=\"18\" rx=\"9\" fill=\"#C9962B\" stroke=\"#F0C64E\" stroke-opacity=\"0.25\" stroke-width=\"0.75\"/><line x1=\"31\" y1=\"60.8\" x2=\"97\" y2=\"60.8\" stroke=\"#1A1A1A\" stroke-opacity=\"0.5\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><line x1=\"31\" y1=\"67.2\" x2=\"78.52\" y2=\"67.2\" stroke=\"#1A1A1A\" stroke-opacity=\"0.5\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><rect x=\"14\" y=\"83\" width=\"100\" height=\"18\" rx=\"9\" fill=\"#F0C64E\" stroke=\"#FFFFFF\" stroke-opacity=\"0.3\" stroke-width=\"0.75\"/><line x1=\"25\" y1=\"88.8\" x2=\"93\" y2=\"88.8\" stroke=\"#1A1A1A\" stroke-opacity=\"0.5\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><line x1=\"25\" y1=\"95.2\" x2=\"73.96\" y2=\"95.2\" stroke=\"#1A1A1A\" stroke-opacity=\"0.5\" stroke-width=\"1.6\" stroke-linecap=\"round\"/></g></svg>", "kiosk": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1024 1024\"><rect width=\"1024\" height=\"1024\" rx=\"192\" fill=\"#1A1A1A\"/><path d=\"M300,802 L300,449 A212,212 0 0 1 724,449 L724,802\" fill=\"none\" stroke=\"#D4AF37\" stroke-width=\"150\"/><rect x=\"202\" y=\"742\" width=\"620\" height=\"120\" rx=\"26\" fill=\"#8A6416\"/></svg>", "employee": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1024 1024\" width=\"1024\" height=\"1024\"><rect width=\"1024\" height=\"1024\" fill=\"#1A1A1A\"/><path fill=\"#C9A227\" fill-rule=\"evenodd\" d=\"M780.3,312.9 Q791.6,301.6 780.3,290.3 L723.7,233.7 Q712.4,222.4 701.1,233.7 L320.1,614.7 Q314.4,620.4 322.4,620.4 L463.4,621.7 Q471.4,621.8 477.1,616.1 Z\"/><path fill=\"#C9A227\" fill-rule=\"evenodd\" d=\"M337,722 H679 A31,31 0 0 1 710,753 V753 A31,31 0 0 1 679,784 H337 A31,31 0 0 1 306,753 V753 A31,31 0 0 1 337,722 Z\"/></svg>", "superadmin": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1024 1024\" width=\"1024\" height=\"1024\"><rect width=\"1024\" height=\"1024\" fill=\"#1A1A1A\"/><path fill=\"#C9A227\" fill-rule=\"evenodd\" d=\"M506.9,174.6 Q512.0,166.0 517.1,174.6 L586.3,289.7 Q592.5,300.0 593.2,312.0 L617.2,726.0 Q617.8,736.0 607.8,736.0 L416.2,736.0 Q406.2,736.0 406.8,726.0 L430.8,312.0 Q431.5,300.0 437.7,289.7 Z M367.4,748 H656.6 A16,16 0 0 1 672.6,764 V806 A16,16 0 0 1 656.6,822 H367.4 A16,16 0 0 1 351.4,806 V764 A16,16 0 0 1 367.4,748 Z\"/></svg>", "web": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1024 1024\" width=\"1024\" height=\"1024\"><rect width=\"1024\" height=\"1024\" fill=\"#1A1A1A\"/><g transform=\"translate(512 512) scale(1.16) translate(-512 -512)\"><path fill=\"#C9A227\" fill-rule=\"evenodd\" d=\"M270.0,256.0 Q262.0,256.0 259.7,248.3 L246.3,203.7 Q244.0,196.0 252.0,196.0 L772.0,196.0 Q780.0,196.0 777.7,203.7 L764.3,248.3 Q762.0,256.0 754.0,256.0 Z M226.0,746.0 Q214.0,746.0 215.2,734.1 L260.8,267.9 Q262.0,256.0 274.0,256.0 L750.0,256.0 Q762.0,256.0 763.2,267.9 L808.8,734.1 Q810.0,746.0 798.0,746.0 Z M437.0,746.0 L437.0,746.0 L446.1,532.0 Q447.0,512.0 467.0,512.0 L557.0,512.0 Q577.0,512.0 577.9,532.0 L587.0,746.0 L587.0,746.0 Z\"/><path fill=\"#C9A227\" fill-rule=\"evenodd\" d=\"M170,758 H854 A20,20 0 0 1 874,778 V824 A20,20 0 0 1 854,844 H170 A20,20 0 0 1 150,824 V778 A20,20 0 0 1 170,758 Z\"/></g></svg>"}, ICONS=[["manager", "Manager", "ألواح مكدّسة"], ["kiosk", "Kiosk", "قوس على عتبة"], ["employee", "Employee", "قلم البوص"], ["superadmin", "Superadmin", "المسلّة"], ["web", "Web", "بوابة الويب"]];
+const uri=(k,s)=>{let d=SVGS[k];
+ if(s) d=d.replace(/<svg\b[^>]*>/, m=>
+   m.replace(/\s(?:width|height)="[^"]*"/g,"").replace("<svg ", `<svg width="${s}" height="${s}" `));
+ return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(d);};
+const img=(k,s,d)=>`<img src="${uri(k,s)}" width="${d||s}" height="${d||s}" alt="">`;
+const GROUNDS=[["#000000","OLED"],["#1C1C1E","iOS"],["#F2F2F7","فاتح"],["#7a7a7a","رمادي"]];
+let ground="#000000";
+const chan=v=>(v/=255,v<=0.04045?v/12.92:Math.pow((v+0.055)/1.055,2.4));
+function lum(h){const n=parseInt(h.slice(1),16);
+ return 0.2126*chan(n>>16&255)+0.7152*chan(n>>8&255)+0.0722*chan(n&255);}
+const cr=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+function sw(el,list,cur,fn){
+ el.innerHTML=list.map(([v,l])=>`<button class="sw" data-v="${v}" aria-pressed="${v===cur}" style="background:${v}"><i>${l}</i></button>`).join("");
+ el.onclick=e=>{const b=e.target.closest("button");if(!b)return;fn(b.dataset.v);
+  [...el.children].forEach(c=>c.setAttribute("aria-pressed",c===b));render();};
+}
+function render(){
+ const light=(ground==="#F2F2F7"); const R=document.documentElement.style;
+ R.setProperty("--page",ground); R.setProperty("--ink",light?"#1A1714":"#EDE8E1");
+ R.setProperty("--dim",light?"#6E655C":"#8B8279");
+ R.setProperty("--line",light?"#DCD6CE":"#2A2A2A");
+ R.setProperty("--panel",light?"#FFFFFF":"#1C1C1C");
+ document.getElementById("big").innerHTML=ICONS.map(([k,en,ar])=>
+  `<div class="cell">${img(k,256)}<b>${en}</b>${ar}</div>`).join("");
+ document.getElementById("home").innerHTML=ICONS.map(([k,en])=>
+  `<div class="cell" style="color:#B9AFA4">${img(k,64)}${en}</div>`).join("");
+ document.getElementById("small").innerHTML=ICONS.map(([k,en,ar])=>
+  `<div class="blk"><div class="cell" style="text-align:right;margin-bottom:10px"><b>${en} — ${ar}</b></div>`+
+  `<div class="fam">`+[48,32,22,16].map(s=>`<div class="cell">${img(k,s)}${s}px</div>`).join("")+
+  `<div style="width:16px"></div>`+
+  [[32,"32px ×3.4"],[22,"22px ×5"],[16,"16px ×6.8"]].map(([s,l])=>
+   `<div class="cell px">${img(k,s,110)}${l}</div>`).join("")+`</div></div>`).join("");
+ const marks=[["#F0C64E","Manager — اللوح الأمامي"],["#D4AF37","Kiosk — القوس"],
+  ["#C9A227","Employee · Superadmin · Web"],["#C9962B","Manager — اللوح الأوسط"],
+  ["#8A6416","Manager — اللوح الخلفي · Kiosk — العتبة"]];
+ document.getElementById("ctab").innerHTML=
+  '<tr><th>اللون</th><th>فين</th><th>مقابل <span class="hex">#1A1A1A</span></th><th>3:1</th></tr>'+
+  marks.map(([c,w])=>{const r=cr(c,"#1A1A1A"),k=r>=3?"pass":"fail";
+   return `<tr><td><span class="dot" style="background:${c}"></span><span class="hex">${c}</span></td>`+
+    `<td>${w}</td><td class="num ${k}">${r.toFixed(2)} : 1</td><td class="${k}">${r>=3?"يمر":"تحت"}</td></tr>`;
+  }).join("");
+}
+sw(document.getElementById("g"),GROUNDS,ground,v=>ground=v);
+render();
+</script></body></html>
