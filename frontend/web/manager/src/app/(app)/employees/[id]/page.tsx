@@ -621,7 +621,7 @@ function ProfileForm({
   onSave,
   busy,
 }: {
-  employee: { name: string; phone?: string | null; email?: string | null; job_title?: string | null; base_salary: number };
+  employee: { name: string; phone?: string | null; job_title?: string | null; base_salary: number };
   branchName: string;
   canEdit: boolean;
   onSave: (data: Record<string, unknown>) => void;
@@ -649,7 +649,6 @@ function ProfileForm({
           ...(touched && nextPhone !== (employee.phone ?? "")
             ? { phone: nextPhone }
             : {}),
-          email: fd.get("email"),
           job_title: fd.get("job_title"),
           base_salary: Number(fd.get("base_salary")) || 0,
         });
@@ -670,9 +669,6 @@ function ProfileForm({
           invalid={phoneErr !== null}
         />
         {phoneErr && <p className="text-label-sm text-destructive">{t(phoneErr)}</p>}
-      </Labeled>
-      <Labeled label={t("email")}>
-        <Input name="email" defaultValue={employee.email ?? ""} disabled={!canEdit} />
       </Labeled>
       <Labeled label={t("job_title")}>
         <Input name="job_title" defaultValue={employee.job_title ?? ""} disabled={!canEdit} />
