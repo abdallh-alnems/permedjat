@@ -8,19 +8,10 @@ import '../../../core/class/status_request.dart';
 import '../../../core/constant/routes/app_routes.dart';
 import '../../../core/constant/theme/theme.dart';
 import '../../../core/shared/buttons/primary_button.dart';
+import '../../../core/shared/input_fields/phone_input.dart';
 import '../../../core/shared/input_fields/primary_input.dart';
 import '../../../logic/controller/employee/add_employee_controller.dart';
 import '../../../data/model/branch_model.dart';
-
-/// Strips non-digits and the national trunk prefix (leading zeros) from a
-/// locally-typed number so it can be joined to a country code as E.164.
-/// E.g. Egypt "01023809407" + code "20" → "+201023809407" (not "+2001023809407").
-String _nationalDigits(String raw) =>
-    raw.replaceAll(RegExp(r'\D'), '').replaceFirst(RegExp(r'^0+'), '');
-
-/// Builds an E.164 number from a country dial code and a locally-typed number.
-String _toE164(String phoneCode, String raw) =>
-    '+$phoneCode${_nationalDigits(raw)}';
 
 class AddEmployeeScreen extends StatelessWidget {
   const AddEmployeeScreen({super.key});
@@ -137,17 +128,6 @@ class _AddEmployeeFormState extends State<_AddEmployeeForm> {
     }
   }
 
-  void _pickCountry() {
-    showCountryPicker(
-      context: context,
-      showPhoneCode: true,
-      // Huawei AppGallery rule 4.8 (territorial integrity): these regions must
-      // not be presented as standalone countries. Exclude them from the picker.
-      exclude: const ['TW', 'HK', 'MO'],
-      onSelect: (country) => setState(() => selectedCountry = country),
-    );
-  }
-
   String _fmtDate(DateTime d) =>
       '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
@@ -241,10 +221,11 @@ class _AddEmployeeFormState extends State<_AddEmployeeForm> {
                   v == null || v.trim().isEmpty ? 'name_required'.tr : null,
             ),
             const SizedBox(height: AppSpacing.s3),
-            _PhoneField(
+            PhoneField(
               controller: phoneCtrl,
               country: selectedCountry,
-              onPickCountry: _pickCountry,
+              onCountryChanged: (country) =>
+                  setState(() => selectedCountry = country),
             ),
             const SizedBox(height: AppSpacing.s3),
             PrimaryInput(
@@ -909,7 +890,7 @@ class _AddEmployeeFormState extends State<_AddEmployeeForm> {
     // activation link / QR code shown after creation instead of by phone.
     final phoneE164 =
         (phoneCtrl.text.trim().isNotEmpty && selectedCountry != null)
-        ? _toE164(selectedCountry!.phoneCode, phoneCtrl.text)
+        ? toE164(selectedCountry!.phoneCode, phoneCtrl.text)
         : null;
 
     // Collect filled-in allowance rows; the backend defaults each one's start
@@ -1173,137 +1154,6 @@ class _ActivationCodeView extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _PhoneField extends StatelessWidget {
-  final TextEditingController controller;
-  final Country? country;
-  final VoidCallback onPickCountry;
-
-  const _PhoneField({
-    required this.controller,
-    required this.country,
-    required this.onPickCountry,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = AppColors.of(context);
-    final hasCountry = country != null;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.s2),
-          child: Row(
-            children: [
-              Text(
-                'phone_number'.tr,
-                style: TextStyle(
-                  fontFamily: 'IBM Plex Sans Arabic',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: colors.textSecondary,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.s1),
-              Text(
-                '(${'optional'.tr})',
-                style: TextStyle(
-                  fontFamily: 'IBM Plex Sans Arabic',
-                  fontSize: 11,
-                  fontWeight: FontWeight.w400,
-                  color: colors.textTertiary,
-                ),
-              ),
-            ],
-          ),
-        ),
-        // Two separate cards: the country selector on the left and the phone
-        // field on the right. Top-aligned so a validation error growing under
-        // the phone field never stretches the country card. The country card's
-        // height comes from its padding (matching the field) — not a fixed
-        // height — so the two boxes line up at rest.
-        Row(
-          textDirection: TextDirection.ltr,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            InkWell(
-              onTap: onPickCountry,
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.s3,
-                  vertical: 13,
-                ),
-                decoration: BoxDecoration(
-                  color: colors.surface,
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  border: Border.all(color: colors.borderHairline),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      hasCountry
-                          ? '${country!.flagEmoji}  +${country!.phoneCode}'
-                          : 'select_country'.tr,
-                      style: TextStyle(
-                        fontFamily: 'Geist',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: hasCountry
-                            ? colors.textPrimary
-                            : colors.textTertiary,
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.s1),
-                    Icon(
-                      Icons.expand_more,
-                      size: 18,
-                      color: colors.textTertiary,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(width: AppSpacing.s2),
-            Expanded(
-              child: TextFormField(
-                controller: controller,
-                keyboardType: TextInputType.phone,
-                textDirection: TextDirection.ltr,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  LengthLimitingTextInputFormatter(14),
-                ],
-                style: TextStyle(
-                  fontFamily: 'Geist',
-                  fontSize: 16,
-                  color: colors.textPrimary,
-                ),
-                decoration: InputDecoration(hintText: 'phone_number_hint'.tr),
-                validator: (v) {
-                  final n = (v ?? '').trim();
-                  // Phone is optional — blank is valid (sign-in via link/QR).
-                  if (n.isEmpty) return null;
-                  // Once a number is typed, a country code is required to build
-                  // a valid E.164 number (8–15 digits total).
-                  if (country == null) return 'country_required'.tr;
-                  final full = '${country!.phoneCode}${_nationalDigits(n)}';
-                  if (!RegExp(r'^[1-9]\d{7,14}$').hasMatch(full)) {
-                    return 'phone_invalid'.tr;
-                  }
-                  return null;
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

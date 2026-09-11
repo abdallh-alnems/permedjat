@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:country_picker/country_picker.dart' show Country;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import '../../../core/constant/theme/app_colors.dart';
 import '../../../core/constant/theme/app_spacing.dart';
 import '../../../core/constant/theme/app_text_styles.dart';
 import '../../../core/constant/routes/app_routes.dart';
+import '../../../core/shared/input_fields/phone_input.dart';
 import '../../../core/utils/currency.dart';
 import '../../../core/widget/month_grid_picker.dart';
 import '../../../data/data_source/remote/employee_data/employee_data.dart';
@@ -1690,7 +1692,9 @@ void _showEditInfoSheet(BuildContext context, EmployeeDetailController ctrl) {
   if (e == null) return;
 
   final nameCtrl = TextEditingController(text: e.name);
-  final phoneCtrl = TextEditingController(text: e.phone ?? '');
+  final originalPhone = PhoneParts.parse(e.phone);
+  final phoneCtrl = TextEditingController(text: originalPhone.national);
+  Country? phoneCountry = originalPhone.country;
   final jobTitleCtrl = TextEditingController(text: e.jobTitle ?? '');
   final salaryCtrl = TextEditingController(
     text: e.baseSalary == 0
@@ -1808,11 +1812,16 @@ void _showEditInfoSheet(BuildContext context, EmployeeDetailController ctrl) {
                                 ? 'required'.tr
                                 : null,
                           ),
-                          _FormField(
-                            controller: phoneCtrl,
-                            label: 'phone_number'.tr,
-                            icon: Icons.phone_outlined,
-                            keyboardType: TextInputType.phone,
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: AppSpacing.s2),
+                            child: PhoneField(
+                              controller: phoneCtrl,
+                              country: phoneCountry,
+                              original: originalPhone,
+                              onCountryChanged: (c) =>
+                                  setSheetState(() => phoneCountry = c),
+                            ),
                           ),
                           _FormField(
                             controller: jobTitleCtrl,
@@ -1956,7 +1965,18 @@ void _showEditInfoSheet(BuildContext context, EmployeeDetailController ctrl) {
                             }
 
                             putIfChanged('name', nameCtrl.text, e.name);
-                            putIfChanged('phone', phoneCtrl.text, e.phone);
+                            // Only a number the admin actually edited is sent,
+                            // so an old one is never rewritten behind them.
+                            if (!originalPhone.isSameAs(
+                                phoneCountry, phoneCtrl.text)) {
+                              final n = phoneCtrl.text.trim();
+                              final phone = n.isEmpty
+                                  ? ''
+                                  : toE164(phoneCountry!.phoneCode, n);
+                              if (phone != (e.phone ?? '')) {
+                                changes['phone'] = phone;
+                              }
+                            }
                             putIfChanged(
                                 'job_title', jobTitleCtrl.text, e.jobTitle);
                             final newSalary =

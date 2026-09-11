@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { PhoneInput } from "@/components/ui/phone-input";
 import {
   Select,
   SelectContent,
@@ -27,6 +28,7 @@ import { createEmployee } from "@/lib/api/employees";
 import { useBranches, useShifts, useCategories } from "@/lib/hooks/use-org";
 import { useT } from "@/lib/i18n/use-t";
 import type { TKey } from "@/lib/i18n/ar";
+import { EMPTY_PHONE, phoneError, toE164 } from "@/lib/phone";
 import { Can } from "@/components/permissions/can";
 import { LoadingState } from "@/components/ui/states";
 import { toast } from "sonner";
@@ -34,7 +36,12 @@ import { Loader2 } from "lucide-react";
 
 const schema = z.object({
   name: z.string().min(2),
-  phone: z.string().optional(),
+  phone: z
+    .object({ iso: z.string().nullable(), national: z.string() })
+    .superRefine((phone, ctx) => {
+      const error = phoneError(phone);
+      if (error) ctx.addIssue({ code: "custom", message: error });
+    }),
   branch_id: z.number().int().positive(),
   shift_id: z.number().int().optional(),
   category_id: z.number().int().optional(),
@@ -78,10 +85,11 @@ export default function AddEmployeePage() {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitted },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
+      phone: EMPTY_PHONE,
       hire_date: new Date().toISOString().slice(0, 10),
       base_salary: 0,
       work_start_time: "09:00",
@@ -105,7 +113,8 @@ export default function AddEmployeePage() {
     try {
       await mutation.mutateAsync({
         name: data.name,
-        phone: data.phone,
+        // Optional: left blank, the employee signs in via the activation link.
+        phone: toE164(data.phone) || undefined,
         national_id: data.identity_number,
         job_title: data.job_title,
         hire_date: data.hire_date,
@@ -148,8 +157,17 @@ export default function AddEmployeePage() {
                 <Field label={t("name")} error={errors.name && t("required")}>
                   <Input {...register("name")} />
                 </Field>
-                <Field label={t("phone")}>
-                  <Input {...register("phone")} />
+                <Field
+                  label={t("phone")}
+                  error={errors.phone?.message && t(errors.phone.message as TKey)}
+                >
+                  <PhoneInput
+                    value={watch("phone")}
+                    onChange={(phone) =>
+                      setValue("phone", phone, { shouldValidate: isSubmitted })
+                    }
+                    invalid={!!errors.phone}
+                  />
                 </Field>
                 <Field label={t("identity_number")}>
                   <Input {...register("identity_number")} />

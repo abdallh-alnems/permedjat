@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useMemo, useState } from "react";
 import { useRouter, notFound } from "next/navigation";
 import {
   Card,
@@ -13,10 +13,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { PhoneInput } from "@/components/ui/phone-input";
 import { useEmployee, useFinancialSummary, useAttendanceHistory, useYearToDate } from "@/lib/hooks/use-employees";
 import { useBranches } from "@/lib/hooks/use-org";
 import { useT } from "@/lib/i18n/use-t";
 import type { TKey } from "@/lib/i18n/ar";
+import {
+  isSamePhone,
+  parsePhone,
+  phoneError,
+  toE164,
+  type PhoneError,
+} from "@/lib/phone";
 import { usePermissions } from "@/lib/hooks/use-permissions";
 import { useToastMutation } from "@/lib/hooks/use-org";
 import {
@@ -620,14 +628,27 @@ function ProfileForm({
   busy: boolean;
 }) {
   const { t } = useT();
+  // Compared against the stored value as it is now, which changes after a save.
+  const originalPhone = useMemo(() => parsePhone(employee.phone), [employee.phone]);
+  const [phone, setPhone] = useState(originalPhone);
+  const [phoneErr, setPhoneErr] = useState<PhoneError | null>(null);
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        // Only a number the admin actually edited is validated and sent, so an
+        // old one is never rewritten behind them.
+        const touched = !isSamePhone(originalPhone, phone);
+        const error = touched ? phoneError(phone) : null;
+        setPhoneErr(error);
+        if (error) return;
+        const nextPhone = toE164(phone);
         const fd = new FormData(e.currentTarget);
         onSave({
           name: fd.get("name"),
-          phone: fd.get("phone"),
+          ...(touched && nextPhone !== (employee.phone ?? "")
+            ? { phone: nextPhone }
+            : {}),
           email: fd.get("email"),
           job_title: fd.get("job_title"),
           base_salary: Number(fd.get("base_salary")) || 0,
@@ -639,7 +660,16 @@ function ProfileForm({
         <Input name="name" defaultValue={employee.name} disabled={!canEdit} />
       </Labeled>
       <Labeled label={t("phone")}>
-        <Input name="phone" defaultValue={employee.phone ?? ""} disabled={!canEdit} />
+        <PhoneInput
+          value={phone}
+          onChange={(p) => {
+            setPhone(p);
+            setPhoneErr(null);
+          }}
+          disabled={!canEdit}
+          invalid={phoneErr !== null}
+        />
+        {phoneErr && <p className="text-label-sm text-destructive">{t(phoneErr)}</p>}
       </Labeled>
       <Labeled label={t("email")}>
         <Input name="email" defaultValue={employee.email ?? ""} disabled={!canEdit} />
