@@ -84,7 +84,7 @@ class RequiredDocumentSubmissionsScreen extends StatelessWidget {
             runSpacing: AppSpacing.s2,
             children: [
               _chip(context, 'doc_submitted'.tr,
-                  '${ctrl.submittedCount}/${ctrl.submissions.length}', colors.brand),
+                  '${ctrl.submittedCount}/${ctrl.submissions.length}', colors.brandText),
               if (ctrl.verifiedCount > 0)
                 _chip(context, 'document_verified'.tr,
                     '${ctrl.verifiedCount}', colors.success),
@@ -170,7 +170,7 @@ class RequiredDocumentSubmissionsScreen extends StatelessWidget {
             const SizedBox(height: AppSpacing.s3),
             if (doc.filePath != null || doc.fileUrl != null)
               ListTile(
-                leading: Icon(Icons.visibility_outlined, color: colors.brand),
+                leading: Icon(Icons.visibility_outlined, color: colors.brandText),
                 title: Text('view_document'.tr),
                 onTap: () {
                   Get.back<void>();

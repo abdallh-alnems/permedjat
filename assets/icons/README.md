@@ -97,7 +97,9 @@ the scale `flutter_launcher_icons` had already used for the sets in the repo, so
 
 `frontend/web/manager/public/manifest.json` was updated: the icon list now names
 favicon-48, icon-192 and icon-512 (the last two `any maskable`), and
-`theme_color` moved from the retired teal `#0E7C86` to `#1A1A1A`.
+`theme_color` moved from the retired teal `#0E7C86` to `#1A1A1A`. (On 2026-09-11 the UI
+itself moved to gold, and `theme_color` became the brand `#B8860B` to match the
+`themeColor` meta in `src/app/layout.tsx`.)
 
 ## Regenerating
 

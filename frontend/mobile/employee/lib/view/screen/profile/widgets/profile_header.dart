@@ -28,8 +28,8 @@ class ProfileHeader extends StatelessWidget {
             backgroundColor: AppColors.brand(context),
             child: Text(
               name.substring(0, 1).toUpperCase(),
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.of(context).onBrand,
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
               ),

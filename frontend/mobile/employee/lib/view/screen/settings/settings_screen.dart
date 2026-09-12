@@ -244,7 +244,7 @@ class _LanguageOption extends StatelessWidget {
           isSelected
               ? Icons.radio_button_checked
               : Icons.radio_button_unchecked,
-          color: isSelected ? colors.brand : colors.textTertiary,
+          color: isSelected ? colors.brandText : colors.textTertiary,
         ),
         title: Text(
           label,

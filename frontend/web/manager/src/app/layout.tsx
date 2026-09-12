@@ -23,8 +23,9 @@ const geist = Geist({
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0E7C86" },
-    { media: "(prefers-color-scheme: dark)", color: "#4FC6CC" },
+    // --brand in globals.css; public/manifest.json theme_color matches the light value.
+    { media: "(prefers-color-scheme: light)", color: "#B8860B" },
+    { media: "(prefers-color-scheme: dark)", color: "#E0B93C" },
   ],
   width: "device-width",
   initialScale: 1,

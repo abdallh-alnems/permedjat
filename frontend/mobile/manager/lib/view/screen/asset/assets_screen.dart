@@ -37,7 +37,7 @@ class AssetsScreen extends StatelessWidget {
         heroTag: 'fab_asset',
         onPressed: () => _showCreateSheet(context, ctrl),
         backgroundColor: colors.brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: colors.onBrand),
       ),
       body: Column(
         children: [
@@ -421,7 +421,7 @@ class _EmployeePickerField extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(Icons.person_search_outlined, size: 18, color: colors.brand),
+            Icon(Icons.person_search_outlined, size: 18, color: colors.brandText),
             const SizedBox(width: AppSpacing.s2),
             Expanded(
               child: Text(
@@ -685,7 +685,7 @@ class _EmployeePickerSheetState extends State<_EmployeePickerSheet> {
                                 style: TextStyle(
                                   fontFamily: 'IBM Plex Sans Arabic',
                                   fontWeight: FontWeight.w600,
-                                  color: colors.brand,
+                                  color: colors.brandText,
                                 ),
                               ),
                             ),
@@ -766,7 +766,7 @@ class _DatePickerField extends StatelessWidget {
             child: Row(
               children: [
                 Icon(Icons.calendar_today_outlined,
-                    size: 18, color: colors.brand),
+                    size: 18, color: colors.brandText),
                 const SizedBox(width: AppSpacing.s2),
                 Text(
                   value != null
@@ -826,7 +826,7 @@ class _Chip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),
@@ -1060,7 +1060,7 @@ class _AssetTile extends StatelessWidget {
   Color _statusColor(String status, AppColorScheme colors) {
     switch (status) {
       case 'assigned':
-        return colors.brand;
+        return colors.brandText;
       case 'return_requested':
         return colors.warning;
       case 'returned':

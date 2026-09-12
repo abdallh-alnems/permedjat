@@ -169,7 +169,7 @@ class _SupportThreadScreenState extends State<SupportThreadScreen>
                 padding: const EdgeInsets.only(bottom: AppSpacing.s2),
                 child: Row(
                   children: [
-                    Icon(Icons.image_outlined, size: 16, color: colors.brand),
+                    Icon(Icons.image_outlined, size: 16, color: colors.brandText),
                     const SizedBox(width: AppSpacing.s2),
                     Expanded(
                       child: Text(
@@ -300,7 +300,7 @@ class _MessageBubble extends StatelessWidget {
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: isSupport ? colors.brand : colors.textTertiary,
+                color: isSupport ? colors.brandText : colors.textTertiary,
               ),
             ),
             const SizedBox(height: 4),
@@ -377,7 +377,7 @@ class _Attachment extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.description_outlined, size: 18, color: colors.brand),
+                Icon(Icons.description_outlined, size: 18, color: colors.brandText),
                 const SizedBox(width: 6),
                 Flexible(
                   child: Text(
@@ -386,7 +386,7 @@ class _Attachment extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'IBM Plex Sans Arabic',
                       fontSize: 12,
-                      color: colors.brand,
+                      color: colors.brandText,
                     ),
                   ),
                 ),

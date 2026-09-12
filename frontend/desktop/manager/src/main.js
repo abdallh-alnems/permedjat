@@ -155,7 +155,7 @@ function createWindow() {
     minWidth: 1024,
     minHeight: 680,
     show: false,
-    backgroundColor: '#F9FCFC',
+    backgroundColor: '#FDFBF6',
     title: 'Permedjat Central',
     autoHideMenuBar: !IS_MAC,
     webPreferences: {
@@ -192,7 +192,7 @@ function createWindow() {
       return {
         action: 'allow',
         overrideBrowserWindowOptions: {
-          backgroundColor: '#F9FCFC',
+          backgroundColor: '#FDFBF6',
           autoHideMenuBar: !IS_MAC,
         },
       };

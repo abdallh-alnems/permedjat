@@ -98,7 +98,7 @@ class _Body extends StatelessWidget {
             children: [
               CircleAvatar(
                 backgroundColor: colors.brandSubtle,
-                child: Icon(Icons.badge_outlined, color: colors.brand),
+                child: Icon(Icons.badge_outlined, color: colors.brandText),
               ),
               const SizedBox(width: AppSpacing.s3),
               Expanded(
@@ -245,7 +245,7 @@ class _Body extends StatelessWidget {
                   if (editable) ...[
                     const SizedBox(width: AppSpacing.s1),
                     Icon(Icons.edit_outlined,
-                        size: 16, color: colors.brand),
+                        size: 16, color: colors.brandText),
                   ],
                 ],
               ),
@@ -476,7 +476,7 @@ class _Body extends StatelessWidget {
           _summaryRow(
             'settlement_net'.tr,
             s.netAmount.toStringAsFixed(2),
-            colors.brand,
+            colors.brandText,
             big: true,
           ),
         ],
@@ -522,7 +522,7 @@ class _Body extends StatelessWidget {
         child: ElevatedButton.icon(
           onPressed: busy ? null : () => _confirmApprove(context),
           style: ElevatedButton.styleFrom(
-              backgroundColor: colors.brand, foregroundColor: Colors.white),
+              backgroundColor: colors.brand, foregroundColor: colors.onBrand),
           icon: const Icon(Icons.verified_outlined, size: 18),
           label: Text('settlement_approve'.tr),
         ),

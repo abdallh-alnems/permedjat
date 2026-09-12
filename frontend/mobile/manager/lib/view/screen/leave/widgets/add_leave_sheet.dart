@@ -432,7 +432,7 @@ class _AddLeaveSheetState extends State<AddLeaveSheet> {
         decoration: _fieldDecoration(colors),
         child: Row(
           children: [
-            Icon(Icons.event_outlined, size: 20, color: colors.brand),
+            Icon(Icons.event_outlined, size: 20, color: colors.brandText),
             const SizedBox(width: AppSpacing.s3),
             Expanded(
               child: date == null
@@ -462,7 +462,7 @@ class _AddLeaveSheetState extends State<AddLeaveSheet> {
         child: range == null
             ? Row(
                 children: [
-                  Icon(Icons.event_outlined, size: 20, color: colors.brand),
+                  Icon(Icons.event_outlined, size: 20, color: colors.brandText),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
                     child: Text('leave_period_hint'.tr,
@@ -503,7 +503,7 @@ class _AddLeaveSheetState extends State<AddLeaveSheet> {
                           : 'leave_days_count'
                               .trParams({'count': '$_requestedDays'}),
                       style: AppTextStyles.sm(context).copyWith(
-                        color: colors.brand,
+                        color: colors.brandText,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -547,7 +547,7 @@ class _AddLeaveSheetState extends State<AddLeaveSheet> {
               icon: remaining > 0
                   ? Icons.account_balance_wallet_outlined
                   : Icons.warning_amber_rounded,
-              color: remaining > 0 ? colors.brand : colors.error,
+              color: remaining > 0 ? colors.brandText : colors.error,
               text: 'leave_balance_summary'.trParams({
                 'remaining': '$remaining',
                 'used': '$used',
@@ -745,7 +745,7 @@ class _OnExceedOption extends StatelessWidget {
             Icon(
               selected ? Icons.radio_button_checked : Icons.radio_button_off,
               size: 18,
-              color: selected ? colors.brand : colors.textTertiary,
+              color: selected ? colors.brandText : colors.textTertiary,
             ),
             const SizedBox(width: AppSpacing.s2),
             Expanded(
@@ -800,7 +800,7 @@ class _ChoiceChip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),
@@ -833,7 +833,7 @@ class _Avatar extends StatelessWidget {
           fontFamily: 'IBM Plex Sans Arabic',
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          color: colors.brand,
+          color: colors.brandText,
         ),
       ),
     );

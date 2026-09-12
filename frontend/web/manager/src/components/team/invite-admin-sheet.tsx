@@ -189,7 +189,7 @@ export function InviteAdminSheet({ open, onOpenChange }: Props) {
               {t("invitation_code_label")}
             </p>
             <div className="rounded-lg border-2 border-primary bg-primary/10 px-6 py-4">
-              <span className="font-mono text-3xl font-bold tracking-[0.3em] text-primary">
+              <span className="font-mono text-3xl font-bold tracking-[0.3em] text-brand-text">
                 {code}
               </span>
             </div>
@@ -248,7 +248,7 @@ export function InviteAdminSheet({ open, onOpenChange }: Props) {
                       className={cn(
                         "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-body-sm transition-colors",
                         selected
-                          ? "border-primary bg-primary/10 text-primary"
+                          ? "border-primary bg-primary/10 text-brand-text"
                           : "border-border text-foreground hover:bg-muted/50",
                       )}
                     >

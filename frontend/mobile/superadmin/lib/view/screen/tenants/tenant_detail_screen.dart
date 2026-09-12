@@ -431,7 +431,7 @@ class _ContactButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 16, color: colors.brand),
+            Icon(icon, size: 16, color: colors.brandText),
             const SizedBox(width: 4),
             Text(
               label,

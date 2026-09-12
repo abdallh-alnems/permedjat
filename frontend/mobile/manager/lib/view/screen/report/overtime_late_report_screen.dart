@@ -245,7 +245,7 @@ class _SortChip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: selected ? Colors.white : colors.textPrimary,
+            color: selected ? colors.onBrand : colors.textPrimary,
           ),
         ),
       ),

@@ -238,7 +238,7 @@ class _BulkAdjustmentDetailScreenState
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: active ? Colors.white : colors.textSecondary,
+                color: active ? colors.onBrand : colors.textSecondary,
               )),
         ),
       ),

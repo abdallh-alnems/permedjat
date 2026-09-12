@@ -34,7 +34,7 @@ export function BranchPerformanceList({
           >
             <div className="flex items-center justify-between gap-3">
               <div className="flex min-w-0 items-center gap-2">
-                <Building2 className="h-4 w-4 shrink-0 text-brand" />
+                <Building2 className="h-4 w-4 shrink-0 text-brand-text" />
                 <p className="truncate text-title-md font-semibold">
                   {b.branch_name}
                 </p>

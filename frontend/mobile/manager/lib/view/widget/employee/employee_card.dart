@@ -44,7 +44,7 @@ class EmployeeCard extends StatelessWidget {
                         fontFamily: 'Geist',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     )
                   : null,

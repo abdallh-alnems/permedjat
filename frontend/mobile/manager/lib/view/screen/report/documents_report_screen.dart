@@ -59,7 +59,7 @@ class DocumentsReportScreen extends StatelessWidget {
           ],
           bottom: TabBar(
             onTap: ctrl.setTab,
-            labelColor: colors.brand,
+            labelColor: colors.brandText,
             unselectedLabelColor: colors.textTertiary,
             indicatorColor: colors.brand,
             labelStyle: const TextStyle(
@@ -116,7 +116,7 @@ class _StatsBar extends StatelessWidget {
             child: _StatCard(
               label: 'document_total_required'.tr,
               value: '${s.totalRequired}',
-              color: colors.brand,
+              color: colors.brandText,
               colors: colors,
             ),
           ),

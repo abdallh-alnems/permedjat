@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontFamily: 'Geist',
                 fontSize: 36,
                 fontWeight: FontWeight.w700,
-                color: colors.brand,
+                color: colors.brandText,
                 letterSpacing: -0.02,
               ),
             ),

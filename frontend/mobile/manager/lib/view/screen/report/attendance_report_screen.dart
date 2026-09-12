@@ -147,7 +147,7 @@ class _SummaryCards extends StatelessWidget {
             child: _StatCard(
                 label: 'total_leave'.tr,
                 value: '${summary.totalLeave}',
-                color: colors.brand,
+                color: colors.brandText,
                 colors: colors)),
       ],
     );
@@ -259,7 +259,7 @@ class _AttendanceRow extends StatelessWidget {
               const SizedBox(width: AppSpacing.s2),
               _Badge(
                   label: '${row.daysLeave}',
-                  color: colors.brand,
+                  color: colors.brandText,
                   colors: colors),
               const Spacer(),
               Text(

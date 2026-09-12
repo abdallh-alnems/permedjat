@@ -138,7 +138,7 @@ class _NativeAdWidgetState extends State<NativeAdWidget> {
           size: 12,
         ),
         callToActionTextStyle: NativeTemplateTextStyle(
-          textColor: Colors.white,
+          textColor: colors.onBrand,
           backgroundColor: colors.brand,
           size: 14,
         ),

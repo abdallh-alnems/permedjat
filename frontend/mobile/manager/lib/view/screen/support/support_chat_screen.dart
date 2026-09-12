@@ -188,7 +188,7 @@ class _SupportChatScreenState extends State<SupportChatScreen>
               padding: const EdgeInsets.only(bottom: AppSpacing.s2),
               child: Row(
                 children: [
-                  Icon(Icons.attach_file, size: 16, color: colors.brand),
+                  Icon(Icons.attach_file, size: 16, color: colors.brandText),
                   const SizedBox(width: AppSpacing.s2),
                   Expanded(
                     child: Text(
@@ -256,7 +256,7 @@ class _SupportChatScreenState extends State<SupportChatScreen>
                         height: 20,
                         child: CircularProgressIndicator.adaptive(strokeWidth: 2),
                       )
-                    : Icon(Icons.send_rounded, color: colors.brand),
+                    : Icon(Icons.send_rounded, color: colors.brandText),
               )),
             ],
           ),
@@ -428,7 +428,7 @@ class _AttachmentView extends StatelessWidget {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.description_outlined, size: 16, color: colors.brand),
+          Icon(Icons.description_outlined, size: 16, color: colors.brandText),
           const SizedBox(width: 4),
           Flexible(
             child: Text(
@@ -437,7 +437,7 @@ class _AttachmentView extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 12,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ),

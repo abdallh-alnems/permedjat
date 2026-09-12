@@ -120,7 +120,7 @@ class _ContactCard extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontWeight: FontWeight.w600,
-                    color: colors.brand,
+                    color: colors.brandText,
                   ),
                 ),
               ),
@@ -328,7 +328,7 @@ class _Action extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = panelColors(context);
-    final color = danger ? colors.error : colors.brand;
+    final color = danger ? colors.error : colors.brandText;
 
     return InkWell(
       onTap: onTap,

@@ -52,7 +52,7 @@ export default function CategoryEmployeesPage({
       <div className="flex items-center gap-2">
         <Link
           href="/settings/categories"
-          className="text-brand hover:underline"
+          className="text-brand-text hover:underline"
           aria-label={t("back")}
         >
           <ArrowLeft className="h-4 w-4" />

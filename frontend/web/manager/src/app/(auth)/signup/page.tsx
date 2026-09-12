@@ -136,7 +136,7 @@ export default function SignupPage() {
           </Button>
           <p className="text-label-md text-muted-foreground">
             {t("have_account")}{" "}
-            <Link href="/login" className="text-brand hover:underline">
+            <Link href="/login" className="text-brand-text hover:underline">
               {t("login")}
             </Link>
           </p>

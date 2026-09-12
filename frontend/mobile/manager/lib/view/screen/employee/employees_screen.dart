@@ -49,7 +49,7 @@ class EmployeesScreen extends StatelessWidget {
                                 : Icons.arrow_downward)
                             : null,
                         size: 18,
-                        color: AppColors.of(context).brand,
+                        color: AppColors.of(context).brandText,
                       ),
                       const SizedBox(width: AppSpacing.s2),
                       Text(_sortLabel(s)),
@@ -189,7 +189,7 @@ class EmployeesScreen extends StatelessWidget {
                             fontFamily: 'IBM Plex Sans Arabic',
                             fontSize: 13,
                             color: selected
-                                ? AppColors.of(context).brand
+                                ? AppColors.of(context).brandText
                                 : AppColors.of(context).textSecondary,
                           ),
                         ),
@@ -362,7 +362,7 @@ class _StatsHeader extends StatelessWidget {
         key: null,
         label: 'total_employees'.tr,
         count: counts['total'] ?? 0,
-        color: colors.brand
+        color: colors.brandText
       ),
       (
         key: 'on_leave',
@@ -557,12 +557,12 @@ class _EmptyEmployees extends StatelessWidget {
                   final result = await Get.toNamed<dynamic>(AppRoutes.employeeAdd);
                   if (result == true) unawaited(ctrl.loadEmployees());
                 },
-                icon: const Icon(Icons.person_add_outlined,
-                    size: 18, color: Colors.white),
+                icon: Icon(Icons.person_add_outlined,
+                    size: 18, color: colors.onBrand),
                 label: Text('add_first_employee'.tr),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.brand,
-                  foregroundColor: Colors.white,
+                  foregroundColor: colors.onBrand,
                 ),
               ),
             ],

@@ -22,9 +22,9 @@
         .card{max-width:480px;margin:40px auto;background:#fff;border-radius:14px;padding:32px;box-shadow:0 2px 12px rgba(0,0,0,.06);text-align:center}
         h1{font-size:20px;margin:0 0 12px}
         p{color:#444;font-size:15px;line-height:1.7;margin:0 0 16px}
-        .code{display:inline-block;border:2px solid #0E7C86;border-radius:8px;padding:12px 24px;font-size:26px;font-weight:700;letter-spacing:5px;color:#0E7C86;margin:8px 0 20px}
-        .btn{display:block;background:#0E7C86;color:#fff;text-decoration:none;padding:14px 20px;border-radius:10px;font-weight:600;font-size:16px;margin:10px 0}
-        .btn.alt{background:#fff;color:#0E7C86;border:1.5px solid #0E7C86}
+        .code{display:inline-block;border:2px solid #B8860B;border-radius:8px;padding:12px 24px;font-size:26px;font-weight:700;letter-spacing:5px;color:#B8860B;margin:8px 0 20px}
+        .btn{display:block;background:#B8860B;color:#1A1A1A;text-decoration:none;padding:14px 20px;border-radius:10px;font-weight:600;font-size:16px;margin:10px 0}
+        .btn.alt{background:#fff;color:#715215;border:1.5px solid #B8860B}
         .stores{margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
         .stores a{flex:1;min-width:140px;background:#f1f1f1;color:#333;text-decoration:none;padding:10px;border-radius:8px;font-size:13px}
         .muted{color:#888;font-size:13px;margin-top:18px}

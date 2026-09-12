@@ -94,7 +94,7 @@ class DashboardScreen extends StatelessWidget {
         const SizedBox(height: AppSpacing.s4),
         ...actions.map((action) => ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: Icon(action.icon, color: colors.brand),
+              leading: Icon(action.icon, color: colors.brandText),
               title: Text(
                 action.label,
                 style: const TextStyle(fontFamily: 'IBM Plex Sans Arabic', fontSize: 16),

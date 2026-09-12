@@ -42,7 +42,7 @@ class SecondaryButton extends StatelessWidget {
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: colors.brand,
+                  color: colors.brandText,
                 ),
               ),
       ),

@@ -170,7 +170,7 @@ class _InfoBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, size: 20, color: colors.brand),
+          Icon(Icons.info_outline, size: 20, color: colors.brandText),
           const SizedBox(width: AppSpacing.s2),
           Expanded(
             child: Text(
@@ -178,7 +178,7 @@ class _InfoBanner extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 12,
-                color: colors.brand,
+                color: colors.brandText,
                 height: 1.5,
               ),
             ),
@@ -264,14 +264,14 @@ class _QrPosterAccessButton extends StatelessWidget {
       width: double.infinity,
       child: OutlinedButton.icon(
         onPressed: () => _openBranchPicker(context),
-        icon: Icon(Icons.qr_code_2, size: 18, color: colors.brand),
+        icon: Icon(Icons.qr_code_2, size: 18, color: colors.brandText),
         label: Text(
           'show_branch_qr'.tr,
           style: const TextStyle(
               fontFamily: 'IBM Plex Sans Arabic', fontWeight: FontWeight.w500),
         ),
         style: OutlinedButton.styleFrom(
-          foregroundColor: colors.brand,
+          foregroundColor: colors.brandText,
           side: BorderSide(color: colors.brand),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppRadius.md)),
@@ -352,7 +352,7 @@ class _QrPosterAccessButton extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(Icons.qr_code_2,
-                              size: 22, color: colors.brand),
+                              size: 22, color: colors.brandText),
                           const SizedBox(width: AppSpacing.s3),
                           Expanded(
                             child: Column(
@@ -432,7 +432,7 @@ class _MethodSwitchCard extends StatelessWidget {
         children: [
           Icon(icon,
               size: 22,
-              color: enabled ? colors.brand : colors.textSecondary),
+              color: enabled ? colors.brandText : colors.textSecondary),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
             child: Column(
@@ -444,7 +444,7 @@ class _MethodSwitchCard extends StatelessWidget {
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: enabled ? colors.brand : colors.textPrimary,
+                    color: enabled ? colors.brandText : colors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -500,7 +500,7 @@ class _ManualMethodCard extends StatelessWidget {
                   Icon(Icons.person_outline,
                       size: 22,
                       color:
-                          manualEnabled ? colors.brand : colors.textSecondary),
+                          manualEnabled ? colors.brandText : colors.textSecondary),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
                     child: Column(
@@ -513,7 +513,7 @@ class _ManualMethodCard extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: manualEnabled
-                                ? colors.brand
+                                ? colors.brandText
                                 : colors.textPrimary,
                           ),
                         ),
@@ -667,7 +667,7 @@ class _ManualAdminsSubSectionState extends State<_ManualAdminsSubSection> {
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: colors.brand,
+                  foregroundColor: colors.brandText,
                   side: BorderSide(color: colors.brand),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppRadius.md),
@@ -929,7 +929,7 @@ class _AdminPickerSheetState extends State<_AdminPickerSheet> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colors.brand,
-                    foregroundColor: Colors.white,
+                    foregroundColor: colors.onBrand,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppRadius.md),
                     ),
@@ -1032,7 +1032,7 @@ class _BranchTile extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: 'IBM Plex Sans Arabic',
                             fontSize: 10,
-                            color: colors.brand,
+                            color: colors.brandText,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -1067,7 +1067,7 @@ class _BranchTile extends StatelessWidget {
             IconButton(
               tooltip: 'set_branch_gps'.tr,
               icon: Icon(Icons.location_on_outlined,
-                  size: 20, color: colors.brand),
+                  size: 20, color: colors.brandText),
               onPressed: () => showBranchLocationSheet(
                 context,
                 branchId: branch.id,
@@ -1083,7 +1083,7 @@ class _BranchTile extends StatelessWidget {
             IconButton(
               tooltip: 'show_branch_qr'.tr,
               icon: Icon(Icons.qr_code_2,
-                  size: 20, color: colors.brand),
+                  size: 20, color: colors.brandText),
               onPressed: () => Get.toNamed<void>(
                 AppRoutes.branchQrPoster,
                 arguments: {'branch': branch},
@@ -1312,7 +1312,7 @@ class _BranchTile extends StatelessWidget {
                                     ? Icons.location_on
                                     : Icons.add_location_alt_outlined,
                                 color: hasLoc
-                                    ? colors.brand
+                                    ? colors.brandText
                                     : colors.textSecondary,
                               ),
                               const SizedBox(width: AppSpacing.s3),
@@ -1330,7 +1330,7 @@ class _BranchTile extends StatelessWidget {
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
                                         color: hasLoc
-                                            ? colors.brand
+                                            ? colors.brandText
                                             : colors.textPrimary,
                                       ),
                                     ),
@@ -1422,7 +1422,7 @@ class _BranchTile extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.of(context).brand,
-                        foregroundColor: Colors.white,
+                        foregroundColor: AppColors.of(context).onBrand,
                         padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.s3),
                         shape: RoundedRectangleBorder(
@@ -1511,7 +1511,7 @@ class _BranchMethodSwitch extends StatelessWidget {
                 color: disabled
                     ? colors.textTertiary
                     : enabled
-                        ? colors.brand
+                        ? colors.brandText
                         : colors.textPrimary,
               ),
             ),
@@ -1555,7 +1555,7 @@ class _RejectMockLocationCard extends StatelessWidget {
             children: [
               Icon(Icons.wrong_location_outlined,
                   size: 22,
-                  color: enabled ? colors.brand : colors.textSecondary),
+                  color: enabled ? colors.brandText : colors.textSecondary),
               const SizedBox(width: AppSpacing.s3),
               Expanded(
                 child: Column(
@@ -1567,7 +1567,7 @@ class _RejectMockLocationCard extends StatelessWidget {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: enabled ? colors.brand : colors.textPrimary,
+                        color: enabled ? colors.brandText : colors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -1628,7 +1628,7 @@ class _RequireLocalBiometricCard extends StatelessWidget {
             children: [
               Icon(Icons.fingerprint,
                   size: 22,
-                  color: enabled ? colors.brand : colors.textSecondary),
+                  color: enabled ? colors.brandText : colors.textSecondary),
               const SizedBox(width: AppSpacing.s3),
               Expanded(
                 child: Column(
@@ -1640,7 +1640,7 @@ class _RequireLocalBiometricCard extends StatelessWidget {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: enabled ? colors.brand : colors.textPrimary,
+                        color: enabled ? colors.brandText : colors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -1697,7 +1697,7 @@ class _OfflineModeCard extends StatelessWidget {
             children: [
               Icon(Icons.cloud_off_outlined,
                   size: 22,
-                  color: enabled ? colors.brand : colors.textSecondary),
+                  color: enabled ? colors.brandText : colors.textSecondary),
               const SizedBox(width: AppSpacing.s3),
               Expanded(
                 child: Column(
@@ -1709,7 +1709,7 @@ class _OfflineModeCard extends StatelessWidget {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: enabled ? colors.brand : colors.textPrimary,
+                        color: enabled ? colors.brandText : colors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -1768,7 +1768,7 @@ class _GpsOnlyMethodCard extends StatelessWidget {
                 children: [
                   Icon(Icons.location_on_outlined,
                       size: 22,
-                      color: enabled ? colors.brand : colors.textSecondary),
+                      color: enabled ? colors.brandText : colors.textSecondary),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
                     child: Column(
@@ -1781,7 +1781,7 @@ class _GpsOnlyMethodCard extends StatelessWidget {
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color:
-                                enabled ? colors.brand : colors.textPrimary,
+                                enabled ? colors.brandText : colors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -1859,7 +1859,7 @@ class _WifiMethodCard extends StatelessWidget {
                 children: [
                   Icon(Icons.wifi,
                       size: 22,
-                      color: enabled ? colors.brand : colors.textSecondary),
+                      color: enabled ? colors.brandText : colors.textSecondary),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
                     child: Column(
@@ -1871,7 +1871,7 @@ class _WifiMethodCard extends StatelessWidget {
                             fontFamily: 'IBM Plex Sans Arabic',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: enabled ? colors.brand : colors.textPrimary,
+                            color: enabled ? colors.brandText : colors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -1950,7 +1950,7 @@ class _DeviceMethodCard extends StatelessWidget {
                 children: [
                   Icon(Icons.fingerprint,
                       size: 22,
-                      color: enabled ? colors.brand : colors.textSecondary),
+                      color: enabled ? colors.brandText : colors.textSecondary),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
                     child: Column(
@@ -1962,7 +1962,7 @@ class _DeviceMethodCard extends StatelessWidget {
                             fontFamily: 'IBM Plex Sans Arabic',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: enabled ? colors.brand : colors.textPrimary,
+                            color: enabled ? colors.brandText : colors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -2100,7 +2100,7 @@ class _BranchNetworksPicker extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 11,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                     Icon(Icons.chevron_left,
@@ -2142,7 +2142,7 @@ class _FaceMethodCard extends StatelessWidget {
                 children: [
                   Icon(Icons.face_retouching_natural_outlined,
                       size: 22,
-                      color: enabled ? colors.brand : colors.textSecondary),
+                      color: enabled ? colors.brandText : colors.textSecondary),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
                     child: Column(
@@ -2154,7 +2154,7 @@ class _FaceMethodCard extends StatelessWidget {
                             fontFamily: 'IBM Plex Sans Arabic',
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: enabled ? colors.brand : colors.textPrimary,
+                            color: enabled ? colors.brandText : colors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -2248,7 +2248,7 @@ class _FaceSettingsPanelState extends State<_FaceSettingsPanel> {
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: colors.brand,
+                  color: colors.brandText,
                 ),
               ),
             ],
@@ -2400,7 +2400,7 @@ class _ModeChip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 12,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),
@@ -2452,7 +2452,7 @@ class _CompanyLocationCard extends StatelessWidget {
                 Icon(
                   has ? Icons.location_on : Icons.add_location_alt_outlined,
                   size: 22,
-                  color: has ? colors.brand : colors.textSecondary,
+                  color: has ? colors.brandText : colors.textSecondary,
                 ),
                 const SizedBox(width: AppSpacing.s3),
                 Expanded(
@@ -2465,7 +2465,7 @@ class _CompanyLocationCard extends StatelessWidget {
                           fontFamily: 'IBM Plex Sans Arabic',
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: has ? colors.brand : colors.textPrimary,
+                          color: has ? colors.brandText : colors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -2519,7 +2519,7 @@ class _SummaryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.fingerprint, color: Colors.white, size: 22),
+              Icon(Icons.fingerprint, color: colors.onBrand, size: 22),
               const SizedBox(width: AppSpacing.s2),
               Text(
                 'company_default'.tr,
@@ -2651,7 +2651,7 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
                       color: colors.brandSubtle,
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
-                    child: Icon(widget.icon, size: 20, color: colors.brand),
+                    child: Icon(widget.icon, size: 20, color: colors.brandText),
                   ),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
@@ -2747,7 +2747,7 @@ class _MethodChips extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 10,
-                    color: colors.brand,
+                    color: colors.brandText,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -2925,7 +2925,7 @@ class _EmployeeOverridesSection extends StatelessWidget {
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontWeight: FontWeight.w500)),
             style: OutlinedButton.styleFrom(
-              foregroundColor: colors.brand,
+              foregroundColor: colors.brandText,
               side: BorderSide(color: colors.brand),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppRadius.md)),
@@ -3091,7 +3091,7 @@ class _MethodsOverrideSheetState extends State<_MethodsOverrideSheet> {
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colors.brand,
-                    foregroundColor: Colors.white,
+                    foregroundColor: colors.onBrand,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.md)),
                     padding:
@@ -3136,7 +3136,7 @@ class _MethodsOverrideSheetState extends State<_MethodsOverrideSheet> {
           child: Row(
             children: [
               Icon(on ? Icons.check_circle : Icons.circle_outlined,
-                  size: 20, color: on ? colors.brand : colors.textTertiary),
+                  size: 20, color: on ? colors.brandText : colors.textTertiary),
               const SizedBox(width: AppSpacing.s3),
               Text(
                 methodLabel(m),
@@ -3144,7 +3144,7 @@ class _MethodsOverrideSheetState extends State<_MethodsOverrideSheet> {
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
-                  color: on ? colors.brand : colors.textPrimary,
+                  color: on ? colors.brandText : colors.textPrimary,
                 ),
               ),
             ],
@@ -3381,7 +3381,7 @@ class _KioskMethodCard extends StatelessWidget {
                 children: [
                   Icon(Icons.tablet_android,
                       size: 22,
-                      color: enabled ? colors.brand : colors.textSecondary),
+                      color: enabled ? colors.brandText : colors.textSecondary),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
                     child: Column(
@@ -3600,7 +3600,7 @@ class _WebToggleCard extends StatelessWidget {
       child: Row(
         children: [
           Icon(icon,
-              size: 22, color: value ? colors.brand : colors.textSecondary),
+              size: 22, color: value ? colors.brandText : colors.textSecondary),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
             child: Column(
@@ -3612,7 +3612,7 @@ class _WebToggleCard extends StatelessWidget {
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: value ? colors.brand : colors.textPrimary,
+                    color: value ? colors.brandText : colors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -3788,7 +3788,7 @@ class _CategoryWebAccessRow extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'IBM Plex Sans Arabic',
                       fontSize: 12,
-                      color: value == false ? colors.textSecondary : colors.brand,
+                      color: value == false ? colors.textSecondary : colors.brandText,
                     ),
                   ),
                   const SizedBox(width: 4),

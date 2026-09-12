@@ -20,11 +20,11 @@ class AppTheme {
       colorScheme: ColorScheme(
         brightness: brightness,
         primary: c.brand,
-        onPrimary: Colors.white,
+        onPrimary: c.onBrand,
         primaryContainer: c.brandSubtle,
-        onPrimaryContainer: c.brand,
+        onPrimaryContainer: c.onBrandSubtle,
         secondary: c.accentWarm,
-        onSecondary: Colors.white,
+        onSecondary: c.onAccentWarm,
         error: c.error,
         onError: Colors.white,
         surface: c.surface,
@@ -100,7 +100,7 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: c.brand,
-          foregroundColor: Colors.white,
+          foregroundColor: c.onBrand,
           elevation: 0,
           shadowColor: Colors.transparent,
           minimumSize: const Size.fromHeight(52),
@@ -116,7 +116,7 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: c.brand,
+          foregroundColor: c.brandText,
           minimumSize: const Size.fromHeight(52),
           side: BorderSide(color: c.borderHairline),
           shape: RoundedRectangleBorder(
@@ -131,7 +131,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: c.brand,
+          foregroundColor: c.brandText,
           textStyle: const TextStyle(
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 14,
@@ -141,7 +141,7 @@ class AppTheme {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: c.surface,
-        selectedItemColor: c.brand,
+        selectedItemColor: c.brandText,
         unselectedItemColor: c.textTertiary,
         type: BottomNavigationBarType.fixed,
         elevation: 0,

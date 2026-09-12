@@ -162,7 +162,7 @@ export default function InstallPage() {
             </>
           ) : inDesktop ? (
             <>
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/15 text-brand">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/15 text-brand-text">
                 <AppWindow className="h-6 w-6" aria-hidden />
               </span>
               <div>
@@ -216,7 +216,7 @@ export default function InstallPage() {
             /* Installable, but the browser has not offered a prompt (already
                dismissed, or it only ever installs from its own menu). */
             <>
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/15 text-brand">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/15 text-brand-text">
                 <Download className="h-6 w-6" aria-hidden />
               </span>
               <p className="text-body-md text-text-secondary">
@@ -269,7 +269,7 @@ export default function InstallPage() {
           ].map(({ icon: Icon, title, body }) => (
             <Card key={title}>
               <CardContent className="py-5">
-                <Icon className="h-5 w-5 text-brand" aria-hidden />
+                <Icon className="h-5 w-5 text-brand-text" aria-hidden />
                 <p className="mt-3 text-label-lg font-semibold text-foreground">
                   {t(title as TKey)}
                 </p>

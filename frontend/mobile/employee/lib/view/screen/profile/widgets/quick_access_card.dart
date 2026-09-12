@@ -35,7 +35,7 @@ class QuickAccessCard extends StatelessWidget {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                Icon(icon, size: 28, color: brand),
+                Icon(icon, size: 28, color: AppColors.brandText(context)),
                 if (badge != null)
                   Positioned(
                     right: -8,
@@ -50,8 +50,8 @@ class QuickAccessCard extends StatelessWidget {
                       child: Text(
                         badge!,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.of(context).onBrand,
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
                         ),

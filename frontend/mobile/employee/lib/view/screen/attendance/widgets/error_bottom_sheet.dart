@@ -74,7 +74,7 @@ class ErrorBottomSheet extends StatelessWidget {
                   onPressed: onRetry,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colors.brand,
-                    foregroundColor: Colors.white,
+                    foregroundColor: colors.onBrand,
                     padding: const EdgeInsets.symmetric(vertical: AppSpacing.s3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppRadius.md),

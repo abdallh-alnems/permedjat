@@ -140,7 +140,7 @@ class StatusPill extends StatelessWidget {
       PillTone.success => colors.success,
       PillTone.error => colors.error,
       PillTone.warning => colors.warning,
-      PillTone.brand => colors.brand,
+      PillTone.brand => colors.brandText,
       PillTone.neutral => colors.textSecondary,
     };
 

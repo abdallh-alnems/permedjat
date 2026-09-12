@@ -82,7 +82,7 @@ class NotificationPrefsScreen extends StatelessWidget {
                         : () => controller.savePrefs(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.brand,
-                      foregroundColor: Colors.white,
+                      foregroundColor: colors.onBrand,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.sm),

@@ -212,7 +212,7 @@ class _ShiftMembersScreenState extends State<ShiftMembersScreen> {
           ),
           TextButton(
             onPressed: () => Get.back<bool>(result: true),
-            style: TextButton.styleFrom(foregroundColor: colors.brand),
+            style: TextButton.styleFrom(foregroundColor: colors.brandText),
             child: Text('confirm'.tr),
           ),
         ],
@@ -269,10 +269,10 @@ class _ShiftMembersScreenState extends State<ShiftMembersScreen> {
         heroTag: 'fab_shift_members',
         onPressed: _openAddSheet,
         backgroundColor: colors.brand,
-        icon: const Icon(Icons.person_add_alt_1, color: Colors.white),
+        icon: Icon(Icons.person_add_alt_1, color: colors.onBrand),
         label: Text(
           'shift_add_member'.tr,
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: colors.onBrand),
         ),
       ),
       body: RefreshIndicator(
@@ -385,7 +385,7 @@ class _MemberTile extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'IBM Plex Sans Arabic',
                       fontWeight: FontWeight.w700,
-                      color: colors.brand,
+                      color: colors.brandText,
                     ),
                   )
                 : null,
@@ -535,7 +535,7 @@ class _AddMembersSheetState extends State<_AddMembersSheet> {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     )),
             ],
@@ -622,7 +622,7 @@ class _AddMembersSheetState extends State<_AddMembersSheet> {
                       fontFamily: 'IBM Plex Sans Arabic',
                       fontSize: 13,
                       color:
-                          _onlyUnassigned ? colors.brand : colors.textSecondary,
+                          _onlyUnassigned ? colors.brandText : colors.textSecondary,
                     ),
                     selectedColor: colors.brandSubtle,
                   ),

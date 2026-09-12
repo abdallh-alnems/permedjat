@@ -124,7 +124,7 @@ class _SummaryCards extends StatelessWidget {
                 child: _StatCard(
                     label: 'total_leaves'.tr,
                     value: '${summary.totalLeaves}',
-                    color: colors.brand,
+                    color: colors.brandText,
                     colors: colors)),
             const SizedBox(width: AppSpacing.s2),
             Expanded(
@@ -269,7 +269,7 @@ class _LeaveRow extends StatelessWidget {
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
-                    color: colors.brand,
+                    color: colors.brandText,
                   ),
                 ),
               ),

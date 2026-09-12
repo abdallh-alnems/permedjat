@@ -136,7 +136,7 @@ export default function EmployeeDetailPage({
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <button onClick={() => router.back()} className="text-brand">
+        <button onClick={() => router.back()} className="text-brand-text">
           <ArrowRight className="h-4 w-4" />
         </button>
         <h1 className="flex-1 text-headline-md font-bold">{employee.name}</h1>

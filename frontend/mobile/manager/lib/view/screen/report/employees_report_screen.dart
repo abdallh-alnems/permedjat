@@ -111,7 +111,7 @@ class _SummaryCards extends StatelessWidget {
                 child: _StatCard(
                     label: 'total_employees'.tr,
                     value: '${summary.totalEmployees}',
-                    color: colors.brand,
+                    color: colors.brandText,
                     colors: colors)),
             const SizedBox(width: AppSpacing.s2),
             Expanded(
@@ -137,7 +137,7 @@ class _SummaryCards extends StatelessWidget {
                 child: _StatCard(
                     label: 'branch_count'.tr,
                     value: '${summary.branchCount}',
-                    color: colors.brand,
+                    color: colors.brandText,
                     colors: colors)),
           ],
         ),
@@ -302,7 +302,7 @@ class _StatusBadge extends StatelessWidget {
       case 'pending_activation':
         return colors.warning;
       case 'on_leave':
-        return colors.brand;
+        return colors.brandText;
       case 'suspended':
         return colors.error;
       default:

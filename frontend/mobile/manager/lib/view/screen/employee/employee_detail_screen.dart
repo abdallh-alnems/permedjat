@@ -140,7 +140,7 @@ class EmployeeDetailScreen extends StatelessWidget {
                         child: TabBar(
                           isScrollable: true,
                           tabAlignment: TabAlignment.start,
-                          labelColor: AppColors.of(context).brand,
+                          labelColor: AppColors.of(context).brandText,
                           unselectedLabelColor:
                               AppColors.of(context).textSecondary,
                           indicatorColor: AppColors.of(context).brand,
@@ -234,7 +234,7 @@ class _ProfileHeader extends StatelessWidget {
                         fontFamily: 'Geist',
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     )
                   : null,
@@ -416,7 +416,7 @@ class _ActivationHeader extends StatelessWidget {
       badgeText = 'employee_active_simple'.tr;
       badgeIcon = Icons.check_circle;
     } else if (hasCode) {
-      badgeColor = colors.brand;
+      badgeColor = colors.brandText;
       badgeText = 'pending_activation'.tr;
       badgeIcon = Icons.pending_actions;
     } else {
@@ -450,7 +450,7 @@ class _ActivationHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadius.sm),
               border: Border.all(color: colors.brand.withValues(alpha: 0.2)),
             ),
-            child: Icon(Icons.key_rounded, size: 20, color: colors.brand),
+            child: Icon(Icons.key_rounded, size: 20, color: colors.brandText),
           ),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
@@ -569,14 +569,14 @@ class _ActivationActiveBody extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed:
                   isBusy ? null : () => _confirmDeviceReset(context, ctrl),
-              icon: Icon(Icons.phonelink_setup, size: 18, color: colors.brand),
+              icon: Icon(Icons.phonelink_setup, size: 18, color: colors.brandText),
               label: Text(
                 'reset_and_create_code'.tr,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               style: OutlinedButton.styleFrom(
-                foregroundColor: colors.brand,
+                foregroundColor: colors.brandText,
                 side: BorderSide(color: colors.brand),
                 padding:
                     const EdgeInsets.symmetric(vertical: AppSpacing.s3),
@@ -643,12 +643,12 @@ class _ActivationCodeBody extends StatelessWidget {
                       child: Center(
                         child: SelectableText(
                           _formatCode(ctrl.activationCode ?? ''),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontFamily: 'Geist',
                             fontSize: 36,
                             fontWeight: FontWeight.w800,
                             letterSpacing: 8,
-                            color: Colors.white,
+                            color: colors.onBrand,
                           ),
                         ),
                       ),
@@ -673,16 +673,16 @@ class _ActivationCodeBody extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.content_copy_rounded,
-                                size: 14, color: Colors.white),
+                            Icon(Icons.content_copy_rounded,
+                                size: 14, color: colors.onBrand),
                             const SizedBox(width: 6),
                             Text(
                               'copy_code'.tr,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontFamily: 'IBM Plex Sans Arabic',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                                color: colors.onBrand,
                               ),
                             ),
                           ],
@@ -721,7 +721,7 @@ class _ActivationCodeBody extends StatelessWidget {
                 icon: const Icon(Icons.link, size: 16),
                 label: Text('copy_link'.tr),
                 style:
-                    OutlinedButton.styleFrom(foregroundColor: colors.brand),
+                    OutlinedButton.styleFrom(foregroundColor: colors.brandText),
               ),
             ),
           ],
@@ -782,7 +782,7 @@ class _ActivationCodeBody extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               style: OutlinedButton.styleFrom(
-                foregroundColor: colors.brand,
+                foregroundColor: colors.brandText,
                 side: BorderSide(color: colors.brand),
                 padding:
                     const EdgeInsets.symmetric(vertical: AppSpacing.s3),
@@ -859,7 +859,7 @@ class _ActivationEmptyBody extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Icon(Icons.phonelink_lock_outlined,
-                size: 28, color: colors.brand),
+                size: 28, color: colors.brandText),
           ),
           const SizedBox(height: AppSpacing.s3),
           Text(
@@ -1022,7 +1022,7 @@ void _showCodeShareSheet(EmployeeDetailController ctrl) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.phone_iphone, size: 18, color: colors.brand),
+                          Icon(Icons.phone_iphone, size: 18, color: colors.brandText),
                           const SizedBox(width: AppSpacing.s2),
                           Text(
                             phone,
@@ -1057,7 +1057,7 @@ void _showCodeShareSheet(EmployeeDetailController ctrl) {
                         fontSize: 34,
                         fontWeight: FontWeight.w800,
                         letterSpacing: 6,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                   ),
@@ -1166,7 +1166,7 @@ class _LeaveBalanceCard extends StatelessWidget {
           Row(
             children: [
               Icon(Icons.beach_access_outlined,
-                  size: 18, color: colors.brand),
+                  size: 18, color: colors.brandText),
               const SizedBox(width: AppSpacing.s2),
               Text('leave_balance'.tr, style: AppTextStyles.h3(context)),
               const Spacer(),
@@ -1406,7 +1406,7 @@ class _InfoCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.info_outline, size: 18, color: colors.brand),
+              Icon(Icons.info_outline, size: 18, color: colors.brandText),
               const SizedBox(width: AppSpacing.s2),
               Expanded(
                 child: Text('profile_overview'.tr,
@@ -1418,7 +1418,7 @@ class _InfoCard extends StatelessWidget {
                 IconButton(
                   onPressed: () => _showEditInfoSheet(context, ctrl),
                   icon: Icon(Icons.edit_outlined,
-                      size: 18, color: colors.brand),
+                      size: 18, color: colors.brandText),
                   tooltip: 'edit_basic_info'.tr,
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
@@ -2059,7 +2059,7 @@ class _SectionLabel extends StatelessWidget {
           fontFamily: 'IBM Plex Sans Arabic',
           fontSize: 12,
           fontWeight: FontWeight.w700,
-          color: colors.brand,
+          color: colors.brandText,
           letterSpacing: 0.5,
         ),
       ),
@@ -2360,7 +2360,7 @@ class _AttendancePeriodSelector extends StatelessWidget {
                             p.$3,
                             size: 14,
                             color: isActive
-                                ? Colors.white
+                                ? colors.onBrand
                                 : colors.textSecondary,
                           ),
                           const SizedBox(width: 6),
@@ -2371,7 +2371,7 @@ class _AttendancePeriodSelector extends StatelessWidget {
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: isActive
-                                  ? Colors.white
+                                  ? colors.onBrand
                                   : colors.textPrimary,
                             ),
                           ),
@@ -2399,7 +2399,7 @@ class _AttendancePeriodSelector extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(Icons.calendar_today_outlined,
-                      size: 16, color: colors.brand),
+                      size: 16, color: colors.brandText),
                   const SizedBox(width: AppSpacing.s2),
                   Expanded(
                     child: Text(
@@ -2426,7 +2426,7 @@ class _AttendancePeriodSelector extends StatelessWidget {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                   ),
@@ -2592,7 +2592,7 @@ class _AttendanceSummaryCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.s2),
             Row(
               children: [
-                Icon(Icons.schedule, size: 14, color: colors.brand),
+                Icon(Icons.schedule, size: 14, color: colors.brandText),
                 const SizedBox(width: AppSpacing.s2),
                 Expanded(
                   child: Text(
@@ -3387,7 +3387,7 @@ void _showDayEditorSheet(
                           borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
                         child: Icon(Icons.edit_calendar_outlined,
-                            size: 20, color: colors.brand),
+                            size: 20, color: colors.brandText),
                       ),
                       const SizedBox(width: AppSpacing.s3),
                       Expanded(
@@ -3520,7 +3520,7 @@ void _showDayEditorSheet(
                             label: 'check_out_time_label'.tr,
                             icon: Icons.logout,
                             time: checkOut,
-                            color: colors.brand,
+                            color: colors.brandText,
                             onTap: () => pickTime(checkOut, (v) {
                               checkOut = v;
                             }),
@@ -3569,7 +3569,7 @@ void _showDayEditorSheet(
                                 child: Icon(opt.icon,
                                     size: 18,
                                     color: sel
-                                        ? Colors.white
+                                        ? colors.onBrand
                                         : colors.textSecondary),
                               ),
                               const SizedBox(width: AppSpacing.s3),
@@ -3585,7 +3585,7 @@ void _showDayEditorSheet(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: sel
-                                            ? colors.brand
+                                            ? colors.brandText
                                             : colors.textPrimary,
                                       ),
                                     ),
@@ -3607,7 +3607,7 @@ void _showDayEditorSheet(
                                     : Icons.radio_button_unchecked,
                                 size: 20,
                                 color:
-                                    sel ? colors.brand : colors.borderHairline,
+                                    sel ? colors.brandText : colors.borderHairline,
                               ),
                             ],
                           ),
@@ -3670,7 +3670,7 @@ void _showDayEditorSheet(
                               Icon(o.$3,
                                   size: 20,
                                   color: sel
-                                      ? colors.brand
+                                      ? colors.brandText
                                       : colors.textSecondary),
                               const SizedBox(width: AppSpacing.s3),
                               Expanded(
@@ -3681,7 +3681,7 @@ void _showDayEditorSheet(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
                                     color: sel
-                                        ? colors.brand
+                                        ? colors.brandText
                                         : colors.textPrimary,
                                   ),
                                 ),
@@ -3692,7 +3692,7 @@ void _showDayEditorSheet(
                                     : Icons.radio_button_unchecked,
                                 size: 20,
                                 color: sel
-                                    ? colors.brand
+                                    ? colors.brandText
                                     : colors.borderHairline,
                               ),
                             ],
@@ -4247,7 +4247,7 @@ class _FinancialSummaryCard extends StatelessWidget {
             onPressed: () => Get.back<bool>(result: true),
             style: ElevatedButton.styleFrom(
               backgroundColor: colors.warning,
-              foregroundColor: Colors.white,
+              foregroundColor: colors.onWarning,
             ),
             child: Text('payroll_revert'.tr),
           ),
@@ -4271,7 +4271,7 @@ class _FinancialSummaryCard extends StatelessWidget {
     final resultAmount = partial ? f.earnedToDate : f.netSalary;
     final statusColor = f.status == 'paid'
         ? colors.success
-        : (f.status == 'approved' ? colors.brand : colors.warning);
+        : (f.status == 'approved' ? colors.brandText : colors.warning);
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.s4),
@@ -4303,7 +4303,7 @@ class _FinancialSummaryCard extends StatelessWidget {
                             fontFamily: 'Geist',
                             fontSize: 32,
                             fontWeight: FontWeight.w800,
-                            color: colors.brand,
+                            color: colors.brandText,
                             height: 1.0,
                           ),
                           children: [
@@ -4451,7 +4451,7 @@ class _FinancialSummaryCard extends StatelessWidget {
                   label: Text('payroll_approve'.tr),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colors.brand,
-                    foregroundColor: Colors.white,
+                    foregroundColor: colors.onBrand,
                     padding:
                         const EdgeInsets.symmetric(vertical: AppSpacing.s3),
                   ),
@@ -4566,7 +4566,7 @@ class _FinancialBreakdownCard extends StatelessWidget {
                 ? 'full_cycle_net_label'.tr
                 : 'net_salary_full_label'.tr,
             amount: '${_money(f.netSalary)} $currency',
-            color: colors.brand,
+            color: colors.brandText,
           ),
         ],
       ),
@@ -4708,7 +4708,7 @@ class _BankPaymentCard extends StatelessWidget {
           if (bankName.isNotEmpty)
             Row(
               children: [
-                Icon(Icons.account_balance, size: 16, color: colors.brand),
+                Icon(Icons.account_balance, size: 16, color: colors.brandText),
                 const SizedBox(width: AppSpacing.s2),
                 Expanded(
                   child: Text(
@@ -4851,7 +4851,7 @@ class _LoansCard extends StatelessWidget {
             fontFamily: 'Geist',
             fontSize: 12,
             fontWeight: FontWeight.w700,
-            color: colors.brand,
+            color: colors.brandText,
           ),
         ),
       ),
@@ -4879,7 +4879,7 @@ class _LoanTile extends StatelessWidget {
         ? (loan.installmentsPaid / loan.installmentsCount).clamp(0.0, 1.0)
         : 0.0;
     final isPending = loan.status == 'pending';
-    final statusColor = isPending ? colors.warning : colors.brand;
+    final statusColor = isPending ? colors.warning : colors.brandText;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.s3),
@@ -5138,7 +5138,7 @@ class _FinancialAttendanceCard extends StatelessWidget {
                             icon: Icons.work_history_outlined,
                             label: 'worked_hours_label'.tr,
                             value: _fmtHM(f.attWorkedMinutes),
-                            color: colors.brand,
+                            color: colors.brandText,
                           ),
                         ),
                         _MetricDivider(color: colors.borderHairline),
@@ -5275,7 +5275,7 @@ class _CollapsibleSectionState extends State<_CollapsibleSection> {
                 padding: const EdgeInsets.all(AppSpacing.s4),
                 child: Row(
                   children: [
-                    Icon(widget.icon, size: 18, color: colors.brand),
+                    Icon(widget.icon, size: 18, color: colors.brandText),
                     const SizedBox(width: AppSpacing.s2),
                     Expanded(
                       child: Text(widget.title,
@@ -5931,7 +5931,7 @@ void _showAdjustmentDetailSheet(
                     icon: const Icon(Icons.edit_outlined, size: 18),
                     label: Text('adjustment_edit'.tr),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: colors.brand,
+                      foregroundColor: colors.brandText,
                       side: BorderSide(color: colors.brand),
                       padding:
                           const EdgeInsets.symmetric(vertical: AppSpacing.s3),
@@ -5999,7 +5999,7 @@ void _showAdjustmentDetailSheet(
                     icon: const Icon(Icons.tune, size: 18),
                     label: Text('adjustment_override_value'.tr),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: colors.brand,
+                      foregroundColor: colors.brandText,
                       side: BorderSide(color: colors.brand),
                       padding:
                           const EdgeInsets.symmetric(vertical: AppSpacing.s3),
@@ -6131,7 +6131,7 @@ Future<void> _showOverrideAmountDialog(
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: colors.brand,
-            foregroundColor: Colors.white,
+            foregroundColor: colors.onBrand,
           ),
           child: Text('save'.tr),
         ),
@@ -6249,7 +6249,7 @@ class _PayslipDownloadButtonState extends State<_PayslipDownloadButton> {
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: colors.brand,
-          foregroundColor: Colors.white,
+          foregroundColor: colors.onBrand,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
@@ -6283,7 +6283,7 @@ class _AllowancesCard extends StatelessWidget {
       trailing: items.isEmpty
           ? IconButton(
               onPressed: () => _showAllowanceSheet(context, ctrl),
-              icon: Icon(Icons.add, color: colors.brand),
+              icon: Icon(Icons.add, color: colors.brandText),
               tooltip: 'allowance_add'.tr,
               visualDensity: VisualDensity.compact,
             )
@@ -6309,7 +6309,7 @@ class _AllowancesCard extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () => _showAllowanceSheet(context, ctrl),
-                  icon: Icon(Icons.add, color: colors.brand),
+                  icon: Icon(Icons.add, color: colors.brandText),
                   tooltip: 'allowance_add'.tr,
                   visualDensity: VisualDensity.compact,
                 ),
@@ -6531,7 +6531,7 @@ void _showAllowanceSheet(
                           borderRadius: BorderRadius.circular(AppRadius.sm),
                         ),
                         child: Icon(Icons.workspace_premium_outlined,
-                            color: colors.brand, size: 20),
+                            color: colors.brandText, size: 20),
                       ),
                       const SizedBox(width: AppSpacing.s3),
                       Expanded(
@@ -6747,7 +6747,7 @@ void _showAllowanceSheet(
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: colors.brand,
-                            foregroundColor: Colors.white,
+                            foregroundColor: colors.onBrand,
                           ),
                         ),
                       ),
@@ -6803,7 +6803,7 @@ class _EosbCard extends StatelessWidget {
                             fontFamily: 'Geist',
                             fontSize: 26,
                             fontWeight: FontWeight.w800,
-                            color: colors.brand,
+                            color: colors.brandText,
                             height: 1.0,
                           ),
                           children: [
@@ -6837,7 +6837,7 @@ class _EosbCard extends StatelessWidget {
                       fontFamily: 'Geist',
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: colors.brand,
+                      color: colors.brandText,
                     ),
                   ),
                 ),
@@ -6857,7 +6857,7 @@ class _EosbCard extends StatelessWidget {
                     label: 'eosb_years_label'.tr,
                     value: 'eosb_years_value'
                         .trParams({'years': _years(e.yearsOfService)}),
-                    color: colors.brand,
+                    color: colors.brandText,
                   ),
                 ),
                 _MetricDivider(color: colors.borderHairline),
@@ -7083,7 +7083,7 @@ class _SalaryTrendCard extends StatelessWidget {
             fontFamily: 'Geist',
             fontSize: 11,
             fontWeight: FontWeight.w700,
-            color: colors.brand,
+            color: colors.brandText,
           ),
         ),
       ),
@@ -7229,7 +7229,7 @@ class _SalaryHistoryCard extends StatelessWidget {
           _SalaryHistoryRow(
             amount: '${_money(currentBase)} $currency',
             subtitle: 'salary_history_current'.tr,
-            color: colors.brand,
+            color: colors.brandText,
             isCurrent: true,
           ),
           for (final s in history) ...[
@@ -7298,7 +7298,7 @@ class _SalaryHistoryRow extends StatelessWidget {
                     fontFamily: 'Geist',
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: isCurrent ? colors.brand : colors.textPrimary,
+                    color: isCurrent ? colors.brandText : colors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -7364,7 +7364,7 @@ class _PayrollHistoryTile extends StatelessWidget {
     final label = '${'month_$monthIdx'.tr} $year';
     final statusColor = entry.status == 'paid'
         ? colors.success
-        : (entry.status == 'approved' ? colors.brand : colors.warning);
+        : (entry.status == 'approved' ? colors.brandText : colors.warning);
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.s3),
@@ -7501,7 +7501,7 @@ class _DocumentsTab extends StatelessWidget {
                 Row(
                   children: [
                     Icon(Icons.folder_outlined,
-                        size: 18, color: colors.brand),
+                        size: 18, color: colors.brandText),
                     const SizedBox(width: AppSpacing.s2),
                     Text('requested_documents'.tr,
                         style: AppTextStyles.h3(context)),
@@ -7513,7 +7513,7 @@ class _DocumentsTab extends StatelessWidget {
                           fontFamily: 'Geist',
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: colors.brand,
+                          color: colors.brandText,
                         ),
                       ),
                   ],
@@ -7557,7 +7557,7 @@ class _DocumentsTab extends StatelessWidget {
                       label: Text('request_document'.tr),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.brand,
-                        foregroundColor: Colors.white,
+                        foregroundColor: colors.onBrand,
                         padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.s3),
                       ),
@@ -7600,7 +7600,7 @@ void _showDocReviewSheet(
             ),
             if (hasFile)
               ListTile(
-                leading: Icon(Icons.visibility_outlined, color: colors.brand),
+                leading: Icon(Icons.visibility_outlined, color: colors.brandText),
                 title: Text('view_document'.tr),
                 onTap: () {
                   Get.back<void>();
@@ -7713,7 +7713,7 @@ void _showRequestDocumentSheet(
                       children: [
                         Icon(icon,
                             size: 16,
-                            color: isSel ? Colors.white : colors.textTertiary),
+                            color: isSel ? colors.onBrand : colors.textTertiary),
                         const SizedBox(width: AppSpacing.s2),
                         Text(
                           labelKey.tr,
@@ -7722,7 +7722,7 @@ void _showRequestDocumentSheet(
                             fontSize: 13,
                             fontWeight:
                                 isSel ? FontWeight.w600 : FontWeight.w400,
-                            color: isSel ? Colors.white : colors.textPrimary,
+                            color: isSel ? colors.onBrand : colors.textPrimary,
                           ),
                         ),
                       ],
@@ -7842,7 +7842,7 @@ void _showRequestDocumentSheet(
                                             : Icons.check_box_outline_blank,
                                         size: 20,
                                         color: isSel
-                                            ? colors.brand
+                                            ? colors.brandText
                                             : colors.textTertiary,
                                       ),
                                       const SizedBox(width: AppSpacing.s3),
@@ -7861,7 +7861,7 @@ void _showRequestDocumentSheet(
                                                     ? FontWeight.w600
                                                     : FontWeight.w400,
                                                 color: isSel
-                                                    ? colors.brand
+                                                    ? colors.brandText
                                                     : colors.textPrimary,
                                               ),
                                             ),
@@ -8357,7 +8357,7 @@ class _ShowMoreButton extends StatelessWidget {
         icon: Icon(
           expanded ? Icons.expand_less : Icons.expand_more,
           size: 18,
-          color: colors.brand,
+          color: colors.brandText,
         ),
         label: Text(
           expanded ? 'show_less'.tr : '${'show_all'.tr} ($total)',
@@ -8365,7 +8365,7 @@ class _ShowMoreButton extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: colors.brand,
+            color: colors.brandText,
           ),
         ),
         style: TextButton.styleFrom(
@@ -8460,7 +8460,7 @@ void _showAddWarningSheet(BuildContext context, EmployeeDetailController ctrl) {
                                     : Icons.radio_button_unchecked,
                                 size: 20,
                                 color: selected
-                                    ? colors.brand
+                                    ? colors.brandText
                                     : colors.textTertiary,
                               ),
                               const SizedBox(width: AppSpacing.s3),
@@ -8473,7 +8473,7 @@ void _showAddWarningSheet(BuildContext context, EmployeeDetailController ctrl) {
                                       ? FontWeight.w600
                                       : FontWeight.w400,
                                   color: selected
-                                      ? colors.brand
+                                      ? colors.brandText
                                       : colors.textPrimary,
                                 ),
                               ),
@@ -8640,12 +8640,12 @@ void _showSuspendSheet(BuildContext context, EmployeeDetailController ctrl) {
                           ? Icons.radio_button_checked
                           : Icons.radio_button_unchecked,
                       size: 20,
-                      color: selected ? colors.brand : colors.textTertiary,
+                      color: selected ? colors.brandText : colors.textTertiary,
                     ),
                     const SizedBox(width: AppSpacing.s2),
                     Icon(icon,
                         size: 18,
-                        color: selected ? colors.brand : colors.textTertiary),
+                        color: selected ? colors.brandText : colors.textTertiary),
                     const SizedBox(width: AppSpacing.s2),
                     Expanded(
                       child: Text(
@@ -8655,7 +8655,7 @@ void _showSuspendSheet(BuildContext context, EmployeeDetailController ctrl) {
                           fontSize: 14,
                           fontWeight:
                               selected ? FontWeight.w600 : FontWeight.w400,
-                          color: selected ? colors.brand : colors.textPrimary,
+                          color: selected ? colors.brandText : colors.textPrimary,
                         ),
                       ),
                     ),
@@ -9451,7 +9451,7 @@ class _ReviewsTab extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.star_outline, size: 18, color: colors.brand),
+                    Icon(Icons.star_outline, size: 18, color: colors.brandText),
                     const SizedBox(width: AppSpacing.s2),
                     Expanded(
                       child: Text(
@@ -9465,10 +9465,10 @@ class _ReviewsTab extends StatelessWidget {
                       OutlinedButton.icon(
                         onPressed: () => _showAddReviewSheet(context, ctrl),
                         icon: Icon(Icons.star_outline,
-                            size: 16, color: colors.brand),
+                            size: 16, color: colors.brandText),
                         label: Text('add_review'.tr),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: colors.brand,
+                          foregroundColor: colors.brandText,
                           side: BorderSide(color: colors.brand),
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppSpacing.s3,
@@ -9710,7 +9710,7 @@ Color _ratingColor(int rating, AppColorScheme colors) {
     case 4:
       return colors.success;
     case 5:
-      return colors.brand;
+      return colors.brandText;
     default:
       return colors.textTertiary;
   }
@@ -9900,7 +9900,7 @@ class _YearToDateButton extends StatelessWidget {
           style: const TextStyle(fontFamily: 'IBM Plex Sans Arabic'),
         ),
         style: OutlinedButton.styleFrom(
-          foregroundColor: colors.brand,
+          foregroundColor: colors.brandText,
           side: BorderSide(color: colors.brand),
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.s2),
           shape: RoundedRectangleBorder(
@@ -10104,19 +10104,19 @@ class _YearToDateSheetState extends State<_YearToDateSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('ytd_total_net'.tr,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 12,
-                color: Colors.white70,
+                color: colors.onBrand,
               )),
           const SizedBox(height: 2),
           Text(
             '${_money(t['total_net'])} $cur',
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 26,
               fontWeight: FontWeight.w800,
-              color: Colors.white,
+              color: colors.onBrand,
             ),
           ),
           const SizedBox(height: AppSpacing.s3),
@@ -10141,10 +10141,10 @@ class _YearToDateSheetState extends State<_YearToDateSheet> {
             '${t['paid_count'] ?? 0} ${'status_paid'.tr} • '
             '${t['approved_count'] ?? 0} ${'status_approved'.tr} • '
             '${t['draft_count'] ?? 0} ${'status_draft'.tr}',
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 11,
-              color: Colors.white70,
+              color: AppColors.of(context).onBrand,
             ),
           ),
         ],
@@ -10163,15 +10163,15 @@ class _YearToDateSheetState extends State<_YearToDateSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(children: [
-            Icon(icon, size: 12, color: Colors.white),
+            Icon(icon, size: 12, color: AppColors.of(context).onBrand),
             const SizedBox(width: 4),
             Expanded(
               child: Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontSize: 10,
-                  color: Colors.white70,
+                  color: AppColors.of(context).onBrand,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -10179,11 +10179,11 @@ class _YearToDateSheetState extends State<_YearToDateSheet> {
           ]),
           const SizedBox(height: 2),
           Text(value,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: AppColors.of(context).onBrand,
               )),
         ],
       ),
@@ -10234,7 +10234,7 @@ class _YearToDateSheetState extends State<_YearToDateSheet> {
               fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: colors.brand,
+              color: colors.brandText,
             ),
           ),
         ],

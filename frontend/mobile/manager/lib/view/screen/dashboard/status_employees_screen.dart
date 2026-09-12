@@ -61,7 +61,7 @@ class StatusEmployeesScreen extends StatelessWidget {
                                   fontFamily: 'Geist',
                                   fontSize: 9,
                                   fontWeight: FontWeight.w700,
-                                  color: colors.brand,
+                                  color: colors.brandText,
                                   height: 1,
                                 ),
                               ),
@@ -169,7 +169,7 @@ class _StatusEmployeeTile extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Geist',
             fontWeight: FontWeight.w700,
-            color: colors.brand,
+            color: colors.brandText,
           ),
         ),
       ),

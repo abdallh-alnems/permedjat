@@ -22,7 +22,7 @@ export default function ExpiringCompliancePage() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <Link href="/dashboard" className="text-brand hover:underline">
+        <Link href="/dashboard" className="text-brand-text hover:underline">
           <ArrowLeft className="h-4 w-4" />
         </Link>
         <h1 className="text-headline-md font-bold">{t("expiring_compliance")}</h1>

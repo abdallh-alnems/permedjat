@@ -203,7 +203,7 @@ class _BranchLocationSheetState extends State<_BranchLocationSheet> {
                     hasLocation
                         ? Icons.location_on
                         : Icons.location_off_outlined,
-                    color: hasLocation ? colors.brand : colors.textTertiary,
+                    color: hasLocation ? colors.brandText : colors.textTertiary,
                   ),
                   const SizedBox(width: AppSpacing.s3),
                   Expanded(
@@ -217,7 +217,7 @@ class _BranchLocationSheetState extends State<_BranchLocationSheet> {
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color:
-                                hasLocation ? colors.brand : colors.textSecondary,
+                                hasLocation ? colors.brandText : colors.textSecondary,
                           ),
                         ),
                         if (hasLocation) ...[
@@ -268,7 +268,7 @@ class _BranchLocationSheetState extends State<_BranchLocationSheet> {
                       fontWeight: FontWeight.w500),
                 ),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: colors.brand,
+                  foregroundColor: colors.brandText,
                   side: BorderSide(color: colors.brand),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppRadius.md)),
@@ -300,7 +300,7 @@ class _BranchLocationSheetState extends State<_BranchLocationSheet> {
                   labelStyle: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 12,
-                    color: on ? Colors.white : colors.textPrimary,
+                    color: on ? colors.onBrand : colors.textPrimary,
                     fontWeight: FontWeight.w500,
                   ),
                   selectedColor: colors.brand,
@@ -336,7 +336,7 @@ class _BranchLocationSheetState extends State<_BranchLocationSheet> {
                       fontFamily: 'IBM Plex Sans Arabic',
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: colors.brand,
+                      color: colors.brandText,
                     ),
                   ),
                 ),
@@ -368,17 +368,17 @@ class _BranchLocationSheetState extends State<_BranchLocationSheet> {
                     onPressed: (_saving || !hasLocation) ? null : _save,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.brand,
-                      foregroundColor: Colors.white,
+                      foregroundColor: colors.onBrand,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.md)),
                       padding: const EdgeInsets.symmetric(vertical: AppSpacing.s3),
                     ),
                     child: _saving
-                        ? const SizedBox(
+                        ? SizedBox(
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                                strokeWidth: 2, color: Colors.white))
+                                strokeWidth: 2, color: colors.onBrand))
                         : Text('save'.tr,
                             style: const TextStyle(
                                 fontFamily: 'IBM Plex Sans Arabic',

@@ -242,7 +242,7 @@ class _UserTile extends StatelessWidget {
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ),

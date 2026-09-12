@@ -59,7 +59,7 @@ export function MobileBottomNav() {
             href={href}
             className={cn(
               "flex flex-1 flex-col items-center gap-1 py-1 text-label-sm",
-              active ? "text-brand" : "text-muted-foreground",
+              active ? "text-brand-text" : "text-muted-foreground",
             )}
           >
             <Icon className="h-5 w-5" />

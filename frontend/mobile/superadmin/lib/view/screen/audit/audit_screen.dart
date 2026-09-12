@@ -127,7 +127,7 @@ class _Chip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 12,
             fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),
@@ -209,7 +209,7 @@ class _AuditCard extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 11,
-                    color: colors.brand,
+                    color: colors.brandText,
                   ),
                 ),
             ],

@@ -14,7 +14,7 @@ export function PayrollSummary({ data }: { data: DashboardPayrollSummary }) {
       label: t("net_pay"),
       value: data.net,
       icon: Wallet,
-      tone: "text-brand",
+      tone: "text-brand-text",
     },
     {
       label: t("base_salary"),
@@ -75,7 +75,7 @@ export function AttendanceSummary({
         <p className="text-label-md text-muted-foreground">
           {t("attendance_rate")}
         </p>
-        <p className="text-display-sm font-bold text-brand">{pct}%</p>
+        <p className="text-display-sm font-bold text-brand-text">{pct}%</p>
         <p className="text-label-sm text-muted-foreground">
           {present} / {total}
         </p>

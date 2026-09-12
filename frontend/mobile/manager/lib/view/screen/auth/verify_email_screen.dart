@@ -69,7 +69,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen>
                     borderRadius: BorderRadius.circular(AppRadius.lg),
                   ),
                   child: Icon(Icons.mark_email_read_outlined,
-                      size: 40, color: colors.brand),
+                      size: 40, color: colors.brandText),
                 ),
                 const SizedBox(height: AppSpacing.s6),
                 Text(
@@ -98,7 +98,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen>
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: colors.brand,
+                    color: colors.brandText,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.s3),

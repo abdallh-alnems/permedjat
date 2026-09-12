@@ -139,7 +139,7 @@ class EmployeeDocumentsScreen extends StatelessWidget {
             const SizedBox(height: AppSpacing.s4),
             if (doc.filePath != null || doc.fileUrl != null)
               ListTile(
-                leading: Icon(Icons.visibility_outlined, color: colors.brand),
+                leading: Icon(Icons.visibility_outlined, color: colors.brandText),
                 title: Text('view_document'.tr),
                 onTap: () {
                   Get.back<void>();

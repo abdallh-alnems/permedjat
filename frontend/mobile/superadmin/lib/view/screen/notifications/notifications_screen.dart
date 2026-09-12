@@ -110,7 +110,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               ),
                               child: Row(
                                 children: [
-                                  Icon(Icons.business, size: 18, color: colors.brand),
+                                  Icon(Icons.business, size: 18, color: colors.brandText),
                                   const SizedBox(width: AppSpacing.s2),
                                   Expanded(
                                     child: Text(
@@ -247,7 +247,7 @@ class _Choice extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 12,
             fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),

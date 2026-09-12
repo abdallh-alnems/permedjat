@@ -24,12 +24,16 @@ class AttendanceButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color bgColor;
+    Color fgColor;
     if (isDayDone) {
       bgColor = colors.sunken;
+      fgColor = colors.textTertiary;
     } else if (canCheckOut) {
       bgColor = colors.accentWarm;
+      fgColor = colors.onAccentWarm;
     } else {
       bgColor = colors.brand;
+      fgColor = colors.onBrand;
     }
 
     return Center(
@@ -57,7 +61,7 @@ class AttendanceButton extends StatelessWidget {
               Icon(
                 icon,
                 size: 48,
-                color: isDayDone ? colors.textTertiary : Colors.white,
+                color: fgColor,
               ),
               const SizedBox(height: AppSpacing.s2),
               Text(
@@ -67,7 +71,7 @@ class AttendanceButton extends StatelessWidget {
                   fontFamily: AppTextStyles.arabicFamily,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: isDayDone ? colors.textTertiary : Colors.white,
+                  color: fgColor,
                 ),
               ),
             ],

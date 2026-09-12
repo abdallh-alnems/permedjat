@@ -42,7 +42,7 @@ export function KioskCodeDialog({
           </button>
         </div>
 
-        <div className="bg-primary/10 text-primary rounded-lg py-6 text-center">
+        <div className="bg-primary/10 text-brand-text rounded-lg py-6 text-center">
           <span className="font-mono text-3xl font-bold tracking-[0.3em]">
             {code}
           </span>

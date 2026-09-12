@@ -37,7 +37,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppRadius.lg),
                       ),
                       child: Icon(Icons.lock_reset_outlined,
-                          size: 40, color: colors.brand),
+                          size: 40, color: colors.brandText),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.s5),
@@ -95,7 +95,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'IBM Plex Sans Arabic',
                           fontSize: 14,
-                          color: colors.brand,
+                          color: colors.brandText,
                         ),
                       ),
                     ),

@@ -19,7 +19,7 @@ class SupportTicketsScreen extends StatelessWidget {
         heroTag: 'fab_support',
         onPressed: () => Get.toNamed<void>(AppRoutes.supportNew),
         backgroundColor: colors.brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: colors.onBrand),
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.tickets.isEmpty) {
@@ -115,7 +115,7 @@ class _TicketTile extends StatelessWidget {
               child: Icon(
                 Icons.support_agent_outlined,
                 size: 20,
-                color: isUnread ? colors.brand : colors.textTertiary,
+                color: isUnread ? colors.brandText : colors.textTertiary,
               ),
             ),
             const SizedBox(width: AppSpacing.s3),
@@ -225,7 +225,7 @@ class _StatusChip extends StatelessWidget {
   (Color, Color) _colors() {
     switch (status) {
       case 'open':
-        return (colors.brandSubtle, colors.brand);
+        return (colors.brandSubtle, colors.brandText);
       case 'pending_support':
         return (colors.warning.withValues(alpha: 0.1), colors.warning);
       case 'pending_user':

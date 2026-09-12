@@ -59,7 +59,7 @@ class RequiredDocumentsScreen extends StatelessWidget {
         heroTag: 'fab_add_doc_type',
         onPressed: () => _showAddDialog(context, ctrl),
         backgroundColor: AppColors.of(context).brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: AppColors.of(context).onBrand),
       ),
     );
   }
@@ -576,7 +576,7 @@ class RequiredDocumentsScreen extends StatelessWidget {
                       Row(
                         children: [
                           Icon(_scopeIconFor(doc.scopeType),
-                              size: 16, color: colors.brand),
+                              size: 16, color: colors.brandText),
                           const SizedBox(width: AppSpacing.s2),
                           Text(scopeHeading,
                               style: AppTextStyles.body(context)),
@@ -872,7 +872,7 @@ class _ScopeOption extends StatelessWidget {
             Icon(
               selected ? Icons.radio_button_checked : Icons.radio_button_off,
               size: 18,
-              color: selected ? colors.brand : colors.textTertiary,
+              color: selected ? colors.brandText : colors.textTertiary,
             ),
             const SizedBox(width: AppSpacing.s2),
             Expanded(
@@ -886,7 +886,7 @@ class _ScopeOption extends StatelessWidget {
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                       color:
-                          selected ? colors.brand : colors.textPrimary,
+                          selected ? colors.brandText : colors.textPrimary,
                     ),
                   ),
                   Text(

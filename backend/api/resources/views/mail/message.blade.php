@@ -13,7 +13,8 @@
 @php
     $dir = ($lang ?? 'ar') === 'en' ? 'ltr' : 'rtl';
     $align = $dir === 'ltr' ? 'left' : 'right';
-    $brand = '#0E7C86'; // faience teal — the same brand token the apps and web use
+    $brand = '#B8860B'; // brand gold — the same brand token the apps and web use
+    $onBrand = '#1A1A1A'; // text on a $brand fill (5.35:1; white would be 3.26:1)
     $fonts = "'IBM Plex Sans Arabic',-apple-system,Segoe UI,Tahoma,Arial,sans-serif";
 @endphp
 <div dir="{{ $dir }}" style="margin:0;padding:0;background:#f4f6f8;">
@@ -59,7 +60,7 @@
 
     @if (($link ?? '') !== '' && ($button ?? '') !== '')
         <tr><td align="center" style="padding:0 32px 28px;">
-            <a href="{{ $link }}" style="display:inline-block;background:{{ $brand }};color:#ffffff;text-decoration:none;font-size:16px;font-weight:600;padding:14px 36px;border-radius:10px;font-family:{{ $fonts }};">{{ $button }}</a>
+            <a href="{{ $link }}" style="display:inline-block;background:{{ $brand }};color:{{ $onBrand }};text-decoration:none;font-size:16px;font-weight:600;padding:14px 36px;border-radius:10px;font-family:{{ $fonts }};">{{ $button }}</a>
         </td></tr>
     @endif
 

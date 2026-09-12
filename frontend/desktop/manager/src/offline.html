@@ -5,22 +5,26 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'" />
     <title>تعذّر الاتصال — Permedjat Central</title>
     <style>
+      /* Same values as the web app's globals.css (--brand, --brand-hover,
+         --on-brand and the warm neutrals). Hover darkens in light mode and
+         lightens in dark, as it does there. */
       :root {
-        --brand: #0e7c86;
-        --brand-dark: #0a5f67;
-        --bg: #f9fcfc;
-        --fg: #0f1b1d;
-        --muted: #5b6b6e;
-        --border: #dbe7e8;
+        --brand: #b8860b;
+        --brand-hover: #ad7e0e;
+        --on-brand: #1a1a1a;
+        --bg: #fdfbf6;
+        --fg: #292723;
+        --muted: #68655e;
+        --border: #ddd9d0;
       }
       @media (prefers-color-scheme: dark) {
         :root {
-          --brand: #4fc6cc;
-          --brand-dark: #3aa9af;
-          --bg: #0d1516;
-          --fg: #eaf4f4;
-          --muted: #93a5a7;
-          --border: #1e2c2e;
+          --brand: #e0b93c;
+          --brand-hover: #ecc756;
+          --bg: #1e1d1a;
+          --fg: #f6f3ec;
+          --muted: #bdbab2;
+          --border: #3c3a34;
         }
       }
       * { box-sizing: border-box; }
@@ -56,7 +60,7 @@
         font: inherit;
         font-weight: 600;
         font-size: 14.5px;
-        color: #fff;
+        color: var(--on-brand);
         background: var(--brand);
         border: 0;
         border-radius: 10px;
@@ -64,7 +68,7 @@
         cursor: pointer;
         transition: background 0.15s ease;
       }
-      button:hover { background: var(--brand-dark); }
+      button:hover { background: var(--brand-hover); }
       button:disabled { opacity: 0.6; cursor: default; }
       .code {
         margin-top: 26px;

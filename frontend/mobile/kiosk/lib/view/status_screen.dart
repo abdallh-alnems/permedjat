@@ -114,8 +114,11 @@ class StatusScreen extends StatelessWidget {
           ),
         KioskState.maintenance => const _StatusSpec(
             icon: Icons.build_circle_outlined,
-            accent: KioskTheme.brand,
-            background: Color(0xFFF0FDFA),
+            // Not the plain gold: the 40px title in brand gold on this tint is
+            // 2.7:1. A pale gold would also be indistinguishable from the
+            // warning screens' amber-50.
+            accent: KioskTheme.onBrandSubtle,
+            background: KioskTheme.brandSubtle,
             title: 'صيانة مؤقتة',
             body: 'النظام تحت الصيانة حاليًا.\n'
                 'سيعود تسجيل الحضور تلقائيًا بعد انتهائها.',
@@ -123,7 +126,7 @@ class StatusScreen extends StatelessWidget {
         _ => const _StatusSpec(
             icon: Icons.hourglass_empty_rounded,
             accent: KioskTheme.brand,
-            background: Color(0xFFF8FAFB),
+            background: KioskTheme.canvas,
             title: 'جارٍ التشغيل',
             body: 'لحظات من فضلك.',
           ),

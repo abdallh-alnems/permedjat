@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Icon(
                 Icons.shield_outlined,
                 size: 40,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
             const SizedBox(height: AppSpacing.s4),
