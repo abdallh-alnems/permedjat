@@ -182,7 +182,7 @@ export default function KiosksPage() {
                         ? "size-5 text-muted-foreground"
                         : s.is_offline
                           ? "size-5 text-amber-600"
-                          : "size-5 text-primary"
+                          : "size-5 text-brand-text"
                     }
                   />
                   <div className="min-w-0 flex-1">

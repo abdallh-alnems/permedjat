@@ -25,12 +25,12 @@ class BulkAdjustmentsScreen extends StatelessWidget {
           await Get.toNamed<void>(AppRoutes.bulkAdjustmentCreate);
         },
         backgroundColor: colors.brand,
-        icon: const Icon(Icons.add, color: Colors.white),
+        icon: Icon(Icons.add, color: colors.onBrand),
         label: Text('bulk_adjustment_new'.tr,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: colors.onBrand,
             )),
       ),
       body: RefreshIndicator(

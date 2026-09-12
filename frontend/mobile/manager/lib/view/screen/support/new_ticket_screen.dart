@@ -156,7 +156,7 @@ class _NewTicketScreenState extends State<NewTicketScreen> {
                 onPressed: _isSubmitting ? null : _submit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.brand,
-                  foregroundColor: Colors.white,
+                  foregroundColor: colors.onBrand,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppRadius.sm),

@@ -135,7 +135,7 @@ class CompanySettingsScreen extends StatelessWidget {
                     Row(
                       children: [
                         Icon(Icons.my_location,
-                            size: 14, color: AppColors.of(context).brand),
+                            size: 14, color: AppColors.of(context).brandText),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text('timezone_auto_detected'.tr,
@@ -231,12 +231,12 @@ class CompanySettingsScreen extends StatelessWidget {
                         fontWeight:
                             isSelected ? FontWeight.w600 : FontWeight.w400,
                         color: isSelected
-                            ? colors.brand
+                            ? colors.brandText
                             : colors.textPrimary,
                       ),
                     ),
                     trailing: isSelected
-                        ? Icon(Icons.check, color: colors.brand)
+                        ? Icon(Icons.check, color: colors.brandText)
                         : null,
                     onTap: () {
                       onSelected(o);
@@ -324,12 +324,12 @@ class CompanySettingsScreen extends StatelessWidget {
                                       ? FontWeight.w600
                                       : FontWeight.w400,
                                   color: isSelected
-                                      ? colors.brand
+                                      ? colors.brandText
                                       : colors.textPrimary,
                                 ),
                               ),
                               trailing: isSelected
-                                  ? Icon(Icons.check, color: colors.brand)
+                                  ? Icon(Icons.check, color: colors.brandText)
                                   : null,
                               onTap: () {
                                 ctrl.setTimezone(tz);
@@ -462,7 +462,7 @@ class _CycleStartDayField extends StatelessWidget {
                         ? () => ctrl.setCycleStartDay(from - 1)
                         : null,
                     icon: const Icon(Icons.remove_circle_outline),
-                    color: colors.brand,
+                    color: colors.brandText,
                     visualDensity: VisualDensity.compact,
                   ),
                   SizedBox(
@@ -474,7 +474,7 @@ class _CycleStartDayField extends StatelessWidget {
                         fontFamily: 'Geist',
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                   ),
@@ -483,7 +483,7 @@ class _CycleStartDayField extends StatelessWidget {
                         ? () => ctrl.setCycleStartDay(from + 1)
                         : null,
                     icon: const Icon(Icons.add_circle_outline),
-                    color: colors.brand,
+                    color: colors.brandText,
                     visualDensity: VisualDensity.compact,
                   ),
                 ],

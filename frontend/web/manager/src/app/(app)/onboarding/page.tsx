@@ -167,7 +167,7 @@ function OnboardingInner() {
           <CardContent className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-start gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                <MailCheck className="h-5 w-5 text-primary" />
+                <MailCheck className="h-5 w-5 text-brand-text" />
               </div>
               <div className="space-y-1">
                 <p className="text-body-md font-medium">
@@ -382,7 +382,7 @@ function OnboardingInner() {
               href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
                 t("support_email_subject"),
               )}`}
-              className="inline-flex items-center gap-1.5 text-body-sm font-medium text-primary hover:underline"
+              className="inline-flex items-center gap-1.5 text-body-sm font-medium text-brand-text hover:underline"
             >
               <LifeBuoy className="h-4 w-4" />
               {t("contact_support")}

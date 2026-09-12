@@ -24,7 +24,7 @@ class BranchScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddBranchSheet(context, ctrl),
         backgroundColor: colors.brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: colors.onBrand),
       ),
       body: RefreshIndicator(
         onRefresh: ctrl.loadBranches,
@@ -274,7 +274,7 @@ class _BranchTile extends StatelessWidget {
               color: colors.brandSubtle,
               borderRadius: BorderRadius.circular(AppRadius.md),
             ),
-            child: Icon(Icons.store_outlined, color: colors.brand, size: 22),
+            child: Icon(Icons.store_outlined, color: colors.brandText, size: 22),
           ),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
@@ -306,7 +306,7 @@ class _BranchTile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.event_repeat_outlined,
-                          size: 12, color: colors.brand),
+                          size: 12, color: colors.brandText),
                       const SizedBox(width: 4),
                       Text(
                         'cycle_starts_on'.trParams({'day': '$cycleStartDay'}),
@@ -314,7 +314,7 @@ class _BranchTile extends StatelessWidget {
                           fontFamily: 'IBM Plex Sans Arabic',
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
-                          color: colors.brand,
+                          color: colors.brandText,
                         ),
                       ),
                     ],
@@ -332,7 +332,7 @@ class _BranchTile extends StatelessWidget {
                   fontFamily: 'Geist',
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: colors.brand,
+                  color: colors.brandText,
                 ),
               ),
               Text(

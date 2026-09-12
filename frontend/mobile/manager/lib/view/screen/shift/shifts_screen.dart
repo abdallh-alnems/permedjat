@@ -24,7 +24,7 @@ class ShiftsScreen extends StatelessWidget {
           heroTag: 'fab_shifts',
           onPressed: () => _showAddEditSheet(context, ctrl),
           backgroundColor: colors.brand,
-          child: const Icon(Icons.add, color: Colors.white, size: 32),
+          child: Icon(Icons.add, color: colors.onBrand, size: 32),
         ),
       ),
       body: RefreshIndicator(
@@ -314,7 +314,7 @@ class ShiftsScreen extends StatelessWidget {
                                 },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.of(context).brand,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.of(context).onBrand,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(AppRadius.sm),
@@ -377,7 +377,7 @@ class _ShiftTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = AppColors.of(context);
-    final badgeColor = colors.brand;
+    final badgeColor = colors.brandText;
 
     return Dismissible(
       key: ValueKey(shift.id),
@@ -458,7 +458,7 @@ class _ShiftTile extends StatelessWidget {
                                 style: TextStyle(
                                   fontFamily: 'IBM Plex Sans Arabic',
                                   fontSize: 10,
-                                  color: colors.brand,
+                                  color: colors.brandText,
                                 ),
                               ),
                             ),

@@ -176,7 +176,7 @@ class _AssetCard extends StatelessWidget {
               child: OutlinedButton.icon(
                 onPressed: () => _confirmReturn(context),
                 icon: const Icon(Icons.assignment_return_outlined, size: 18),
-                style: OutlinedButton.styleFrom(foregroundColor: colors.brand),
+                style: OutlinedButton.styleFrom(foregroundColor: colors.brandText),
                 label: Text('asset_request_return'.tr),
               ),
             ),
@@ -228,7 +228,7 @@ class _AssetCard extends StatelessWidget {
                 note: noteCtrl.text,
               );
             },
-            style: TextButton.styleFrom(foregroundColor: colors.brand),
+            style: TextButton.styleFrom(foregroundColor: colors.brandText),
             child: Text('confirm'.tr),
           ),
         ],
@@ -243,7 +243,7 @@ class _AssetCard extends StatelessWidget {
       case 'return_requested':
         return colors.warning;
       case 'assigned':
-        return colors.brand;
+        return colors.brandText;
       default:
         return colors.textTertiary;
     }

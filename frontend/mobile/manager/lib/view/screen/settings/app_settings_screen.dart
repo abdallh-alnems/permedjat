@@ -190,11 +190,11 @@ class _ThemeOption extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 15,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textPrimary,
+            color: selected ? colors.brandText : colors.textPrimary,
           ),
         ),
         trailing: selected
-            ? Icon(Icons.check_rounded, size: 22, color: colors.brand)
+            ? Icon(Icons.check_rounded, size: 22, color: colors.brandText)
             : null,
         onTap: () {
           Navigator.pop(context);
@@ -278,11 +278,11 @@ class _LanguageOption extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 15,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textPrimary,
+            color: selected ? colors.brandText : colors.textPrimary,
           ),
         ),
         trailing: selected
-            ? Icon(Icons.check_rounded, size: 22, color: colors.brand)
+            ? Icon(Icons.check_rounded, size: 22, color: colors.brandText)
             : null,
         onTap: () {
           Navigator.pop(context);

@@ -161,7 +161,7 @@ function CompanyForm({ initial }: { initial: CompanySettings }) {
             >
               <Minus className="h-4 w-4" />
             </Button>
-            <span className="w-9 text-center text-headline-sm font-bold text-primary">
+            <span className="w-9 text-center text-headline-sm font-bold text-brand-text">
               {cycleStart}
             </span>
             <Button

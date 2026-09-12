@@ -19,7 +19,7 @@ class ReportScreen extends StatelessWidget {
             icon: Icons.access_time_outlined,
             title: 'attendance_report'.tr,
             subtitle: 'attendance_summary'.tr,
-            color: colors.brand,
+            color: colors.brandText,
             onTap: () => Get.toNamed<void>(AppRoutes.reportAttendance),
           ),
           const SizedBox(height: AppSpacing.s3),

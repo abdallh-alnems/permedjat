@@ -112,7 +112,7 @@ class _BranchQrPosterScreenState extends State<BranchQrPosterScreen> {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.brand,
-                      foregroundColor: Colors.white,
+                      foregroundColor: colors.onBrand,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(AppRadius.md)),
                       padding:
@@ -151,7 +151,7 @@ class _BranchQrPosterScreenState extends State<BranchQrPosterScreen> {
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: colors.brand,
+                    foregroundColor: colors.brandText,
                     side: BorderSide(color: colors.brand),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.md)),
@@ -423,7 +423,7 @@ class _MissingQrCard extends StatelessWidget {
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: colors.brand,
-                foregroundColor: Colors.white,
+                foregroundColor: colors.onBrand,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppRadius.md)),
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.s3),
@@ -451,7 +451,7 @@ class _PrintHint extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.print_outlined, size: 18, color: colors.brand),
+          Icon(Icons.print_outlined, size: 18, color: colors.brandText),
           const SizedBox(width: AppSpacing.s2),
           Expanded(
             child: Text(
@@ -459,7 +459,7 @@ class _PrintHint extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 12,
-                color: colors.brand,
+                color: colors.brandText,
                 height: 1.5,
               ),
             ),

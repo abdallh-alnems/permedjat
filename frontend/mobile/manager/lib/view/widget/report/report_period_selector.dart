@@ -209,7 +209,7 @@ class _PeriodChip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: selected ? Colors.white : colors.textPrimary,
+            color: selected ? colors.onBrand : colors.textPrimary,
           ),
         ),
       ),
@@ -356,7 +356,7 @@ class _MonthYearRangeSheetState extends State<_MonthYearRangeSheet> {
                 onPressed: _apply,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.brand,
-                  foregroundColor: Colors.white,
+                  foregroundColor: colors.onBrand,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(AppRadius.md),
                   ),

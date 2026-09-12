@@ -22,7 +22,7 @@ class BreakScreen extends StatelessWidget {
         heroTag: 'fab_break',
         onPressed: () => showAddBreakSheet(ctrl),
         backgroundColor: colors.brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: colors.onBrand),
       ),
       body: Column(
         children: [
@@ -312,7 +312,7 @@ class BreakScreen extends StatelessWidget {
                             style: AppTextStyles.body(context),
                           ),
                           trailing: isSel
-                              ? Icon(Icons.check, color: colors.brand)
+                              ? Icon(Icons.check, color: colors.brandText)
                               : null,
                           onTap: () {
                             Get.back<void>();
@@ -632,7 +632,7 @@ class _FilterChip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),
@@ -741,7 +741,7 @@ class _BreakTile extends StatelessWidget {
                   '${breakItem.durationMinutes} ${'minutes'.tr}',
                   style: AppTextStyles.sm(
                     context,
-                  ).copyWith(color: colors.brand, fontWeight: FontWeight.w600),
+                  ).copyWith(color: colors.brandText, fontWeight: FontWeight.w600),
                 ),
               ),
             ],

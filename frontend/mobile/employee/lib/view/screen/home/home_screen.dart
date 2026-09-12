@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.s3),
           child: Row(
             children: [
-              Icon(Icons.groups_outlined, size: 22, color: colors.brand),
+              Icon(Icons.groups_outlined, size: 22, color: colors.brandText),
               const SizedBox(width: AppSpacing.s3),
               Expanded(
                 child: Text(

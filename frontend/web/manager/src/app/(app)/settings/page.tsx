@@ -40,7 +40,7 @@ export default function SettingsHub() {
             <Link key={s.href} href={s.href}>
               <Card className="transition-colors hover:bg-muted/40">
                 <CardContent className="flex items-center gap-3 p-4">
-                  <Icon className="h-6 w-6 text-primary" />
+                  <Icon className="h-6 w-6 text-brand-text" />
                   <span className="font-medium">{t(s.labelKey)}</span>
                 </CardContent>
               </Card>

@@ -42,7 +42,7 @@ class AccountSettingsScreen extends StatelessWidget {
                         fontFamily: 'Geist',
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                   ),
@@ -290,7 +290,7 @@ void _showEditProfileSheet(BuildContext context, AuthController auth) {
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.brand,
-                      foregroundColor: Colors.white,
+                      foregroundColor: colors.onBrand,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.sm),
@@ -406,7 +406,7 @@ void _showChangePasswordSheet(BuildContext context) {
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.brand,
-                      foregroundColor: Colors.white,
+                      foregroundColor: colors.onBrand,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(AppRadius.sm),
@@ -461,7 +461,7 @@ class _RoleChip extends StatelessWidget {
           fontFamily: 'IBM Plex Sans Arabic',
           fontSize: 12,
           fontWeight: FontWeight.w600,
-          color: colors.brand,
+          color: colors.brandText,
         ),
       ),
     );

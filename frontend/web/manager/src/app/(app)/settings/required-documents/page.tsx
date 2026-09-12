@@ -99,7 +99,7 @@ export default function RequiredDocumentsPage() {
                   <TableCell className="font-medium">
                     <Link
                       href={`/settings/required-documents/submissions?id=${d.id}`}
-                      className="text-primary hover:underline"
+                      className="text-brand-text hover:underline"
                     >
                       {d.name}
                     </Link>

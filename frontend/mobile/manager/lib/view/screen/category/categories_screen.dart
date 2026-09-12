@@ -52,7 +52,7 @@ class CategoriesScreen extends StatelessWidget {
         heroTag: 'fab_add_category',
         onPressed: () => _showAddDialog(context, ctrl),
         backgroundColor: AppColors.of(context).brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: AppColors.of(context).onBrand),
       ),
     );
   }

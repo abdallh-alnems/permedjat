@@ -57,7 +57,7 @@ class InvitationCodeScreen extends StatelessWidget {
                     fontSize: 32,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 4,
-                    color: colors.brand,
+                    color: colors.brandText,
                   ),
                 ),
               ),
@@ -79,7 +79,7 @@ class InvitationCodeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(Icons.mark_email_read_outlined,
-                          size: 18, color: colors.brand),
+                          size: 18, color: colors.brandText),
                       const SizedBox(width: AppSpacing.s2),
                       Expanded(
                         child: Text.rich(

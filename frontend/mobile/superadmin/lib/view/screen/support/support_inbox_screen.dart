@@ -173,7 +173,7 @@ class _StatusChip extends StatelessWidget {
     switch (status) {
       case 'open':
         bgColor = colors.brandSubtle;
-        textColor = colors.brand;
+        textColor = colors.brandText;
         label = 'مفتوح';
         break;
       case 'pending_support':

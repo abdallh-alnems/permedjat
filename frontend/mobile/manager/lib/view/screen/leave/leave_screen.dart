@@ -22,7 +22,7 @@ class LeaveScreen extends StatelessWidget {
         heroTag: 'fab_leave',
         onPressed: () => showAddLeaveSheet(ctrl),
         backgroundColor: colors.brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: colors.onBrand),
       ),
       body: Column(
         children: [
@@ -304,7 +304,7 @@ class LeaveScreen extends StatelessWidget {
                         title: Text(opt.value,
                             style: AppTextStyles.body(context)),
                         trailing: isSel
-                            ? Icon(Icons.check, color: colors.brand)
+                            ? Icon(Icons.check, color: colors.brandText)
                             : null,
                         onTap: () {
                           Get.back<void>();
@@ -448,7 +448,7 @@ class _FilterChip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),

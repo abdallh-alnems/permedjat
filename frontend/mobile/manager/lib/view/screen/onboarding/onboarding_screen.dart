@@ -475,7 +475,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Icon(Icons.business_center_outlined,
-                  size: 80, color: colors.brand),
+                  size: 80, color: colors.brandText),
               const SizedBox(height: AppSpacing.s4),
               Text(
                 '${'welcome'.tr} $name 👋',
@@ -504,7 +504,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Row(
                         children: [
                           Icon(Icons.mark_email_read_outlined,
-                              color: colors.brand),
+                              color: colors.brandText),
                           const SizedBox(width: AppSpacing.s2),
                           Expanded(
                             child: Text('pending_invitation_title'.tr,

@@ -411,7 +411,7 @@ class _MonthPicker extends StatelessWidget {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                     if (showRange) ...[
@@ -598,7 +598,7 @@ class _PayrollTileState extends State<_PayrollTile> {
 
   Widget _netRow(AppColorScheme colors) {
     final isNegative = payroll.netSalary < 0;
-    final netColor = isNegative ? colors.error : colors.brand;
+    final netColor = isNegative ? colors.error : colors.brandText;
     final delta = payroll.netDeltaVsPrevious;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -939,7 +939,7 @@ class _SortButton extends StatelessWidget {
             children: [
               Icon(Icons.swap_vert, size: 18, color: colors.textSecondary),
               const SizedBox(width: 4),
-              Icon(_iconFor(ctrl.sortBy), size: 14, color: colors.brand),
+              Icon(_iconFor(ctrl.sortBy), size: 14, color: colors.brandText),
             ],
           ),
         ),
@@ -1031,7 +1031,7 @@ class _SortButton extends StatelessWidget {
                           _iconFor(key),
                           size: 18,
                           color: isSelected
-                              ? colors.brand
+                              ? colors.brandText
                               : colors.textSecondary,
                         ),
                         const SizedBox(width: AppSpacing.s3),
@@ -1045,13 +1045,13 @@ class _SortButton extends StatelessWidget {
                                   ? FontWeight.w600
                                   : FontWeight.w400,
                               color: isSelected
-                                  ? colors.brand
+                                  ? colors.brandText
                                   : colors.textPrimary,
                             ),
                           ),
                         ),
                         if (isSelected)
-                          Icon(Icons.check, size: 18, color: colors.brand),
+                          Icon(Icons.check, size: 18, color: colors.brandText),
                       ],
                     ),
                   ),
@@ -1104,7 +1104,7 @@ class _DirChip extends StatelessWidget {
             children: [
               Icon(icon,
                   size: 16,
-                  color: selected ? colors.brand : colors.textSecondary),
+                  color: selected ? colors.brandText : colors.textSecondary),
               const SizedBox(width: 6),
               Text(
                 label,
@@ -1112,7 +1112,7 @@ class _DirChip extends StatelessWidget {
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontSize: 13,
                   fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                  color: selected ? colors.brand : colors.textPrimary,
+                  color: selected ? colors.brandText : colors.textPrimary,
                 ),
               ),
             ],
@@ -1161,7 +1161,7 @@ class _FilterButton extends StatelessWidget {
               Icon(
                 Icons.filter_list,
                 size: 18,
-                color: count > 0 ? colors.brand : colors.textSecondary,
+                color: count > 0 ? colors.brandText : colors.textSecondary,
               ),
               if (count > 0) ...[
                 const SizedBox(width: 4),
@@ -1174,11 +1174,11 @@ class _FilterButton extends StatelessWidget {
                   ),
                   child: Text(
                     '$count',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'IBM Plex Sans Arabic',
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white,
+                      color: colors.onBrand,
                     ),
                   ),
                 ),
@@ -1498,7 +1498,7 @@ class _StatusChoiceChip extends StatelessWidget {
               fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 13,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-              color: selected ? Colors.white : colors.textPrimary,
+              color: selected ? colors.onBrand : colors.textPrimary,
             ),
           ),
         ),
@@ -1557,18 +1557,18 @@ class _PayrollSummaryCard extends StatelessWidget {
                   children: [
                     Text(
                       'payroll_total_net'.tr,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 12,
-                        color: Colors.white70,
+                        color: colors.onBrand,
                       ),
                     ),
                     const SizedBox(height: 2),
                     RichText(
                       text: TextSpan(
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'IBM Plex Sans Arabic',
-                          color: Colors.white,
+                          color: colors.onBrand,
                         ),
                         children: [
                           TextSpan(
@@ -1581,10 +1581,10 @@ class _PayrollSummaryCard extends StatelessWidget {
                           ),
                           TextSpan(
                             text: '  ${currencyLabel(ctrl.currency)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white70,
+                              color: colors.onBrand,
                             ),
                           ),
                         ],
@@ -1637,10 +1637,10 @@ class _PayrollSummaryCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   'payroll_employee_count'.trParams({'count': '$visible'}),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 12,
-                    color: Colors.white,
+                    color: colors.onBrand,
                   ),
                 ),
               ),
@@ -1655,19 +1655,19 @@ class _PayrollSummaryCard extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.check_circle,
-                          size: 13, color: Colors.white),
+                      Icon(Icons.check_circle,
+                          size: 13, color: colors.onBrand),
                       const SizedBox(width: 4),
                       Text(
                         'payroll_paid_count'.trParams({
                           'paid': '${ctrl.paidCount}',
                           'total': '${ctrl.scopedCount}',
                         }),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: 'IBM Plex Sans Arabic',
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                          color: colors.onBrand,
                         ),
                       ),
                     ],
@@ -1702,7 +1702,7 @@ class _MiniStat extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, size: 14, color: Colors.white),
+          Icon(icon, size: 14, color: AppColors.of(context).onBrand),
           const SizedBox(width: 6),
           Expanded(
             child: Column(
@@ -1710,20 +1710,20 @@ class _MiniStat extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 11,
-                    color: Colors.white70,
+                    color: AppColors.of(context).onBrand,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   value,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: AppColors.of(context).onBrand,
                   ),
                 ),
               ],
@@ -1757,25 +1757,25 @@ class _DeltaBadge extends StatelessWidget {
           Icon(
             isUp ? Icons.arrow_upward : Icons.arrow_downward,
             size: 12,
-            color: Colors.white,
+            color: AppColors.of(context).onBrand,
           ),
           const SizedBox(width: 3),
           Text(
             formatted,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: AppColors.of(context).onBrand,
             ),
           ),
           const SizedBox(width: 4),
           Text(
             'payroll_vs_prev_cycle'.tr,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 10,
-              color: Colors.white70,
+              color: AppColors.of(context).onBrand,
             ),
           ),
         ],
@@ -1843,7 +1843,7 @@ class _GroupButton extends StatelessWidget {
           child: Icon(
             active ? Icons.layers : Icons.layers_outlined,
             size: 18,
-            color: active ? colors.brand : colors.textSecondary,
+            color: active ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),
@@ -1948,7 +1948,7 @@ class _BranchSubtotal extends StatelessWidget {
               fontFamily: 'IBM Plex Sans Arabic',
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: isNeg ? colors.error : colors.brand,
+              color: isNeg ? colors.error : colors.brandText,
             ),
           ),
         ],
@@ -2239,11 +2239,11 @@ class _QuickAdjustSheetState extends State<_QuickAdjustSheet> {
                     backgroundColor: colors.brand,
                   ),
                   child: _submitting
-                      ? const SizedBox(
+                      ? SizedBox(
                           width: 18,
                           height: 18,
                           child: CircularProgressIndicator(
-                              strokeWidth: 2, color: Colors.white),
+                              strokeWidth: 2, color: colors.onBrand),
                         )
                       : Text('save'.tr),
                 ),

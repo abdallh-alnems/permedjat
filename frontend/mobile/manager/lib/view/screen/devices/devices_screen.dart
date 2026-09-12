@@ -580,7 +580,7 @@ class _ModeOption extends StatelessWidget {
                     ? Icons.radio_button_checked
                     : Icons.radio_button_unchecked,
                 size: 18,
-                color: selected ? colors.brand : colors.textTertiary,
+                color: selected ? colors.brandText : colors.textTertiary,
               ),
               const SizedBox(width: AppSpacing.s2),
               Expanded(

@@ -65,7 +65,7 @@ function DesktopAuthInner() {
   return (
     <Card>
       <CardHeader className="items-center text-center">
-        <div className="mb-2 flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <div className="mb-2 flex size-12 items-center justify-center rounded-full bg-primary/10 text-brand-text">
           {error ? <ShieldAlert className="size-6" /> : <Loader2 className="size-6 animate-spin" />}
         </div>
         <CardTitle>تسجيل الدخول</CardTitle>

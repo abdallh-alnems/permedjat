@@ -19,6 +19,9 @@ What they will not tell you:
 - Flutter apps use **GetX** (GetxController, GetBuilder, Obx) with MVVM layering
   (`core/` `data/` `logic/` `view/`) and `http` behind a `CRUD` class — not Flutter's defaults.
 - Fonts are **IBM Plex Sans Arabic** (Arabic) + **Geist** (Latin/numerals) — **not Cairo**.
+- The brand is **gold** (`#B8860B` light / `#E0B93C` dark) on warm neutrals — **not the old
+  teal**. The values, and the rule splitting the gold (fills) from `brandText` (text/links),
+  are in `BRAND-COLORS.md`.
 
 ## Two backends, for now
 

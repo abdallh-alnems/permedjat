@@ -14,7 +14,7 @@ interface StatCardProps {
 }
 
 const TONES: Record<NonNullable<StatCardProps["tone"]>, string> = {
-  default: "bg-brand-subtle text-brand",
+  default: "bg-brand-subtle text-brand-text",
   success: "bg-success/15 text-success",
   warning: "bg-warning/15 text-warning",
   destructive: "bg-destructive/10 text-destructive",

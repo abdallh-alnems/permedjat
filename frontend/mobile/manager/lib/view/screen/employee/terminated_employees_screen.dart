@@ -149,7 +149,7 @@ class TerminatedEmployeesScreen extends StatelessWidget {
                     fontSize: 26,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 3,
-                    color: colors.brand,
+                    color: colors.brandText,
                   ),
                 ),
               ),
@@ -272,7 +272,7 @@ class _TerminatedCard extends StatelessWidget {
                           fontFamily: 'Geist',
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
-                          color: colors.brand,
+                          color: colors.brandText,
                         ),
                       )
                     : null,
@@ -345,7 +345,7 @@ class _TerminatedCard extends StatelessWidget {
               icon: const Icon(Icons.replay_outlined, size: 18),
               label: Text('rehire_action'.tr),
               style: OutlinedButton.styleFrom(
-                foregroundColor: colors.brand,
+                foregroundColor: colors.brandText,
                 side: BorderSide(color: colors.brand),
               ),
             ),

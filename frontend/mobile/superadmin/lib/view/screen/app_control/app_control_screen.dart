@@ -70,7 +70,7 @@ class _AppCard extends StatelessWidget {
               children: [
                 Icon(
                   _appIcon(app.key),
-                  color: colors.brand,
+                  color: colors.brandText,
                   size: 28,
                 ),
                 const SizedBox(width: AppSpacing.s2),

@@ -280,7 +280,7 @@ export default function TeamPage() {
                   className={cn(
                     "rounded-full border px-3 py-1 text-body-sm transition-colors",
                     selected
-                      ? "border-primary bg-primary/10 text-primary"
+                      ? "border-primary bg-primary/10 text-brand-text"
                       : "border-border text-foreground hover:bg-muted/50",
                   )}
                 >
@@ -407,7 +407,7 @@ export default function TeamPage() {
           </DialogHeader>
           <div className="flex flex-col items-center gap-3 py-2">
             <div className="rounded-lg border-2 border-primary bg-primary/10 px-6 py-4">
-              <span className="font-mono text-3xl font-bold tracking-[0.3em] text-primary">
+              <span className="font-mono text-3xl font-bold tracking-[0.3em] text-brand-text">
                 {resendCode}
               </span>
             </div>

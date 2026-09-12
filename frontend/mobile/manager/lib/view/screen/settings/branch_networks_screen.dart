@@ -172,7 +172,7 @@ class _ModeSelector extends StatelessWidget {
                           : Icons.radio_button_unchecked,
                       size: 20,
                       color: ctrl.mode == entry.key
-                          ? colors.brand
+                          ? colors.brandText
                           : colors.textTertiary,
                     ),
                     const SizedBox(width: AppSpacing.s3),
@@ -186,7 +186,7 @@ class _ModeSelector extends StatelessWidget {
                               ? FontWeight.w700
                               : FontWeight.w500,
                           color: ctrl.mode == entry.key
-                              ? colors.brand
+                              ? colors.brandText
                               : colors.textPrimary,
                         ),
                       ),
@@ -241,7 +241,7 @@ class _NetworkTile extends StatelessWidget {
               Icon(
                 checked ? Icons.check_box : Icons.check_box_outline_blank,
                 size: 20,
-                color: checked ? colors.brand : colors.textTertiary,
+                color: checked ? colors.brandText : colors.textTertiary,
               ),
               const SizedBox(width: AppSpacing.s3),
               Expanded(
@@ -326,7 +326,7 @@ class _LocationBadge extends StatelessWidget {
               });
 
     final color = isGood
-        ? colors.brand
+        ? colors.brandText
         : isBad
             ? colors.error
             : colors.textSecondary;
@@ -393,7 +393,7 @@ class _CoverageCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
-                  color: low ? colors.error : colors.brand,
+                  color: low ? colors.error : colors.brandText,
                 ),
               ),
             ],

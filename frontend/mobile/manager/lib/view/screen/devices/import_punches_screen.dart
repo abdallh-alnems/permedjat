@@ -74,7 +74,7 @@ class _Explainer extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, size: 20, color: colors.brand),
+          Icon(Icons.info_outline, size: 20, color: colors.brandText),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
             child: Text(
@@ -157,7 +157,7 @@ class _FilePicker extends StatelessWidget {
             Icon(
               hasFile ? Icons.description_outlined : Icons.upload_file_outlined,
               size: 26,
-              color: hasFile ? colors.brand : colors.textSecondary,
+              color: hasFile ? colors.brandText : colors.textSecondary,
             ),
             const SizedBox(width: AppSpacing.s3),
             Expanded(
@@ -170,7 +170,7 @@ class _FilePicker extends StatelessWidget {
                       fontFamily: 'IBM Plex Sans Arabic',
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: hasFile ? colors.brand : colors.textPrimary,
+                      color: hasFile ? colors.brandText : colors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 2),

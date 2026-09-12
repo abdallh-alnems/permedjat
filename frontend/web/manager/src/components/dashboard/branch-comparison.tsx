@@ -17,7 +17,15 @@ import type {
   BranchPerformance,
 } from "@/lib/types";
 
-const PALETTE = ["#0E7C86", "#60A5FA", "#B8860B", "#27AE60", "#D4A017"];
+// The globals.css chart tokens, so the bars follow the brand and switch with
+// dark mode. Ordered to keep similar hues (gold, amber) apart.
+const PALETTE = [
+  "var(--chart-1)",
+  "var(--chart-4)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-5)",
+];
 
 export function BranchComparison({ data }: { data: BranchPerformance[] }) {
   const { t } = useT();

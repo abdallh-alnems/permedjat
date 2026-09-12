@@ -25,7 +25,7 @@ class LoansScreen extends StatelessWidget {
         heroTag: 'fab_loan',
         onPressed: () => _showCreateSheet(context, ctrl),
         backgroundColor: colors.brand,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: colors.onBrand),
       ),
       body: Column(
         children: [
@@ -246,7 +246,7 @@ class LoansScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(Icons.calendar_today_outlined,
-                              size: 18, color: colors.brand),
+                              size: 18, color: colors.brandText),
                           const SizedBox(width: AppSpacing.s2),
                           Text(
                             _fmtMonth(startMonth),
@@ -273,7 +273,7 @@ class LoansScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(Icons.info_outline,
-                              size: 18, color: colors.brand),
+                              size: 18, color: colors.brandText),
                           const SizedBox(width: AppSpacing.s2),
                           Expanded(
                             child: Text(
@@ -285,7 +285,7 @@ class LoansScreen extends StatelessWidget {
                                 fontFamily: 'IBM Plex Sans Arabic',
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
-                                color: colors.brand,
+                                color: colors.brandText,
                               ),
                             ),
                           ),
@@ -452,7 +452,7 @@ class _Chip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),
@@ -633,7 +633,7 @@ class _LoanTile extends StatelessWidget {
       case 'pending':
         return colors.warning;
       case 'active':
-        return colors.brand;
+        return colors.brandText;
       case 'completed':
         return colors.success;
       case 'cancelled':

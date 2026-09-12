@@ -151,7 +151,7 @@ export default function ImportPunchesPage() {
 
       <Card>
         <CardContent className="flex gap-3 p-4 text-sm text-muted-foreground">
-          <FileText className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+          <FileText className="mt-0.5 h-5 w-5 shrink-0 text-brand-text" />
           <p>{t("import_punches_intro")}</p>
         </CardContent>
       </Card>
@@ -194,7 +194,7 @@ export default function ImportPunchesPage() {
             />
             {fileName ? (
               <div className="flex items-center gap-3 rounded-md border border-primary bg-primary/5 p-3">
-                <FileText className="h-5 w-5 shrink-0 text-primary" />
+                <FileText className="h-5 w-5 shrink-0 text-brand-text" />
                 <span className="flex-1 truncate text-sm font-medium">
                   {fileName}
                 </span>

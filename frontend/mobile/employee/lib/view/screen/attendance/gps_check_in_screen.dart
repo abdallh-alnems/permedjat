@@ -100,7 +100,7 @@ class _GpsCheckInScreenState extends State<GpsCheckInScreen> {
               Icon(
                 Icons.location_on_outlined,
                 size: 72,
-                color: colors.brand,
+                color: colors.brandText,
               ),
               const SizedBox(height: AppSpacing.s5),
               if (config.branchName != null)
@@ -116,7 +116,7 @@ class _GpsCheckInScreenState extends State<GpsCheckInScreen> {
                 _InfoCard(
                   colors: colors,
                   icon: _wifi.isOnWifi ? Icons.wifi : Icons.wifi_off,
-                  color: _wifi.isOnWifi ? colors.brand : colors.error,
+                  color: _wifi.isOnWifi ? colors.brandText : colors.error,
                   text: _wifi.isOnWifi
                       ? 'wifi_connected_to'
                           .trParams({'name': _wifi.ssid ?? _wifi.bssid!})
@@ -169,7 +169,7 @@ class _GpsCheckInScreenState extends State<GpsCheckInScreen> {
     return _InfoCard(
       colors: colors,
       icon: inRange ? Icons.check_circle_outline : Icons.location_off_outlined,
-      color: inRange ? colors.brand : colors.warning,
+      color: inRange ? colors.brandText : colors.warning,
       text: inRange
           ? 'within_branch_range'.tr
           : 'out_of_range'.tr,
@@ -204,18 +204,18 @@ class _GpsCheckInScreenState extends State<GpsCheckInScreen> {
                     : controller.processGpsCheck),
             style: ElevatedButton.styleFrom(
               backgroundColor: colors.brand,
-              foregroundColor: Colors.white,
+              foregroundColor: colors.onBrand,
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.s4),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadius.md),
               ),
             ),
             child: processing
-                ? const SizedBox(
+                ? SizedBox(
                     width: 22,
                     height: 22,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: Colors.white),
+                        strokeWidth: 2, color: colors.onBrand),
                   )
                 : Text(
                     isCheckOut

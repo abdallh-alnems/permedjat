@@ -104,7 +104,7 @@ function EditAdminForm({
                   className={cn(
                     "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-body-sm transition-colors",
                     selected
-                      ? "border-primary bg-primary/10 text-primary"
+                      ? "border-primary bg-primary/10 text-brand-text"
                       : "border-border text-foreground hover:bg-muted/50",
                   )}
                 >

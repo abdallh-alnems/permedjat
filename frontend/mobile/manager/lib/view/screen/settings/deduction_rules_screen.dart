@@ -114,7 +114,7 @@ class DeductionRulesScreen extends StatelessWidget {
                     icon: const Icon(Icons.add, size: 18),
                     label: Text('add_tier'.tr),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: colors.brand,
+                      foregroundColor: colors.brandText,
                       side: BorderSide(color: colors.brand),
                       minimumSize: const Size.fromHeight(46),
                       shape: RoundedRectangleBorder(
@@ -329,7 +329,7 @@ class _SectionHeader extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 20, color: colors.brand),
+        Icon(icon, size: 20, color: colors.brandText),
         const SizedBox(width: AppSpacing.s2),
         Expanded(
           child: Column(
@@ -410,7 +410,7 @@ class _TierTile extends StatelessWidget {
                 fontFamily: 'Geist',
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ),
@@ -588,7 +588,7 @@ class _Chip extends StatelessWidget {
             fontFamily: 'IBM Plex Sans Arabic',
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: selected ? colors.brand : colors.textSecondary,
+            color: selected ? colors.brandText : colors.textSecondary,
           ),
         ),
       ),

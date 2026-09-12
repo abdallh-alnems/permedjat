@@ -145,7 +145,7 @@ class LeaveSettingsScreen extends StatelessWidget {
                   const Divider(height: AppSpacing.s7 * 2),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.tune, color: colors.brand),
+                    leading: Icon(Icons.tune, color: colors.brandText),
                     title: Text('leave_scope_policies_title'.tr,
                         style: AppTextStyles.body(context)),
                     subtitle: Text('leave_scope_policies_hint'.tr,
@@ -155,7 +155,7 @@ class LeaveSettingsScreen extends StatelessWidget {
                   ),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.payments_outlined, color: colors.brand),
+                    leading: Icon(Icons.payments_outlined, color: colors.brandText),
                     title: Text('leave_encashments_title'.tr,
                         style: AppTextStyles.body(context)),
                     subtitle: Text('leave_encashments_hint'.tr,
@@ -184,7 +184,7 @@ class LeaveSettingsScreen extends StatelessWidget {
                         : const Icon(Icons.sync_alt, size: 18),
                     label: Text('leave_rollover_button'.tr),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: colors.brand,
+                      foregroundColor: colors.brandText,
                       side: BorderSide(color: colors.brand),
                       minimumSize: const Size.fromHeight(48),
                       shape: RoundedRectangleBorder(

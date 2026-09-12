@@ -87,7 +87,7 @@ class AdvanceApplyForm extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.info_outline, size: 18, color: colors.brand),
+                    Icon(Icons.info_outline, size: 18, color: colors.brandText),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -96,7 +96,7 @@ class AdvanceApplyForm extends StatelessWidget {
                           'count': count.toString(),
                         }),
                         style: AppTextStyles.sm(context)
-                            .copyWith(color: colors.brand),
+                            .copyWith(color: colors.brandText),
                       ),
                     ),
                   ],
@@ -307,7 +307,7 @@ class _MonthCell extends StatelessWidget {
           style: AppTextStyles.sm(context).copyWith(
             color: disabled
                 ? colors.borderHairline
-                : (highlight ? colors.brand : null),
+                : (highlight ? colors.brandText : null),
             fontWeight: highlight ? FontWeight.w600 : FontWeight.w400,
           ),
         ),

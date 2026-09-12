@@ -336,7 +336,7 @@ class _BulkAdjustSheetState extends State<_BulkAdjustSheet> {
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
-                color: active ? Colors.white : colors.textSecondary,
+                color: active ? colors.onBrand : colors.textSecondary,
               ),
             ),
           ),

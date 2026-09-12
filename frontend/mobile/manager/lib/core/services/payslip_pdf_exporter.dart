@@ -93,8 +93,10 @@ class PayslipPdfExporter {
             pw.Container(
               padding: const pw.EdgeInsets.symmetric(
                   horizontal: 16, vertical: 12),
+              // Brand gold with its on-brand text. Literal values: this runs
+              // outside the widget tree, so there is no Theme to read.
               decoration: const pw.BoxDecoration(
-                color: PdfColor.fromInt(0xFF0E7C86),
+                color: PdfColor.fromInt(0xFFB8860B),
                 borderRadius: pw.BorderRadius.all(pw.Radius.circular(8)),
               ),
               child: pw.Row(
@@ -104,7 +106,7 @@ class PayslipPdfExporter {
                     'payslip_title'.tr,
                     style: pw.TextStyle(
                       fontSize: 20,
-                      color: PdfColors.white,
+                      color: const PdfColor.fromInt(0xFF1A1A1A),
                       font: _bold,
                     ),
                   ),
@@ -112,7 +114,7 @@ class PayslipPdfExporter {
                     companyName,
                     style: pw.TextStyle(
                       fontSize: 14,
-                      color: PdfColors.white,
+                      color: const PdfColor.fromInt(0xFF1A1A1A),
                       font: _bold,
                     ),
                   ),
@@ -179,7 +181,7 @@ class PayslipPdfExporter {
                         font: _bold,
                         color: payroll.netSalary < 0
                             ? const PdfColor.fromInt(0xFFC0392B)
-                            : const PdfColor.fromInt(0xFF0E7C86),
+                            : const PdfColor.fromInt(0xFFB8860B),
                       ),
                     ),
                     pw.SizedBox(width: 4),

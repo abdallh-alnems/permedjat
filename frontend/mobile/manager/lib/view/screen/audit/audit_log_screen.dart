@@ -124,7 +124,7 @@ class _ActivityTile extends StatelessWidget {
               color: colors.brandSubtle,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, size: 20, color: colors.brand),
+            child: Icon(icon, size: 20, color: colors.brandText),
           ),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
@@ -145,14 +145,14 @@ class _ActivityTile extends StatelessWidget {
                             ? Icons.badge_outlined
                             : Icons.label_outline,
                         size: 13,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                       const SizedBox(width: 4),
                       Flexible(
                         child: Text(
                           entry.subject!,
                           style: AppTextStyles.sm(context).copyWith(
-                            color: colors.brand,
+                            color: colors.brandText,
                             fontWeight: FontWeight.w500,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -247,7 +247,7 @@ class _ActorFilterButton extends StatelessWidget {
     return PopupMenuButton<int?>(
       icon: Icon(
         Icons.filter_alt_outlined,
-        color: active ? colors.brand : null,
+        color: active ? colors.brandText : null,
       ),
       tooltip: 'filter_by_admin'.tr,
       onSelected: (value) => ctrl.filterByAdmin(value),
@@ -296,7 +296,7 @@ class _Chip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.sm(context).copyWith(
-            color: selected ? Colors.white : colors.textSecondary,
+            color: selected ? colors.onBrand : colors.textSecondary,
             fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
           ),
         ),

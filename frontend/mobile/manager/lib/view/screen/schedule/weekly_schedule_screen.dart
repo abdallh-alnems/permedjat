@@ -23,9 +23,10 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
 
   /// Stable accent colours assigned to shifts by their order in the palette,
   /// so "morning / evening / night" stay visually distinct across the screen.
+  /// Starts with the light-mode brand gold, then the teal accent (AppColors).
   static const List<Color> _shiftPalette = [
-    Color(0xFF0E7C86),
     Color(0xFFB8860B),
+    Color(0xFF0E7C86),
     Color(0xFF6C5CE7),
     Color(0xFFE17055),
     Color(0xFF2E86DE),
@@ -76,7 +77,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
               child: Text(
                 'publish'.tr,
                 style: TextStyle(
-                  color: ctrl.hasDraftCells ? colors.brand : colors.textTertiary,
+                  color: ctrl.hasDraftCells ? colors.brandText : colors.textTertiary,
                   fontFamily: AppTextStyles.arabicFamily,
                   fontWeight: FontWeight.w700,
                 ),
@@ -157,7 +158,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
                     style: TextStyle(
                       fontFamily: AppTextStyles.arabicFamily,
                       fontSize: 11,
-                      color: colors.brand,
+                      color: colors.brandText,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -232,7 +233,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
                 fontFamily: AppTextStyles.arabicFamily,
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: isSel ? Colors.white : colors.textSecondary,
+                color: isSel ? colors.onBrand : colors.textSecondary,
               ),
             ),
             const SizedBox(height: 2),
@@ -242,7 +243,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
                 fontFamily: AppTextStyles.latinFamily,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: isSel ? Colors.white : colors.textPrimary,
+                color: isSel ? colors.onBrand : colors.textPrimary,
               ),
             ),
             const SizedBox(height: 4),
@@ -252,7 +253,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: has
-                    ? (isSel ? Colors.white : colors.brand)
+                    ? (isSel ? colors.onBrand : colors.brand)
                     : Colors.transparent,
               ),
             ),
@@ -320,14 +321,14 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
             icon: Icon(
               allSelected ? Icons.check_box : Icons.check_box_outline_blank,
               size: 18,
-              color: colors.brand,
+              color: colors.brandText,
             ),
             label: Text(
               'select_all'.tr,
               style: TextStyle(
                 fontFamily: AppTextStyles.arabicFamily,
                 fontSize: 12,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ),
@@ -484,7 +485,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
           ),
         ),
         child: isSel
-            ? const Icon(Icons.check, size: 20, color: Colors.white)
+            ? Icon(Icons.check, size: 20, color: colors.onBrand)
             : Center(
                 child: Text(
                   _initials(emp.name),
@@ -650,7 +651,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
               fontFamily: AppTextStyles.arabicFamily,
               fontSize: 9,
               fontWeight: focused ? FontWeight.w700 : FontWeight.w500,
-              color: focused ? colors.brand : colors.textTertiary,
+              color: focused ? colors.brandText : colors.textTertiary,
             ),
           ),
           const SizedBox(height: 3),
@@ -795,7 +796,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.brand,
-                      foregroundColor: Colors.white,
+                      foregroundColor: colors.onBrand,
                     ),
                     child: Text('apply_filter'.tr),
                   ),
@@ -853,7 +854,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
     VoidCallback onRemove, {
     Color? color,
   }) {
-    final c = color ?? AppColors.of(context).brand;
+    final c = color ?? AppColors.of(context).brandText;
     return Chip(
       label: Text(
         label,
@@ -1061,7 +1062,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
                 label: Text('assign'.tr),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.brand,
-                  foregroundColor: Colors.white,
+                  foregroundColor: colors.onBrand,
                   // Theme forces full width (Size.fromHeight → infinite);
                   // size to content inside this Row.
                   minimumSize: const Size(0, 48),
@@ -1179,7 +1180,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.brand,
-                      foregroundColor: Colors.white,
+                      foregroundColor: colors.onBrand,
                     ),
                     child: Text('apply'.tr),
                   ),
@@ -1229,11 +1230,11 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
                         fontWeight:
                             isSelected ? FontWeight.w600 : FontWeight.w400,
                         color:
-                            isSelected ? colors.brand : colors.textPrimary,
+                            isSelected ? colors.brandText : colors.textPrimary,
                       ),
                     ),
                     trailing: isSelected
-                        ? Icon(Icons.check, color: colors.brand)
+                        ? Icon(Icons.check, color: colors.brandText)
                         : null,
                     onTap: () async {
                       Get.back<void>();
@@ -1390,7 +1391,7 @@ class _WeeklyScheduleScreenState extends State<WeeklyScheduleScreen> {
       ctrl.shifts.firstWhereOrNull((s) => s.id == id)?.name ?? '';
 
   Color _shiftColor(int? shiftId) {
-    if (shiftId == null) return AppColors.light.brand;
+    if (shiftId == null) return AppColors.of(context).brand;
     final idx = ctrl.shifts.indexWhere((s) => s.id == shiftId);
     if (idx < 0) return _shiftPalette.first;
     return _shiftPalette[idx % _shiftPalette.length];

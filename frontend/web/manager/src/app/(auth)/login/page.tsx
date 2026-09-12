@@ -259,7 +259,7 @@ export default function LoginPage() {
           </div>
           <Link
             href="/forgot-password"
-            className="inline-block text-label-md text-brand hover:underline"
+            className="inline-block text-label-md text-brand-text hover:underline"
           >
             {t("forgot_password")}
           </Link>
@@ -310,7 +310,7 @@ export default function LoginPage() {
         )}
         <p className="mt-2 text-center text-label-md text-muted-foreground">
           {t("no_account")}{" "}
-          <Link href="/signup" className="text-brand hover:underline">
+          <Link href="/signup" className="text-brand-text hover:underline">
             {t("signup")}
           </Link>
         </p>

@@ -137,7 +137,7 @@ class _MonthPicker extends StatelessWidget {
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.of(context).brand,
+                  color: AppColors.of(context).brandText,
                 ),
               ),
             ),
@@ -176,7 +176,7 @@ class _SummaryCards extends StatelessWidget {
                     label: 'total_payroll'.tr,
                     value:
                         '${summary.totalNet.toStringAsFixed(0)} ${currencyLabel(null)}',
-                    color: colors.brand,
+                    color: colors.brandText,
                     colors: colors)),
             const SizedBox(width: AppSpacing.s2),
             Expanded(
@@ -292,7 +292,7 @@ class _PayrollRow extends StatelessWidget {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.s3),
@@ -352,7 +352,7 @@ class _PayrollRow extends StatelessWidget {
       case 'approved':
         return colors.success;
       case 'paid':
-        return colors.brand;
+        return colors.brandText;
       default:
         return colors.textTertiary;
     }

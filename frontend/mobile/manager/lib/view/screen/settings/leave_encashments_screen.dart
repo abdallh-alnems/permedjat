@@ -114,7 +114,7 @@ class LeaveEncashmentsScreen extends StatelessWidget {
                 child: Text(
                   isPaid ? 'enc_status_paid'.tr : 'enc_status_pending'.tr,
                   style: AppTextStyles.xs(context).copyWith(
-                    color: isPaid ? colors.brand : colors.warning,
+                    color: isPaid ? colors.brandText : colors.warning,
                   ),
                 ),
               ),

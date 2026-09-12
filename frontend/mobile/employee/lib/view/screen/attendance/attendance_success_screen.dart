@@ -167,7 +167,7 @@ class _AttendanceSuccessScreenState extends State<AttendanceSuccessScreen>
                       onPressed: _goHome,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.brand,
-                        foregroundColor: Colors.white,
+                        foregroundColor: colors.onBrand,
                         padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.s4),
                         shape: RoundedRectangleBorder(

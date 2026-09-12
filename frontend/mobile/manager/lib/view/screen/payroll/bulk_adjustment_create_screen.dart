@@ -246,10 +246,14 @@ class _BulkAdjustmentCreateScreenState
               colors: colors,
               value: _scopeType,
               options: [
-                _Seg('all', 'bulk_scope_all'.tr, colors.brand),
-                _Seg('branch', 'bulk_scope_branch'.tr, colors.brand),
-                _Seg('category', 'bulk_scope_category'.tr, colors.brand),
-                _Seg('employee', 'bulk_scope_employee'.tr, colors.brand),
+                _Seg('all', 'bulk_scope_all'.tr, colors.brand,
+                    onActiveColor: colors.onBrand),
+                _Seg('branch', 'bulk_scope_branch'.tr, colors.brand,
+                    onActiveColor: colors.onBrand),
+                _Seg('category', 'bulk_scope_category'.tr, colors.brand,
+                    onActiveColor: colors.onBrand),
+                _Seg('employee', 'bulk_scope_employee'.tr, colors.brand,
+                    onActiveColor: colors.onBrand),
               ],
               onChanged: (v) => setState(() {
                 _scopeType = v;
@@ -280,8 +284,10 @@ class _BulkAdjustmentCreateScreenState
               colors: colors,
               value: _amountType,
               options: [
-                _Seg('fixed', 'bulk_type_fixed'.tr, colors.brand),
-                _Seg('percent', 'bulk_type_percent'.tr, colors.brand),
+                _Seg('fixed', 'bulk_type_fixed'.tr, colors.brand,
+                    onActiveColor: colors.onBrand),
+                _Seg('percent', 'bulk_type_percent'.tr, colors.brand,
+                    onActiveColor: colors.onBrand),
               ],
               onChanged: (v) => setState(() => _amountType = v),
             ),
@@ -410,7 +416,7 @@ class _BulkAdjustmentCreateScreenState
         ),
         child: Row(
           children: [
-            Icon(Icons.calendar_today_outlined, size: 18, color: colors.brand),
+            Icon(Icons.calendar_today_outlined, size: 18, color: colors.brandText),
             const SizedBox(width: AppSpacing.s2),
             Text(
               _monthStr,
@@ -444,7 +450,7 @@ class _BulkAdjustmentCreateScreenState
         child: Row(
           children: [
             Icon(Icons.person_search_outlined,
-                size: 18, color: colors.brand),
+                size: 18, color: colors.brandText),
             const SizedBox(width: AppSpacing.s2),
             Expanded(
               child: Text(
@@ -512,7 +518,7 @@ class _BulkAdjustmentCreateScreenState
                     fontFamily: 'IBM Plex Sans Arabic',
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: active ? Colors.white : colors.textSecondary,
+                    color: active ? o.onActiveColor : colors.textSecondary,
                   ),
                 ),
               ),
@@ -528,7 +534,12 @@ class _Seg {
   final String value;
   final String label;
   final Color activeColor;
-  const _Seg(this.value, this.label, this.activeColor);
+
+  /// Label colour while the segment is active. White does not read on the
+  /// brand gold, so those segments pass the on-brand colour instead.
+  final Color onActiveColor;
+  const _Seg(this.value, this.label, this.activeColor,
+      {this.onActiveColor = Colors.white});
 }
 
 /// Bottom sheet that lets the admin search and pick one employee.

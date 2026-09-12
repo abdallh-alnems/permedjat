@@ -255,7 +255,7 @@ export default function EmployeeAttendancePage() {
         )}
 
         {notice && (
-          <p role="status" className="text-sm text-primary">
+          <p role="status" className="text-sm text-brand-text">
             {notice}
           </p>
         )}

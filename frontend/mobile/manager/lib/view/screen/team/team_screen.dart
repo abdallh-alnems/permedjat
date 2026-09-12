@@ -198,7 +198,7 @@ class _AdminCard extends StatelessWidget {
                   fontFamily: 'Geist',
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: colors.brand,
+                  color: colors.brandText,
                 ),
               ),
             ),
@@ -222,7 +222,7 @@ class _AdminCard extends StatelessWidget {
                       ),
                       if (isSelf) ...[
                         const SizedBox(width: AppSpacing.s2),
-                        _Pill(text: 'you_label'.tr, color: colors.brand),
+                        _Pill(text: 'you_label'.tr, color: colors.brandText),
                       ],
                       if (!admin.isActive) ...[
                         const SizedBox(width: AppSpacing.s2),
@@ -461,7 +461,7 @@ void _showCodeDialog(String code) {
                 fontSize: 28,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 4,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ),
@@ -566,7 +566,7 @@ class _InvitationCard extends StatelessWidget {
                   label: Text('resend_code'.tr,
                       style: const TextStyle(fontSize: 12)),
                   style: TextButton.styleFrom(
-                    foregroundColor: colors.brand,
+                    foregroundColor: colors.brandText,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     minimumSize: const Size(0, 32),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -673,7 +673,7 @@ class _RoleBadge extends StatelessWidget {
   (Color, String) _roleConfig(String role) {
     switch (role) {
       case 'general_manager':
-        return (colors.brand, 'general_manager'.tr);
+        return (colors.brandText, 'general_manager'.tr);
       case 'hr':
         return (colors.success, 'role_hr'.tr);
       case 'branch_manager':
@@ -824,7 +824,7 @@ class _EditAdminSheetState extends State<_EditAdminSheet> {
                   onPressed: _saving ? null : _save,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colors.brand,
-                    foregroundColor: Colors.white,
+                    foregroundColor: colors.onBrand,
                     padding:
                         const EdgeInsets.symmetric(vertical: AppSpacing.s3),
                     shape: RoundedRectangleBorder(
@@ -832,11 +832,11 @@ class _EditAdminSheetState extends State<_EditAdminSheet> {
                     ),
                   ),
                   child: _saving
-                      ? const SizedBox(
+                      ? SizedBox(
                           height: 20,
                           width: 20,
                           child: CircularProgressIndicator(
-                              strokeWidth: 2, color: Colors.white),
+                              strokeWidth: 2, color: colors.onBrand),
                         )
                       : Text('save'.tr,
                           style: const TextStyle(
@@ -989,7 +989,7 @@ void _showAdminPermissionsSheet(
                                 fontFamily: 'IBM Plex Sans Arabic',
                                 fontSize: 11,
                                 fontWeight: FontWeight.w600,
-                                color: colors.brand,
+                                color: colors.brandText,
                               )),
                         ),
                     ],
@@ -1074,7 +1074,7 @@ void _showAdminPermissionsSheet(
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.brand,
-                        foregroundColor: Colors.white,
+                        foregroundColor: colors.onBrand,
                         padding:
                             const EdgeInsets.symmetric(vertical: AppSpacing.s3),
                         shape: RoundedRectangleBorder(

@@ -304,7 +304,7 @@ class _AddBreakSheetState extends State<AddBreakSheet> {
       decoration: _fieldDecoration(colors),
       child: Row(
         children: [
-          Icon(Icons.money_off, size: 20, color: colors.brand),
+          Icon(Icons.money_off, size: 20, color: colors.brandText),
           const SizedBox(width: AppSpacing.s3),
           Expanded(
             child: Column(
@@ -337,7 +337,7 @@ class _AddBreakSheetState extends State<AddBreakSheet> {
         decoration: _fieldDecoration(colors),
         child: Row(
           children: [
-            Icon(Icons.event_outlined, size: 20, color: colors.brand),
+            Icon(Icons.event_outlined, size: 20, color: colors.brandText),
             const SizedBox(width: AppSpacing.s3),
             Expanded(
               child: Text(
@@ -370,7 +370,7 @@ class _AddBreakSheetState extends State<AddBreakSheet> {
         decoration: _fieldDecoration(colors),
         child: Row(
           children: [
-            Icon(Icons.access_time, size: 20, color: colors.brand),
+            Icon(Icons.access_time, size: 20, color: colors.brandText),
             const SizedBox(width: AppSpacing.s3),
             Expanded(
               child: Text(
@@ -496,7 +496,7 @@ class _Avatar extends StatelessWidget {
           fontFamily: 'IBM Plex Sans Arabic',
           fontSize: 16,
           fontWeight: FontWeight.w700,
-          color: colors.brand,
+          color: colors.brandText,
         ),
       ),
     );

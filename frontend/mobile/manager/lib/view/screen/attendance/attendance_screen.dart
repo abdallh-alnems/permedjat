@@ -143,7 +143,7 @@ class AttendanceScreen extends StatelessWidget {
                                         label: Text('add_employee'.tr),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: colors.brand,
-                                          foregroundColor: Colors.white,
+                                          foregroundColor: colors.onBrand,
                                           elevation: 0,
                                         ),
                                       ),
@@ -196,7 +196,7 @@ class AttendanceScreen extends StatelessWidget {
             heroTag: 'fab_attendance',
             onPressed: () => _showManualCheckInSheet(context, ctrl),
             backgroundColor: colors.brand,
-            child: const Icon(Icons.add, color: Colors.white),
+            child: Icon(Icons.add, color: colors.onBrand),
           ),
         );
       },
@@ -536,7 +536,10 @@ class _StatusFilterBar extends StatelessWidget {
               ? ctrl.statusFilter == null
               : ctrl.statusFilter == chip.key;
           final bgColor = isSelected ? chip.color : colors.surface;
-          final textColor = isSelected ? Colors.white : colors.textPrimary;
+          // The brand chip is gold, which white does not read on (3.3:1).
+          final textColor = isSelected
+              ? (chip.color == colors.brand ? colors.onBrand : Colors.white)
+              : colors.textPrimary;
           final borderColor =
               isSelected ? chip.color : colors.borderHairline;
 
@@ -709,7 +712,7 @@ class _SortButton extends StatelessWidget {
                       : ctrl.sortBy == 'check_in'
                           ? 'time'
                           : 'name'),
-                  size: 14, color: colors.brand),
+                  size: 14, color: colors.brandText),
             ],
           ),
         ),
@@ -774,7 +777,7 @@ class _SortButton extends StatelessWidget {
                         Icon(_iconFor(opt['icon']!),
                             size: 18,
                             color: isSelected
-                                ? colors.brand
+                                ? colors.brandText
                                 : colors.textSecondary),
                         const SizedBox(width: AppSpacing.s3),
                         Expanded(
@@ -787,13 +790,13 @@ class _SortButton extends StatelessWidget {
                                   ? FontWeight.w600
                                   : FontWeight.w400,
                               color: isSelected
-                                  ? colors.brand
+                                  ? colors.brandText
                                   : colors.textPrimary,
                             ),
                           ),
                         ),
                         if (isSelected)
-                          Icon(Icons.check, size: 18, color: colors.brand),
+                          Icon(Icons.check, size: 18, color: colors.brandText),
                       ],
                     ),
                   ),
@@ -860,7 +863,7 @@ class _DatePickerRow extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.calendar_today,
-                        size: 16, color: colors.brand),
+                        size: 16, color: colors.brandText),
                     const SizedBox(width: AppSpacing.s2),
                     Text(
                       '${_dayName(ctrl.selectedDate)}  ${_formatDate(ctrl.selectedDate)}',
@@ -868,12 +871,12 @@ class _DatePickerRow extends StatelessWidget {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: colors.brand,
+                        color: colors.brandText,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.s1),
                     Icon(Icons.expand_more,
-                        size: 16, color: colors.brand),
+                        size: 16, color: colors.brandText),
                   ],
                 ),
               ),
@@ -1008,7 +1011,7 @@ class _AttendanceTile extends StatelessWidget {
                               !isLeaveLike) ...[
                             const SizedBox(width: 4),
                             Icon(Icons.sticky_note_2,
-                                size: 13, color: colors.brand),
+                                size: 13, color: colors.brandText),
                           ],
                         ],
                       ),
@@ -1937,7 +1940,7 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
                                             fontSize: 13,
                                             fontWeight: FontWeight.w600,
                                             color: isSelected
-                                                ? colors.brand
+                                                ? colors.brandText
                                                 : colors.textPrimary,
                                           ),
                                         ),
@@ -2118,7 +2121,7 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
                         : Icons.check_box_outline_blank,
                     size: 18,
                     color: allSelected
-                        ? colors.brand
+                        ? colors.brandText
                         : colors.textSecondary,
                   ),
                   const SizedBox(width: AppSpacing.s2),
@@ -2152,7 +2155,7 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
                   fontFamily: 'IBM Plex Sans Arabic',
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
-                  color: colors.brand,
+                  color: colors.brandText,
                 ),
               ),
             ),
@@ -2257,7 +2260,7 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.calendar_today,
-                            size: 14, color: colors.brand),
+                            size: 14, color: colors.brandText),
                         const SizedBox(width: AppSpacing.s2),
                         Text(
                           '${_date.year}-${_date.month.toString().padLeft(2, '0')}-${_date.day.toString().padLeft(2, '0')}',
@@ -2265,7 +2268,7 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
                             fontFamily: 'Geist',
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: colors.brand,
+                            color: colors.brandText,
                           ),
                         ),
                       ],
@@ -2305,7 +2308,7 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
                         Icon(
                             _isCheckOut ? Icons.logout : Icons.login,
                             size: 14,
-                            color: colors.brand),
+                            color: colors.brandText),
                         const SizedBox(width: AppSpacing.s2),
                         Text(
                           _isCheckOut
@@ -2315,7 +2318,7 @@ class _ManualCheckInSheetState extends State<_ManualCheckInSheet> {
                             fontFamily: 'Geist',
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: colors.brand,
+                            color: colors.brandText,
                           ),
                         ),
                       ],
@@ -2779,14 +2782,14 @@ class _PunchPhotoChipState extends State<_PunchPhotoChip> {
                 ),
               )
             else
-              Icon(Icons.photo_camera_outlined, size: 12, color: colors.brand),
+              Icon(Icons.photo_camera_outlined, size: 12, color: colors.brandText),
             const SizedBox(width: 4),
             Text(
               '${'punch_photo'.tr} · ${widget.label}',
               style: TextStyle(
                 fontFamily: 'IBM Plex Sans Arabic',
                 fontSize: 11,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ],

@@ -113,7 +113,7 @@ class _ConsentBody extends StatelessWidget {
         children: [
           const SizedBox(height: AppSpacing.s6),
           Icon(Icons.face_retouching_natural_outlined,
-              size: 72, color: colors.brand),
+              size: 72, color: colors.brandText),
           const SizedBox(height: AppSpacing.s5),
           Text(
             'face_enroll_intro'.tr,
@@ -166,7 +166,7 @@ class _ConsentPoint extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.check_circle_outline, size: 18, color: colors.brand),
+          Icon(Icons.check_circle_outline, size: 18, color: colors.brandText),
           const SizedBox(width: AppSpacing.s2),
           Expanded(
             child: Text(

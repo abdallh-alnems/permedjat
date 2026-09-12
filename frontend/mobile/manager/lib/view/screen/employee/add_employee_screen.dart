@@ -677,7 +677,7 @@ class _AddEmployeeFormState extends State<_AddEmployeeForm> {
                     Icon(
                       Icons.event_available,
                       size: 16,
-                      color: AppColors.of(context).brand,
+                      color: AppColors.of(context).brandText,
                     ),
                     const SizedBox(width: AppSpacing.s1),
                     Text(
@@ -686,7 +686,7 @@ class _AddEmployeeFormState extends State<_AddEmployeeForm> {
                         fontFamily: 'IBM Plex Sans Arabic',
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.of(context).brand,
+                        color: AppColors.of(context).brandText,
                       ),
                     ),
                   ],
@@ -1080,7 +1080,7 @@ class _ActivationCodeView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.phone_iphone, size: 18, color: colors.brand),
+                  Icon(Icons.phone_iphone, size: 18, color: colors.brandText),
                   const SizedBox(width: AppSpacing.s2),
                   Text(
                     phone,
@@ -1121,7 +1121,7 @@ class _ActivationCodeView extends StatelessWidget {
                 fontSize: 32,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 4,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ),
@@ -1342,7 +1342,7 @@ class _SectionToggle extends StatelessWidget {
             Icon(
               enabled ? Icons.check_circle : Icons.radio_button_unchecked,
               size: 22,
-              color: enabled ? colors.brand : colors.textTertiary,
+              color: enabled ? colors.brandText : colors.textTertiary,
             ),
             const SizedBox(width: AppSpacing.s3),
             Expanded(
@@ -1437,7 +1437,7 @@ class _DateFieldTile extends StatelessWidget {
                     fontFamily: 'Geist',
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: hasDate ? colors.brand : colors.textTertiary,
+                    color: hasDate ? colors.brandText : colors.textTertiary,
                   ),
                 ),
                 if (hasDate)
@@ -1624,7 +1624,7 @@ class _TimePickerTile extends StatelessWidget {
                 fontFamily: 'Geist',
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: colors.brand,
+                color: colors.brandText,
               ),
             ),
           ],
@@ -1940,7 +1940,7 @@ class _WeeklyDayOffSelector extends StatelessWidget {
                           ? Icons.check_circle
                           : Icons.radio_button_unchecked,
                       size: 16,
-                      color: selected ? colors.brand : colors.textTertiary,
+                      color: selected ? colors.brandText : colors.textTertiary,
                     ),
                     const SizedBox(width: AppSpacing.s1),
                     Text(
@@ -1951,7 +1951,7 @@ class _WeeklyDayOffSelector extends StatelessWidget {
                         fontWeight: selected
                             ? FontWeight.w600
                             : FontWeight.w500,
-                        color: selected ? colors.brand : colors.textPrimary,
+                        color: selected ? colors.brandText : colors.textPrimary,
                       ),
                     ),
                   ],

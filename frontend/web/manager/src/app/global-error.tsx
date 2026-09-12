@@ -34,12 +34,14 @@ export default function GlobalError({
         }}
       >
         <h1 style={{ fontSize: "1.5rem", margin: 0 }}>حدث خطأ في التطبيق</h1>
-        <p style={{ color: "#64748b", margin: 0 }}>{error.message}</p>
+        <p style={{ color: "#68655E", margin: 0 }}>{error.message}</p>
+        {/* Literal values: this page replaces the root layout, so the
+            globals.css tokens (--brand / --on-brand) may not be loaded. */}
         <button
           onClick={reset}
           style={{
-            background: "#0E7C86",
-            color: "#fff",
+            background: "#B8860B",
+            color: "#1A1A1A",
             border: "none",
             borderRadius: "0.5rem",
             padding: "0.5rem 1rem",

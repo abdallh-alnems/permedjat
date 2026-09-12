@@ -142,6 +142,7 @@ class LeaveScreen extends StatelessWidget {
       required bool selected,
       required VoidCallback onTap}) {
     final brand = AppColors.brand(context);
+    final brandText = AppColors.brandText(context);
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(999),
@@ -163,7 +164,7 @@ class LeaveScreen extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.sm(context).copyWith(
-                  color: selected ? brand : colors.textSecondary,
+                  color: selected ? brandText : colors.textSecondary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -182,7 +183,7 @@ class LeaveScreen extends StatelessWidget {
                 child: Text(
                   '$count',
                   style: AppTextStyles.xs(context).copyWith(
-                    color: selected ? Colors.white : colors.textSecondary,
+                    color: selected ? colors.onBrand : colors.textSecondary,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

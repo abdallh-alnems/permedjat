@@ -142,7 +142,7 @@ class _NotificationTile extends StatelessWidget {
               ),
               child: Icon(icon,
                   size: 20,
-                  color: isRead ? colors.textTertiary : colors.brand),
+                  color: isRead ? colors.textTertiary : colors.brandText),
             ),
             const SizedBox(width: AppSpacing.s3),
             Expanded(

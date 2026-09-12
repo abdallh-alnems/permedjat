@@ -131,7 +131,7 @@ class _MethodTile extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.s3),
           child: Row(
             children: [
-              Icon(icon, size: 24, color: colors.brand),
+              Icon(icon, size: 24, color: colors.brandText),
               const SizedBox(width: AppSpacing.s3),
               Expanded(
                 child: Column(

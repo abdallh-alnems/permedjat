@@ -57,7 +57,7 @@ export default function VerifyEmailPage() {
   return (
     <Card>
       <CardHeader className="text-center">
-        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-brand-subtle text-brand">
+        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-brand-subtle text-brand-text">
           <MailCheck className="h-6 w-6" />
         </div>
         <CardTitle className="text-headline-md">{t("verify_email")}</CardTitle>

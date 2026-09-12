@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
   return (
     <Card>
       <CardHeader className="text-center">
-        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-brand-subtle text-brand">
+        <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-brand-subtle text-brand-text">
           <MailCheck className="h-6 w-6" />
         </div>
         <CardTitle className="text-headline-md">
@@ -101,7 +101,7 @@ export default function ForgotPasswordPage() {
         )}
         <Link
           href="/login"
-          className="text-label-md text-brand hover:underline"
+          className="text-label-md text-brand-text hover:underline"
         >
           {t("login")}
         </Link>
