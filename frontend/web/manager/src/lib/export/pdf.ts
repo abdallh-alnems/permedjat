@@ -3,31 +3,57 @@ import autoTable from "jspdf-autotable";
 import type { ReportData } from "@/lib/types";
 import { slug } from "./helpers";
 
-let arabicFontLoaded = false;
+/**
+ * Base64 payloads of the IBM Plex Sans Arabic faces, cached for the lifetime
+ * of the page.
+ * Only the *download* is shared between documents — see ensureArabicFont.
+ */
+let fontCache: { regular: string; bold: string } | null = null;
+
+async function fetchFontBase64(url: string): Promise<string> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${url} -> HTTP ${res.status}`);
+  const buf = await res.arrayBuffer();
+  return btoa(
+    new Uint8Array(buf).reduce((s, b) => s + String.fromCharCode(b), ""),
+  );
+}
 
 /**
- * Attempt to register an Arabic-capable font (Amiri) for jsPDF so that Arabic
- * glyphs render correctly. The font file must be served at /fonts/Amiri-Regular.ttf.
- * If loading fails (e.g. file missing), we fall back to the default font silently.
+ * Register the brand Arabic font (IBM Plex Sans Arabic) on `doc` so Arabic
+ * glyphs render. The files are served from /fonts/ (public/fonts/, OFL
+ * licensed) and are the same files the manager mobile app embeds in its PDFs,
+ * so both export the same face.
+ *
+ * Both faces are registered: jsPDF-autotable asks for the "bold" style for
+ * header rows and for any `fontStyle: "bold"` column, and a style jsPDF cannot
+ * resolve falls back to Helvetica — which renders Arabic as mojibake.
+ *
+ * The registration is repeated for every document on purpose. jsPDF keeps its
+ * virtual file system on the instance (`this.internal.vFS`), so a font added to
+ * one document is unknown to the next; caching "already loaded" in a module
+ * flag left every export after the first one silently rendering in Times.
+ *
+ * Returns whether the font is usable, so callers can point autotable at it.
  */
-async function ensureArabicFont(doc: jsPDF): Promise<void> {
-  if (arabicFontLoaded) {
-    doc.setFont("Amiri");
-    return;
-  }
+async function ensureArabicFont(doc: jsPDF): Promise<boolean> {
   try {
-    const res = await fetch("/fonts/Amiri-Regular.ttf");
-    if (!res.ok) return;
-    const buf = await res.arrayBuffer();
-    const base64 = btoa(
-      new Uint8Array(buf).reduce((s, b) => s + String.fromCharCode(b), ""),
-    );
-    doc.addFileToVFS("Amiri-Regular.ttf", base64);
-    doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");
-    arabicFontLoaded = true;
-    doc.setFont("Amiri");
+    if (!fontCache) {
+      const [regular, bold] = await Promise.all([
+        fetchFontBase64("/fonts/IBMPlexSansArabic-Regular.ttf"),
+        fetchFontBase64("/fonts/IBMPlexSansArabic-Bold.ttf"),
+      ]);
+      fontCache = { regular, bold };
+    }
+    doc.addFileToVFS("IBMPlexSansArabic-Regular.ttf", fontCache.regular);
+    doc.addFont("IBMPlexSansArabic-Regular.ttf", "IBMPlexSansArabic", "normal");
+    doc.addFileToVFS("IBMPlexSansArabic-Bold.ttf", fontCache.bold);
+    doc.addFont("IBMPlexSansArabic-Bold.ttf", "IBMPlexSansArabic", "bold");
+    doc.setFont("IBMPlexSansArabic");
+    return true;
   } catch {
     /* font unavailable — fall back to default */
+    return false;
   }
 }
 
@@ -41,7 +67,7 @@ export async function exportReportToPDF(
   const pageWidth = doc.internal.pageSize.getWidth();
   const isRTL = locale === "ar";
 
-  if (isRTL) await ensureArabicFont(doc);
+  const arabicFont = isRTL ? await ensureArabicFont(doc) : false;
 
   const xPos = isRTL ? pageWidth - 14 : 14;
   const align = isRTL ? "right" : "left";
@@ -54,7 +80,12 @@ export async function exportReportToPDF(
     head: [report.columns],
     body: report.rows.map((r) => r.map((c) => String(c))),
     startY: 28,
-    styles: { halign: isRTL ? "right" : "left", fontSize: 9 },
+    styles: {
+      halign: isRTL ? "right" : "left",
+      fontSize: 9,
+      // autotable defaults to Helvetica regardless of the document font.
+      ...(arabicFont ? { font: "IBMPlexSansArabic" } : {}),
+    },
     headStyles: { fillColor: [37, 99, 235] },
   });
 
@@ -68,12 +99,16 @@ export async function exportKeyValuePDF(
   filename?: string,
 ) {
   const doc = new jsPDF();
-  await ensureArabicFont(doc);
+  const arabicFont = await ensureArabicFont(doc);
   doc.text(title, 14, 18);
   autoTable(doc, {
     body: rows.map(([k, v]) => [k, String(v)]),
     startY: 24,
-    styles: { fontSize: 10, halign: "right" },
+    styles: {
+      fontSize: 10,
+      halign: "right",
+      ...(arabicFont ? { font: "IBMPlexSansArabic" } : {}),
+    },
     columnStyles: { 0: { fontStyle: "bold", cellWidth: 80 } },
   });
   doc.save(filename ?? `${slug(title)}.pdf`);
